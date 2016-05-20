@@ -7,5 +7,6 @@ namespace PjBaySite.Models
 {
     public class Test
     {
+        
     }
 }
