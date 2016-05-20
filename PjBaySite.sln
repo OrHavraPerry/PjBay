@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{9EA3FAFD-C5B6-44D4-BFE2-1DD88CCF2AB5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{65F01858-985D-42E6-8473-2EAE8878DA7E}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+	EndProjectSection
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "PjBaySite", "src\PjBaySite\PjBaySite.xproj", "{783BB02D-B23C-44F7-8262-D893BDE1BA68}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{783BB02D-B23C-44F7-8262-D893BDE1BA68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{783BB02D-B23C-44F7-8262-D893BDE1BA68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{783BB02D-B23C-44F7-8262-D893BDE1BA68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{783BB02D-B23C-44F7-8262-D893BDE1BA68}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{783BB02D-B23C-44F7-8262-D893BDE1BA68} = {9EA3FAFD-C5B6-44D4-BFE2-1DD88CCF2AB5}
+	EndGlobalSection
+EndGlobal
