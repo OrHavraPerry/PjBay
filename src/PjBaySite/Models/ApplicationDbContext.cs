@@ -9,6 +9,9 @@ namespace PjBaySite.Models
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<Course> Courses {get; set;}
+        public DbSet<Project> Projects { get; set; }
+        public DbSet<Instatute> Instatutes { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
