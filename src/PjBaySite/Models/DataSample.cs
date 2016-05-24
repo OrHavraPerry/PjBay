@@ -39,7 +39,7 @@ namespace PjBaySite.Models
                             new Course()
                             {
                                 Name="Introduction to Big Data",
-                                Field=1,
+                                Field=Fields[1],
                                 Projects=new List<Project>()
                                 {
                                     new Project()
@@ -72,6 +72,11 @@ namespace PjBaySite.Models
                         
                     }
                 };
+
+                context.Fields.AddRange(Fields);
+                context.Instatutes.AddRange(ins);
+
+                context.SaveChanges();
             }
         }
     }
