@@ -15,7 +15,7 @@ namespace PjBaySite.Models
         public string Picture { get; set; }
         public string Video { get; set; }
         public bool Purchased { get; set; }
-        public DateTime? SubmiteDate { get; set; }
+        public DateTime? SubmitDate { get; set; }
         public int CourseID { get; set; }
         public Course Course { get; set; }
     }
