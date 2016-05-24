@@ -13,7 +13,7 @@ namespace PjBaySite.Models
         public int FieldID { get; set; }
         public Field Field { get; set; }
         public int InstatuteID { get; set; }
-        public Instatute Instatute { get; set; }
+        public Institute Instatute { get; set; }
         public List<Project> Projects { get; set; }
         [NotMapped]
         public string Description

@@ -18,7 +18,7 @@ namespace PjBaySite.Controllers
         }
         public IActionResult Index()
         {
-            var ins = _context.Instatutes.Cast<IBoxItem>().ToList();
+            var ins = _context.Institutes.Cast<IBoxItem>().ToList();
 
             return View(ins);
         }
@@ -26,7 +26,7 @@ namespace PjBaySite.Controllers
         [HttpPost]
         public IActionResult Index(IBoxItem box)
         {
-            var ins = _context.Instatutes.Include(i=>i.Courses).Cast<IBoxItem>().ToList();
+            var ins = _context.Institutes.Include(i=>i.Courses).Cast<IBoxItem>().ToList();
 
             return View(ins);
         }

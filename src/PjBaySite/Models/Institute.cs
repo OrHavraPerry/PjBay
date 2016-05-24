@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PjBaySite.Models
 {
-    public class Instatute : IBoxItem
+    public class Institute : IBoxItem
     {
         public int ID { get; set; }
         public string Name { get; set; }

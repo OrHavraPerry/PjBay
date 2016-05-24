@@ -170,7 +170,7 @@ namespace PjBaySite.Migrations
                     b.HasKey("ID");
                 });
 
-            modelBuilder.Entity("PjBaySite.Models.Instatute", b =>
+            modelBuilder.Entity("PjBaySite.Models.Institute", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
@@ -246,7 +246,7 @@ namespace PjBaySite.Migrations
                         .WithMany()
                         .HasForeignKey("FieldID");
 
-                    b.HasOne("PjBaySite.Models.Instatute")
+                    b.HasOne("PjBaySite.Models.Institute")
                         .WithMany()
                         .HasForeignKey("InstatuteID");
                 });
