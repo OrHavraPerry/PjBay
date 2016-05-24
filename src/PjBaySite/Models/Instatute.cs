@@ -26,7 +26,8 @@ namespace PjBaySite.Models
         {
             get
             {
-                return Courses.Cast<IBoxItem>();
+                return null;
+                //Courses.Cast<IBoxItem>();
             }
         }
     }

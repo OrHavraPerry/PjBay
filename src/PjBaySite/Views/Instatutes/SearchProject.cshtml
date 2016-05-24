@@ -1,0 +1,28 @@
+﻿@model IEnumerable<PjBaySite.Models.Instatute>
+@{
+    ViewData["Title"] = "SearchProject";
+}
+
+<h2>Search Project:</h2>
+
+<form asp-controller="Instatutes" asp-action="SearchProject">
+    <div>
+        <dl class="dl-horizontal">
+            <dt>
+                Instatute: <input type="text" name="instatute">
+            </dt>
+            <dd>
+                Course: <input type="text" name="course">
+            </dd>
+            <dt>
+                Project <input type="text" name="project">
+            </dt>
+            
+        </dl>
+    </div>
+    <p>
+        <input type="submit" value="Find" />
+    </p>
+</form>
+
+
