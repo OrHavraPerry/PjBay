@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace PjBaySite.Models
 {
-    public class Course
+    public class Course : IBoxItem
     {
         public int ID { get; set; }
         public string Name { get; set; }
@@ -14,5 +15,21 @@ namespace PjBaySite.Models
         public int InstatuteID { get; set; }
         public Instatute Instatute { get; set; }
         public List<Project> Projects { get; set; }
+        [NotMapped]
+        public string Description
+        {
+            get
+            {
+                return "";
+            }
+        }
+        [NotMapped]
+        public IEnumerable<IBoxItem> Childs
+        {
+            get
+            {
+                return Projects.Cast<IBoxItem>();
+            }
+        }
     }
 }
