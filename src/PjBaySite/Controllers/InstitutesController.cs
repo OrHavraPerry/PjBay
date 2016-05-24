@@ -30,13 +30,25 @@ namespace PjBaySite.Controllers
         {
             var institutes = from i in _context.Institutes
                         select i;
+            var courses=from i in _context.Institutes
+                        select i;
+            var projects=from i in _context.Institutes
+                        select i;
 
             if (!String.IsNullOrEmpty(institute))
             {
                 institutes = institutes.Where(s => s.Name.Contains(institute));
             }
-            return RedirectToAction("Details");
-            //return View(institutes);
+            if(!String.IsNullOrEmpty(course)
+            {
+                courses = institutes.Courses.Where(s => s.Name.Contains(course));
+            }
+            if(!String.IsNullOrEmpty(course)
+            {
+                projects = courses.Projects.Where(s => s.Name.Contains(project));
+            }
+            
+            return View(institutes);
         }
 
         // GET: Instatutes/Details/5
@@ -47,13 +59,13 @@ namespace PjBaySite.Controllers
                 return HttpNotFound();
             }
 
-            Institute instatute = _context.Institutes.Single(m => m.ID == id);
-            if (instatute == null)
+            Institute institute = _context.Institutes.Single(m => m.ID == id);
+            if (institute == null)
             {
                 return HttpNotFound();
             }
 
-            return View(instatute);
+            return View(institute);
         }
 
         // GET: Instatutes/Create
