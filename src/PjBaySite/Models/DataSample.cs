@@ -20,11 +20,15 @@ namespace PjBaySite.Models
                     },
                     new Field()
                     {
-                        fieldName="Harta"
+                        fieldName="Psycology"
                     },
                     new Field()
                     {
-                        fieldName="Weed"
+                        fieldName="Geography"
+                    },
+                    new Field()
+                    {
+                        fieldName="electrical engineering"
                     }
                 };
 
@@ -80,7 +84,7 @@ namespace PjBaySite.Models
                             new Course()
                             {
                                 Name="Introduction to C",
-                                Field=Fields[2],
+                                Field=Fields[0],
                                 Projects=new List<Project>()
                                 {
                                     new Project()
@@ -111,6 +115,74 @@ namespace PjBaySite.Models
                             }
                         }
 
+                    },
+                    new Institute()
+                    {
+                        Name ="Technion",
+                        Address="Haifa",
+                        Courses=new List<Course>()
+                        {
+                            new Course()
+                            {
+                                Name="introduction to soul",
+                                Field=Fields[1],
+                                Projects=new List<Project>()
+                                {
+                                    new Project()
+                                    {
+                                        Name="sum on paper number 1",
+                                        Grade=95,
+                                        Price=450,
+                                        Description="tring to understand the human soul",
+                                        Picture="https://lh5.ggpht.com/JJc55ckwLOPH2koySqtvwd8Hc4vzFodhg-x5JxcvFKth-dKW_iD8zy9Ax2W8oPvyR6iOYoeVPRvclIhVmdE=s0#w=1725&h=1060",
+                                        Video="https://youtu.be/44K_bzTL_SM",
+                                        Purchased=false,
+                                        SubmitDate=DateTime.Parse("10/25/2011 19:43"),
+
+                                    }
+                                }
+                            },
+                            new Course()
+                            {
+                                Name="The oceans",
+                                Field=Fields[2],
+                                Projects=new List<Project>()
+                                {
+                                    new Project()
+                                    {
+                                        Name="The atlantic ocean winds",
+                                        Grade=95,
+                                        Price=130,
+                                        Description="very intreating",
+                                        Picture="https://lh5.ggpht.com/JJc55ckwLOPH2koySqtvwd8Hc4vzFodhg-x5JxcvFKth-dKW_iD8zy9Ax2W8oPvyR6iOYoeVPRvclIhVmdE=s0#w=1725&h=1060",
+                                        Video="https://youtu.be/44K_bzTL_SM",
+                                        Purchased=false,
+                                        SubmitDate=DateTime.Parse("10/22/2014 19:43"),
+
+                                    }
+                                }
+                            },
+                            new Course()
+                            {
+                                Name="Mechanics",
+                                Field=Fields[0],
+                                Projects=new List<Project>()
+                                {
+                                    new Project()
+                                    {
+                                        Name="Energy",
+                                        Grade=95,
+                                        Price=130,
+                                        Description="very intreating",
+                                        Picture="https://lh5.ggpht.com/JJc55ckwLOPH2koySqtvwd8Hc4vzFodhg-x5JxcvFKth-dKW_iD8zy9Ax2W8oPvyR6iOYoeVPRvclIhVmdE=s0#w=1725&h=1060",
+                                        Video="https://youtu.be/44K_bzTL_SM",
+                                        Purchased=false,
+                                        SubmitDate=DateTime.Parse("10/22/2014 19:43"),
+
+                                    }
+                                }
+                            }
+                        }
                     }
                 };
 

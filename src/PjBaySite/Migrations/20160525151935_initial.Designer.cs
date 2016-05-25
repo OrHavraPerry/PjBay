@@ -8,7 +8,7 @@ using PjBaySite.Models;
 namespace PjBaySite.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20160524164710_initial")]
+    [Migration("20160525151935_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
