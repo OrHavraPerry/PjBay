@@ -8,8 +8,8 @@ using PjBaySite.Models;
 namespace PjBaySite.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20160524095017_Edit1")]
-    partial class Edit1
+    [Migration("20160524190610_Edit2")]
+    partial class Edit2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -171,7 +171,7 @@ namespace PjBaySite.Migrations
                     b.HasKey("ID");
                 });
 
-            modelBuilder.Entity("PjBaySite.Models.Instatute", b =>
+            modelBuilder.Entity("PjBaySite.Models.Institute", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
@@ -247,7 +247,7 @@ namespace PjBaySite.Migrations
                         .WithMany()
                         .HasForeignKey("FieldID");
 
-                    b.HasOne("PjBaySite.Models.Instatute")
+                    b.HasOne("PjBaySite.Models.Institute")
                         .WithMany()
                         .HasForeignKey("InstatuteID");
                 });

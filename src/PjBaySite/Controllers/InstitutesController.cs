@@ -3,14 +3,15 @@ using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.Data.Entity;
 using PjBaySite.Models;
+using System;
 
 namespace PjBaySite.Controllers
 {
-    public class InstatutesController : Controller
+    public class InstitutesController : Controller
     {
         private ApplicationDbContext _context;
 
-        public InstatutesController(ApplicationDbContext context)
+        public InstitutesController(ApplicationDbContext context)
         {
             _context = context;    
         }
@@ -18,7 +19,36 @@ namespace PjBaySite.Controllers
         // GET: Instatutes
         public IActionResult Index()
         {
-            return View(_context.Instatutes.ToList());
+            return View(_context.Institutes.ToList());
+        }
+        // GET: Instatutes
+        public IActionResult BuyProject()
+        {
+            return View();
+        }
+        public IActionResult SearchProject(string institute,string course,string project)
+        {
+            var institutes = from i in _context.Institutes
+                        select i;
+            var courses=from i in _context.Institutes
+                        select i;
+            var projects=from i in _context.Institutes
+                        select i;
+
+            if (!String.IsNullOrEmpty(institute))
+            {
+                institutes = institutes.Where(s => s.Name.Contains(institute));
+            }
+            if(!String.IsNullOrEmpty(course)
+            {
+                courses = institutes.Courses.Where(s => s.Name.Contains(course));
+            }
+            if(!String.IsNullOrEmpty(course)
+            {
+                projects = courses.Projects.Where(s => s.Name.Contains(project));
+            }
+            
+            return View(institutes);
         }
 
         // GET: Instatutes/Details/5
@@ -29,13 +59,13 @@ namespace PjBaySite.Controllers
                 return HttpNotFound();
             }
 
-            Instatute instatute = _context.Instatutes.Single(m => m.ID == id);
-            if (instatute == null)
+            Institute institute = _context.Institutes.Single(m => m.ID == id);
+            if (institute == null)
             {
                 return HttpNotFound();
             }
 
-            return View(instatute);
+            return View(institute);
         }
 
         // GET: Instatutes/Create
@@ -47,11 +77,11 @@ namespace PjBaySite.Controllers
         // POST: Instatutes/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Instatute instatute)
+        public IActionResult Create(Institute instatute)
         {
             if (ModelState.IsValid)
             {
-                _context.Instatutes.Add(instatute);
+                _context.Institutes.Add(instatute);
                 _context.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -66,7 +96,7 @@ namespace PjBaySite.Controllers
                 return HttpNotFound();
             }
 
-            Instatute instatute = _context.Instatutes.Single(m => m.ID == id);
+            Institute instatute = _context.Institutes.Single(m => m.ID == id);
             if (instatute == null)
             {
                 return HttpNotFound();
@@ -77,7 +107,7 @@ namespace PjBaySite.Controllers
         // POST: Instatutes/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Instatute instatute)
+        public IActionResult Edit(Institute instatute)
         {
             if (ModelState.IsValid)
             {
@@ -97,7 +127,7 @@ namespace PjBaySite.Controllers
                 return HttpNotFound();
             }
 
-            Instatute instatute = _context.Instatutes.Single(m => m.ID == id);
+            Institute instatute = _context.Institutes.Single(m => m.ID == id);
             if (instatute == null)
             {
                 return HttpNotFound();
@@ -111,8 +141,8 @@ namespace PjBaySite.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
-            Instatute instatute = _context.Instatutes.Single(m => m.ID == id);
-            _context.Instatutes.Remove(instatute);
+            Institute instatute = _context.Institutes.Single(m => m.ID == id);
+            _context.Institutes.Remove(instatute);
             _context.SaveChanges();
             return RedirectToAction("Index");
         }

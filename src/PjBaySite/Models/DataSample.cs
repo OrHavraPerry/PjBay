@@ -10,7 +10,7 @@ namespace PjBaySite.Models
         public static void Initialize(IServiceProvider serviceProvider)
         {
             ApplicationDbContext context = (ApplicationDbContext)serviceProvider.GetService(typeof(ApplicationDbContext));
-            if (!context.Instatutes.Any())
+            if (!context.Institutes.Any())
             {
                 var Fields = new List<Field>()
                 {
@@ -28,9 +28,9 @@ namespace PjBaySite.Models
                     }
                 };
 
-                var ins = new List<Instatute>()
+                var ins = new List<Institute>()
                 {
-                    new Instatute()
+                    new Institute()
                     {
                         Name="Colman",
                         Address="Rishon Le Zion",
@@ -51,7 +51,7 @@ namespace PjBaySite.Models
                                         Picture="https://lh5.ggpht.com/JJc55ckwLOPH2koySqtvwd8Hc4vzFodhg-x5JxcvFKth-dKW_iD8zy9Ax2W8oPvyR6iOYoeVPRvclIhVmdE=s0#w=1725&h=1060",
                                         Video="https://youtu.be/44K_bzTL_SM",
                                         Purchased=false,
-                                        SubmitDate=DateTime.Parse("17/04/2016 13:45"),
+                                        SubmitDate=DateTime.Parse("07/23/2016 19:45"),
 
                                     },
                                     new Project()
@@ -63,18 +63,59 @@ namespace PjBaySite.Models
                                         Picture="https://lh5.ggpht.com/JJc55ckwLOPH2koySqtvwd8Hc4vzFodhg-x5JxcvFKth-dKW_iD8zy9Ax2W8oPvyR6iOYoeVPRvclIhVmdE=s0#w=1725&h=1060",
                                         Video="https://youtu.be/4z37fUbpJ3s",
                                         Purchased=false,
-                                        SubmitDate=DateTime.Parse("13/10/2016 13:45"),
+                                        SubmitDate=DateTime.Parse("11/13/2016 13:45"),
 
                                     }
                                 }
                             }
                         }
                         
+                    },
+                    new Institute()
+                    {
+                        Name ="Tel Aviv University",
+                        Address="Tel Aviv Jaffa",
+                        Courses=new List<Course>()
+                        {
+                            new Course()
+                            {
+                                Name="Introduction to C",
+                                Field=Fields[2],
+                                Projects=new List<Project>()
+                                {
+                                    new Project()
+                                    {
+                                        Name="Black Jeck",
+                                        Grade=95,
+                                        Price=230,
+                                        Description="Building black jack with pointers",
+                                        Picture="https://lh5.ggpht.com/JJc55ckwLOPH2koySqtvwd8Hc4vzFodhg-x5JxcvFKth-dKW_iD8zy9Ax2W8oPvyR6iOYoeVPRvclIhVmdE=s0#w=1725&h=1060",
+                                        Video="https://youtu.be/44K_bzTL_SM",
+                                        Purchased=false,
+                                        SubmitDate=DateTime.Parse("05/13/2016 19:45"),
+
+                                    },
+                                    new Project()
+                                    {
+                                        Name="8 horses game chess",
+                                        Grade=98,
+                                        Price=230,
+                                        Description="allocating 8 horses in a chess board,that they can't eat each other,using recursion",
+                                        Picture="https://lh5.ggpht.com/JJc55ckwLOPH2koySqtvwd8Hc4vzFodhg-x5JxcvFKth-dKW_iD8zy9Ax2W8oPvyR6iOYoeVPRvclIhVmdE=s0#w=1725&h=1060",
+                                        Video="https://youtu.be/4z37fUbpJ3s",
+                                        Purchased=false,
+                                        SubmitDate=DateTime.Parse("08/12/2015 13:45"),
+
+                                    }
+                                }
+                            }
+                        }
+
                     }
                 };
 
                 context.Fields.AddRange(Fields);
-                context.Instatutes.AddRange(ins);
+                context.Institutes.AddRange(ins);
 
                 context.SaveChanges();
             }

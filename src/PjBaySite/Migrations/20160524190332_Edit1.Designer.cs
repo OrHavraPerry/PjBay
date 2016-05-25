@@ -8,8 +8,8 @@ using PjBaySite.Models;
 namespace PjBaySite.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20160524084758_initial")]
-    partial class initial
+    [Migration("20160524190332_Edit1")]
+    partial class Edit1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -152,7 +152,7 @@ namespace PjBaySite.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("Field");
+                    b.Property<int>("FieldID");
 
                     b.Property<int>("InstatuteID");
 
@@ -161,7 +161,17 @@ namespace PjBaySite.Migrations
                     b.HasKey("ID");
                 });
 
-            modelBuilder.Entity("PjBaySite.Models.Instatute", b =>
+            modelBuilder.Entity("PjBaySite.Models.Field", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("fieldName");
+
+                    b.HasKey("ID");
+                });
+
+            modelBuilder.Entity("PjBaySite.Models.Institute", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
@@ -192,7 +202,7 @@ namespace PjBaySite.Migrations
 
                     b.Property<bool>("Purchased");
 
-                    b.Property<DateTime?>("SubmiteDate");
+                    b.Property<DateTime?>("SubmitDate");
 
                     b.Property<string>("Video");
 
@@ -233,7 +243,11 @@ namespace PjBaySite.Migrations
 
             modelBuilder.Entity("PjBaySite.Models.Course", b =>
                 {
-                    b.HasOne("PjBaySite.Models.Instatute")
+                    b.HasOne("PjBaySite.Models.Field")
+                        .WithMany()
+                        .HasForeignKey("FieldID");
+
+                    b.HasOne("PjBaySite.Models.Institute")
                         .WithMany()
                         .HasForeignKey("InstatuteID");
                 });
