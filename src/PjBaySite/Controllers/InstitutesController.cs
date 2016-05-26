@@ -3,7 +3,7 @@ using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.Data.Entity;
 using PjBaySite.Models;
-using System;
+
 
 namespace PjBaySite.Controllers
 {
@@ -20,47 +20,6 @@ namespace PjBaySite.Controllers
         public IActionResult Index()
         {
             return View(_context.Institutes.ToList());
-        }
-        // GET: Instatutes
-        public IActionResult BuyProject()
-        {
-            return View();
-        }
-        // GET: Instatutes
-        public IActionResult SellProject()
-        {
-            return View();
-        }
-        public IActionResult SearchProject(string institute,string course,string project)
-        {
-
-            var institutes = from i in _context.Institutes
-                       select i;
-            
-
-            if (!String.IsNullOrEmpty(institute))
-            {
-                institutes = institutes.Where(s => s.Name.Contains(institute));
-            }
-            /*if(!String.IsNullOrEmpty(course))
-            {
-                institutes = institutes.Where(s => Courses.Name.Contains(course));
-            }
-            if(!String.IsNullOrEmpty(course))
-            {
-                institutes = institutes.Projects.Where(s => s.Name.Contains(project));
-            }
-            var query = context.Hospitals;
-            if (HospitalIDsByState.Any())
-                query = query.Where(h => HospitalIDsByState.Contains(h.state));
-            if (HospitalIDsByCity.Any())
-                query = query.Where(h => HospitalIDsByCity.Contains(h.city));
-            if (HospitalIDsByZipcodes.Any())
-                query = query.Where(h => HospitalIDsByZipcodes(h.zipcode));
-
-            return query*/
-
-            return View(institutes);
         }
 
         // GET: Instatutes/Details/5

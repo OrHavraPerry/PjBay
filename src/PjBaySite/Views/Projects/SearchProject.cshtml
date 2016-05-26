@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PjBaySite.Models.IBoxItem>
+﻿@model IEnumerable<PjBaySite.Models.Project>
 
 @{
     ViewData["Title"] = "SearchProject";
@@ -28,7 +28,7 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                <a asp-action="Buy" asp-route-id="">Buy</a>
+                <a asp-action="Buy" asp-route-id="@item.ID">Buy</a>
                 
             </td>
         </tr>
