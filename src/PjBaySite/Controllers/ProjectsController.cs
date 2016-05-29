@@ -135,6 +135,7 @@ namespace PjBaySite.Controllers
             return View();
         }
 
+        [HttpPost]
         public IActionResult SearchProject(string institute, string course, string project,string field)
         {
 

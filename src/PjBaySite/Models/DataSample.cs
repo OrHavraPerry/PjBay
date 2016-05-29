@@ -55,7 +55,7 @@ namespace PjBaySite.Models
                                         Picture="https://lh5.ggpht.com/JJc55ckwLOPH2koySqtvwd8Hc4vzFodhg-x5JxcvFKth-dKW_iD8zy9Ax2W8oPvyR6iOYoeVPRvclIhVmdE=s0#w=1725&h=1060",
                                         Video="https://youtu.be/44K_bzTL_SM",
                                         Purchased=false,
-                                        SubmitDate=DateTime.Parse("07/23/2016 19:45"),
+                                        SubmitDate=DateTime.Parse("07/3/2016 19:45"),
 
                                     },
                                     new Project()
@@ -67,7 +67,7 @@ namespace PjBaySite.Models
                                         Picture="https://lh5.ggpht.com/JJc55ckwLOPH2koySqtvwd8Hc4vzFodhg-x5JxcvFKth-dKW_iD8zy9Ax2W8oPvyR6iOYoeVPRvclIhVmdE=s0#w=1725&h=1060",
                                         Video="https://youtu.be/4z37fUbpJ3s",
                                         Purchased=false,
-                                        SubmitDate=DateTime.Parse("11/13/2016 13:45"),
+                                        SubmitDate=DateTime.Parse("11/10/2016 13:45"),
 
                                     }
                                 }
@@ -96,7 +96,7 @@ namespace PjBaySite.Models
                                         Picture="https://lh5.ggpht.com/JJc55ckwLOPH2koySqtvwd8Hc4vzFodhg-x5JxcvFKth-dKW_iD8zy9Ax2W8oPvyR6iOYoeVPRvclIhVmdE=s0#w=1725&h=1060",
                                         Video="https://youtu.be/44K_bzTL_SM",
                                         Purchased=false,
-                                        SubmitDate=DateTime.Parse("05/13/2016 19:45"),
+                                        SubmitDate=DateTime.Parse("05/11/2016 19:45"),
 
                                     },
                                     new Project()
@@ -137,7 +137,7 @@ namespace PjBaySite.Models
                                         Picture="https://lh5.ggpht.com/JJc55ckwLOPH2koySqtvwd8Hc4vzFodhg-x5JxcvFKth-dKW_iD8zy9Ax2W8oPvyR6iOYoeVPRvclIhVmdE=s0#w=1725&h=1060",
                                         Video="https://youtu.be/44K_bzTL_SM",
                                         Purchased=false,
-                                        SubmitDate=DateTime.Parse("10/25/2011 19:43"),
+                                        SubmitDate=DateTime.Parse("14/2/2011 19:43"),
 
                                     }
                                 }
@@ -157,7 +157,7 @@ namespace PjBaySite.Models
                                         Picture="https://lh5.ggpht.com/JJc55ckwLOPH2koySqtvwd8Hc4vzFodhg-x5JxcvFKth-dKW_iD8zy9Ax2W8oPvyR6iOYoeVPRvclIhVmdE=s0#w=1725&h=1060",
                                         Video="https://youtu.be/44K_bzTL_SM",
                                         Purchased=false,
-                                        SubmitDate=DateTime.Parse("10/22/2014 19:43"),
+                                        SubmitDate=DateTime.Parse("12/5/2014 19:43"),
 
                                     }
                                 }
@@ -177,7 +177,7 @@ namespace PjBaySite.Models
                                         Picture="https://lh5.ggpht.com/JJc55ckwLOPH2koySqtvwd8Hc4vzFodhg-x5JxcvFKth-dKW_iD8zy9Ax2W8oPvyR6iOYoeVPRvclIhVmdE=s0#w=1725&h=1060",
                                         Video="https://youtu.be/44K_bzTL_SM",
                                         Purchased=false,
-                                        SubmitDate=DateTime.Parse("10/22/2014 19:43"),
+                                        SubmitDate=DateTime.Parse("22/10/2014 19:43"),
 
                                     }
                                 }
