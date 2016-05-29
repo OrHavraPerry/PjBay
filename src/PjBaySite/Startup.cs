@@ -98,6 +98,8 @@ namespace PjBaySite
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            DataSample.Initialize(app.ApplicationServices);
         }
 
         // Entry point for the application.

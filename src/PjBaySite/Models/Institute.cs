@@ -1,20 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PjBaySite.Models
 {
-    public class Course : IBoxItem
+    public class Institute : IBoxItem
     {
         public int ID { get; set; }
         public string Name { get; set; }
-        public int FieldID { get; set; }
-        public Field Field { get; set; }
-        public int InstatuteID { get; set; }
-        public Institute Instatute { get; set; }
-        public List<Project> Projects { get; set; }
+        public string Address { get; set; }
+        public List<Course> Courses { get; set; }
         [NotMapped]
         public string Description
         {
@@ -28,7 +26,8 @@ namespace PjBaySite.Models
         {
             get
             {
-                return Projects.Cast<IBoxItem>();
+                return null;
+                //Courses.Cast<IBoxItem>();
             }
         }
     }

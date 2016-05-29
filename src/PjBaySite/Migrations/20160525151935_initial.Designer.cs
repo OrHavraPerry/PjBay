@@ -1,7 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Metadata;
@@ -11,13 +8,13 @@ using PjBaySite.Models;
 namespace PjBaySite.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("00000000000000_CreateIdentitySchema")]
-    partial class CreateIdentitySchema
+    [Migration("20160525151935_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.0-beta8")
+                .HasAnnotation("ProductVersion", "7.0.0-rc1-16348")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityRole", b =>
@@ -50,7 +47,8 @@ namespace PjBaySite.Migrations
 
                     b.Property<string>("ClaimValue");
 
-                    b.Property<string>("RoleId");
+                    b.Property<string>("RoleId")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -66,7 +64,8 @@ namespace PjBaySite.Migrations
 
                     b.Property<string>("ClaimValue");
 
-                    b.Property<string>("UserId");
+                    b.Property<string>("UserId")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -81,7 +80,8 @@ namespace PjBaySite.Migrations
 
                     b.Property<string>("ProviderDisplayName");
 
-                    b.Property<string>("UserId");
+                    b.Property<string>("UserId")
+                        .IsRequired();
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -147,6 +147,68 @@ namespace PjBaySite.Migrations
                     b.HasAnnotation("Relational:TableName", "AspNetUsers");
                 });
 
+            modelBuilder.Entity("PjBaySite.Models.Course", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("FieldID");
+
+                    b.Property<int>("InstatuteID");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("ID");
+                });
+
+            modelBuilder.Entity("PjBaySite.Models.Field", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("fieldName");
+
+                    b.HasKey("ID");
+                });
+
+            modelBuilder.Entity("PjBaySite.Models.Institute", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Address");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("ID");
+                });
+
+            modelBuilder.Entity("PjBaySite.Models.Project", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("CourseID");
+
+                    b.Property<string>("Description");
+
+                    b.Property<int>("Grade");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Picture");
+
+                    b.Property<decimal>("Price");
+
+                    b.Property<bool>("Purchased");
+
+                    b.Property<DateTime?>("SubmitDate");
+
+                    b.Property<string>("Video");
+
+                    b.HasKey("ID");
+                });
+
             modelBuilder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNet.Identity.EntityFramework.IdentityRole")
@@ -177,6 +239,24 @@ namespace PjBaySite.Migrations
                     b.HasOne("PjBaySite.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("PjBaySite.Models.Course", b =>
+                {
+                    b.HasOne("PjBaySite.Models.Field")
+                        .WithMany()
+                        .HasForeignKey("FieldID");
+
+                    b.HasOne("PjBaySite.Models.Institute")
+                        .WithMany()
+                        .HasForeignKey("InstatuteID");
+                });
+
+            modelBuilder.Entity("PjBaySite.Models.Project", b =>
+                {
+                    b.HasOne("PjBaySite.Models.Course")
+                        .WithMany()
+                        .HasForeignKey("CourseID");
                 });
         }
     }

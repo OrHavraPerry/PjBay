@@ -5,11 +5,12 @@ using System.Threading.Tasks;
 
 namespace PjBaySite.Models
 {
-    public class Instatute
+    public class Field
     {
         public int ID { get; set; }
-        public string Name { get; set; }
-        public string Address { get; set; }
+        public string fieldName { get; set; }
+
         public List<Course> Courses { get; set; }
+
     }
 }

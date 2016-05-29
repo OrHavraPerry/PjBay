@@ -1,15 +1,15 @@
-﻿@model IEnumerable<PjBaySite.Models.Project>
+﻿@model IEnumerable<PjBaySite.Models.IBoxItem>
 
 @{
     ViewData["Title"] = "Home Page";
-    var Grid = new List<List<Project>>();
+    var Grid = new List<List<IBoxItem>>();
     for (int i = 0; i < Model.Count(); i++)
     {
         int j = i / 4;
 
         if (Grid.Count() == j)
         {
-            Grid.Add(new List<Project>(4));
+            Grid.Add(new List<IBoxItem>(4));
         }
 
         Grid[j].Add(Model.ElementAt(i));
@@ -23,10 +23,10 @@
     <p><a class="btn btn-primary btn-lg" Link="Buy">Learn Less Now</a></p>
 </div>
 
-@foreach (List<Project> row in Grid)
+@foreach (List<IBoxItem> row in Grid)
 {
     <div class="row">
-        @foreach (Project proj in row)
+        @foreach (IBoxItem proj in row)
         {
             <div class="col-md-3">
                 @Html.Partial("ItemBox", proj)

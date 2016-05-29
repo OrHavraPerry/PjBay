@@ -11,7 +11,8 @@ namespace PjBaySite.Models
     {
         public DbSet<Course> Courses {get; set;}
         public DbSet<Project> Projects { get; set; }
-        public DbSet<Instatute> Instatutes { get; set; }
+        public DbSet<Institute> Institutes { get; set; }
+        public DbSet<Field> Fields { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
