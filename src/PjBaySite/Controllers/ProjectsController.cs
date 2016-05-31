@@ -128,6 +128,7 @@ namespace PjBaySite.Controllers
         // GET: Instatutes
         public IActionResult BuyProject()
         {
+            //-----filling viewData of courses------
             var courses = new List<string>();
 
             // a query which takes the names of courses
@@ -139,6 +140,34 @@ namespace PjBaySite.Controllers
             //filling the viewData parameter which passes to the view
             ViewData["courses"] = new SelectList(courses.Distinct());
 
+
+            //------filling viewData of institutes-------
+            var institutes = new List<string>();
+
+            // a query which takes the names of courses
+            var institutesQ = from i in _context.Institutes
+                              select i.Name;
+            //put the courses list into courses
+            institutes.AddRange(institutesQ.Distinct());
+
+            //filling the viewData parameter which passes to the view
+            ViewData["institutes"] = new SelectList(institutes.Distinct());
+
+            
+            
+            
+            //----filling viewData of fields-------
+            var fields = new List<string>();
+
+            // a query which takes the names of courses
+            var fieldsQ = from i in _context.Fields
+                              select i.fieldName;
+            //put the courses list into courses
+            fields.AddRange(fieldsQ.Distinct());
+
+            //filling the viewData parameter which passes to the view
+            ViewData["fields"] = new SelectList(fields.Distinct());
+
             return View();
         }
         // GET: Instatutes
@@ -148,25 +177,32 @@ namespace PjBaySite.Controllers
         }
 
         [HttpPost]
-        public IActionResult SearchProject(string institute,string courses, string project,string field)
+        public IActionResult SearchProject(string institutes,string courses, string project,string fields)
         {
 
-            /*var projects = from i in _context.Projects
-                             select i;
+
+            var joinQuery = from i in _context.Institutes
+                            join c in _context.Courses on i.ID equals c.InstatuteID
+                            join f in _context.Fields on c.FieldID equals f.ID
+                            join p in _context.Projects on c.ID equals p.CourseID
+                            where i.Name.Equals(institutes)
+                                  && c.Name.Equals(courses) && f.fieldName.Equals(fields)
+                                  && p.Name.Contains(project)
+                            select p;
 
 
-            if (!String.IsNullOrEmpty(project))
+            /*if (!String.IsNullOrEmpty(project))
             {
-                projects = projects.Where(s => s.Name.Contains(project));
-            }*/
-            var courses_1 = from i in _context.Courses
+                JoinQuery = JoinQuery.Where(s => s.Name.Contains(project));
+            } 
+            var projects = from i in _context.Projects
                             select i;
             
             if(!String.IsNullOrEmpty(courses))
             {
-                courses_1 = courses_1.Where(s => s.Name.Contains(courses));
+                projects = projects.Where(s => s.Course.Name.Contains(courses));
             }
-            /*
+            
             if(!String.IsNullOrEmpty(course))
             {
                 institutes = institutes.Projects.Where(s => s.Name.Contains(project));
@@ -181,7 +217,7 @@ namespace PjBaySite.Controllers
 
             return query*/
 
-            return View(courses_1.ToList());
+            return View(joinQuery);
         }
     }
 }
