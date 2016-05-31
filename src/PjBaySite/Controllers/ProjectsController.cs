@@ -180,7 +180,6 @@ namespace PjBaySite.Controllers
         public IActionResult SearchProject(string institutes,string courses, string project,string fields)
         {
 
-
             var joinQuery = from i in _context.Institutes
                             join c in _context.Courses on i.ID equals c.InstatuteID
                             join f in _context.Fields on c.FieldID equals f.ID
@@ -189,35 +188,26 @@ namespace PjBaySite.Controllers
                                   && c.Name.Equals(courses) && f.fieldName.Equals(fields)
                                   && p.Name.Contains(project)
                             select p;
-
-
-            /*if (!String.IsNullOrEmpty(project))
-            {
-                JoinQuery = JoinQuery.Where(s => s.Name.Contains(project));
-            } 
-            var projects = from i in _context.Projects
-                            select i;
             
-            if(!String.IsNullOrEmpty(courses))
-            {
-                projects = projects.Where(s => s.Course.Name.Contains(courses));
-            }
-            
-            if(!String.IsNullOrEmpty(course))
-            {
-                institutes = institutes.Projects.Where(s => s.Name.Contains(project));
-            }
-            var query = context.Hospitals;
-            if (HospitalIDsByState.Any())
-                query = query.Where(h => HospitalIDsByState.Contains(h.state));
-            if (HospitalIDsByCity.Any())
-                query = query.Where(h => HospitalIDsByCity.Contains(h.city));
-            if (HospitalIDsByZipcodes.Any())
-                query = query.Where(h => HospitalIDsByZipcodes(h.zipcode));
-
-            return query*/
 
             return View(joinQuery);
+        }
+
+        // GET: Projects/Details/5
+        public IActionResult Checkout(int? id)
+        {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+
+            Project project = _context.Projects.Single(m => m.ID == id);
+            if (project == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(project);
         }
     }
 }
