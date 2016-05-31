@@ -4,6 +4,7 @@ using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.Data.Entity;
 using PjBaySite.Models;
 using System;
+using System.Collections.Generic;
 
 namespace PjBaySite.Controllers
 {
@@ -127,6 +128,17 @@ namespace PjBaySite.Controllers
         // GET: Instatutes
         public IActionResult BuyProject()
         {
+            var courses = new List<string>();
+
+            // a query which takes the names of courses
+            var coursesQ = from i in _context.Courses
+                           select i.Name;
+            //put the courses list into courses
+            courses.AddRange(coursesQ.Distinct());
+
+            //filling the viewData parameter which passes to the view
+            ViewData["courses"] = new SelectList(courses.Distinct());
+
             return View();
         }
         // GET: Instatutes
@@ -136,21 +148,25 @@ namespace PjBaySite.Controllers
         }
 
         [HttpPost]
-        public IActionResult SearchProject(string institute, string course, string project,string field)
+        public IActionResult SearchProject(string institute,string courses, string project,string field)
         {
 
-            var projects = from i in _context.Projects
+            /*var projects = from i in _context.Projects
                              select i;
 
 
             if (!String.IsNullOrEmpty(project))
             {
                 projects = projects.Where(s => s.Name.Contains(project));
-            }
-            /*if(!String.IsNullOrEmpty(course))
+            }*/
+            var courses_1 = from i in _context.Courses
+                            select i;
+            
+            if(!String.IsNullOrEmpty(courses))
             {
-                institutes = institutes.Where(s => Courses.Name.Contains(course));
+                courses_1 = courses_1.Where(s => s.Name.Contains(courses));
             }
+            /*
             if(!String.IsNullOrEmpty(course))
             {
                 institutes = institutes.Projects.Where(s => s.Name.Contains(project));
@@ -165,7 +181,7 @@ namespace PjBaySite.Controllers
 
             return query*/
 
-            return View(projects);
+            return View(courses_1.ToList());
         }
     }
 }
