@@ -3,53 +3,58 @@
     ViewData["Title"] = "BuyProject";
 }
 
+<script language="javascript" type="text/javascript">
+    function GetCourses(instituteName) {
+        var procemessage = "<option value='0'> Please wait...</option>";
+        $("#select2").html(procemessage).show();
+        var url = "/Projects/GetCourseByInstituteName/";
+
+        $.ajax({
+            url: url,
+            data: { stateid: instituteName },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                var markup = "<option value='0'>Select Course</option>";
+                for (var x = 0; x < data.length; x++) {
+                    markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                }
+                $("#select2").html(markup).show();
+            },
+            error: function (reponse) {
+                alert("error : " + reponse);
+            }
+        });
+
+    }
+</script>
+
+
 <h2>Search Project:</h2>
 
 <form asp-controller="Projects" asp-action="SearchProject" method="post">
-    <div class="form-horizontal">
-        <hr />
-        <div class="text-danger"></div>
-        <div class="form-group">
-            <label class="col-md-2 control-label">Institute:</label>
-            <div class="col-md-10">
-                @Html.DropDownList("institutes")
-                <span class="text-danger" />
-            </div>
+    <hr />
+    <div class="form-group">
+        <label for="select" class="col-lg-2 control-label">Institutes:</label>
+        <div class="col-lg-10">
+            @Html.DropDownList("institutes", null, new { @id = "select1", @class = "form-control", @onchange = "javascript:GetCourses(this.value);" })
+            <br>
         </div>
-        <div class="form-group">
-            <label class="col-md-2 control-label">Field:</label>
-            <div class="col-md-10">
+        <label for="select" class="col-lg-2 control-label">Courses</label>
+        <div class="col-lg-10">
+            <select class="form-control" id="select2"></select>
+            <br>
+        </div>
 
-                @Html.DropDownList("fields")
+        <div class="form-group">
+            <div class="col-lg-10 col-lg-offset-2">
+                <button type="submit" class="btn btn-primary">Find</button>
+            </div>
+        </div>
 
-                <span class="text-danger" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-md-2 control-label">Course:</label>
-            <div class="col-md-10">
-                
-                @Html.DropDownList("courses")
-
-                <span class="text-danger" />
-            </div>
-        </div>
-        
-        
-        <div class="form-group">
-            <label class="col-md-2 control-label">Project:</label>
-            <div class="col-md-10">
-                <input type="text" name="project" class="form-control">
-                <span class="text-danger" />
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Find"  class="btn btn-default" />
-            </div>
-        </div>
     </div>
 </form>
+
 
 
 

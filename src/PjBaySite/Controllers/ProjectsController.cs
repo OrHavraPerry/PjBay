@@ -128,17 +128,17 @@ namespace PjBaySite.Controllers
         // GET: Instatutes
         public IActionResult BuyProject()
         {
-            //-----filling viewData of courses------
-            var courses = new List<string>();
+            ////-----filling viewData of courses------
+            //var courses = new List<string>();
 
-            // a query which takes the names of courses
-            var coursesQ = from i in _context.Courses
-                           select i.Name;
-            //put the courses list into courses
-            courses.AddRange(coursesQ.Distinct());
+            //// a query which takes the names of courses
+            //var coursesQ = from i in _context.Courses
+            //               select i.Name;
+            ////put the courses list into courses
+            //courses.AddRange(coursesQ.Distinct());
 
-            //filling the viewData parameter which passes to the view
-            ViewData["courses"] = new SelectList(courses.Distinct());
+            ////filling the viewData parameter which passes to the view
+            //ViewData["courses"] = new SelectList(courses.Distinct());
 
 
             //------filling viewData of institutes-------
@@ -156,19 +156,30 @@ namespace PjBaySite.Controllers
             
             
             
-            //----filling viewData of fields-------
-            var fields = new List<string>();
+            ////----filling viewData of fields-------
+            //var fields = new List<string>();
 
-            // a query which takes the names of courses
-            var fieldsQ = from i in _context.Fields
-                              select i.fieldName;
-            //put the courses list into courses
-            fields.AddRange(fieldsQ.Distinct());
+            //// a query which takes the names of courses
+            //var fieldsQ = from i in _context.Fields
+            //                  select i.fieldName;
+            ////put the courses list into courses
+            //fields.AddRange(fieldsQ.Distinct());
 
-            //filling the viewData parameter which passes to the view
-            ViewData["fields"] = new SelectList(fields.Distinct());
+            ////filling the viewData parameter which passes to the view
+            //ViewData["fields"] = new SelectList(fields.Distinct());
 
             return View();
+        }
+
+        //Action result for ajax call
+        [HttpPost]
+        public ActionResult GetCourseByInstituteName(string Name)
+        {
+            var query = from c in _context.Courses
+                      where c.Instatute.Name.Equals(Name)
+                      select c.Name;
+            SelectList CourseList = new SelectList(query.Distinct(),"Name");
+            return Json(CourseList);
         }
         // GET: Instatutes
         public IActionResult SellProject()
