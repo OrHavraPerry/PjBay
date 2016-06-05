@@ -4,14 +4,39 @@
 }
 
 <script language="javascript" type="text/javascript">
-    function GetCourses(instituteName) {
+    function GetFields(instituteName) {
         var procemessage = "<option value='0'> Please wait...</option>";
         $("#select2").html(procemessage).show();
-        var url = "/Projects/GetCourseByInstituteName/";
+        var url = "/Projects/GetFieldsByInstituteName/";
 
         $.ajax({
             url: url,
-            data: { stateid: instituteName },
+            data: { Name: instituteName },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                var markup = "<option value='0'>Select Field</option>";
+                for (var x = 0; x < data.length; x++) {
+                    markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                }
+                $("#select2").html(markup).show();
+            },
+            error: function (reponse) {
+                alert("error : " + reponse);
+            }
+        });
+
+    }
+
+
+    function GetCourses(instituteName,fieldName) {
+        var procemessage = "<option value='0'> Please wait...</option>";
+        $("#select3").html(procemessage).show();
+        var url = "/Projects/GetCourseByInstituteAndFieldName/";
+        
+        $.ajax({
+            url: url,
+            data: { instituteName: instituteName, fieldName: fieldName },
             cache: false,
             type: "POST",
             success: function (data) {
@@ -19,7 +44,7 @@
                 for (var x = 0; x < data.length; x++) {
                     markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
                 }
-                $("#select2").html(markup).show();
+                $("#select3").html(markup).show();
             },
             error: function (reponse) {
                 alert("error : " + reponse);
@@ -37,14 +62,25 @@
     <div class="form-group">
         <label for="select" class="col-lg-2 control-label">Institutes:</label>
         <div class="col-lg-10">
-            @Html.DropDownList("institutes", null, new { @id = "select1", @class = "form-control", @onchange = "javascript:GetCourses(this.value);" })
+            @Html.DropDownList("institutes", null, new { @id = "select1", @class = "form-control",@onload= "javascript:GetFields(this.value);", @onchange = "javascript:GetFields(this.value);" })
+            <br>
+        </div>
+        <label for="select" class="col-lg-2 control-label">Fields</label>
+        <div class="col-lg-10">
+            <select class="form-control" id="select2" onchange="GetCourses(this,select1.Text)"></select>
             <br>
         </div>
         <label for="select" class="col-lg-2 control-label">Courses</label>
         <div class="col-lg-10">
-            <select class="form-control" id="select2"></select>
+            <select class="form-control" id="select3"></select>
             <br>
         </div>
+        <label for="select" class="col-lg-2 control-label">Projects</label>
+        <div class="col-lg-10">
+            <select class="form-control" id="select4"></select>
+            <br>
+        </div>
+        
 
         <div class="form-group">
             <div class="col-lg-10 col-lg-offset-2">

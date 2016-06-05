@@ -173,13 +173,33 @@ namespace PjBaySite.Controllers
 
         //Action result for ajax call
         [HttpPost]
-        public ActionResult GetCourseByInstituteName(string Name)
+        public ActionResult GetCourseByInstituteAndFieldName(string instituteName,string fieldName)
         {
-            var query = from c in _context.Courses
-                      where c.Instatute.Name.Equals(Name)
-                      select c.Name;
-            SelectList CourseList = new SelectList(query.Distinct(),"Name");
+            //List<String> list = new List<String>();
+            //list = _context.Courses.Where(c => c.Instatute.Name == Name).Select(c => c.Name ).Distinct().ToList();
+            var query = from f in _context.Fields
+                        join c in _context.Courses on f.ID equals c.Field.ID
+                        join i in _context.Institutes on c.InstatuteID equals i.ID
+                        where f.fieldName.Equals(fieldName) && i.Name.Equals(instituteName)
+                        select c.Name;
+
+            SelectList CourseList = new SelectList(query.Distinct());
             return Json(CourseList);
+        }
+
+        [HttpPost]
+        public ActionResult GetFieldsByInstituteName(string Name)
+        {
+            //List<String> list = new List<String>();
+            //list = _context.Courses.Where(c => c.Instatute.Name == Name).Select(c => c.Name ).Distinct().ToList();
+            var query = from f in _context.Fields
+                        join c in _context.Courses on f.ID equals c.Field.ID
+                        join i in _context.Institutes on c.InstatuteID equals i.ID
+                        where i.Name.Equals(Name)
+                        select f.fieldName;
+
+            SelectList FieldsList = new SelectList(query.Distinct());
+            return Json(FieldsList);
         }
         // GET: Instatutes
         public IActionResult SellProject()
