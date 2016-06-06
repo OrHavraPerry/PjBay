@@ -4,22 +4,83 @@
 }
 
 <script language="javascript" type="text/javascript">
-    function GetFields(instituteName) {
-        var procemessage = "<option value='0'> Please wait...</option>";
-        $("#select2").html(procemessage).show();
-        var url = "/Projects/GetFieldsByInstituteName/";
+    function GetFieldCourseProject(instituteName)
+    {
+        //what will be diplayed when waiting for answer
+        var processmessage = "<option value='0'> Please wait...</option>";
 
+        //before the answer from the server,the strings above will be shown
+        //# means id in html document
+        $("#selectField").html(processmessage).show();
+        $("#selectCourse").html(processmessage).show();
+        $("#selectProject").html(processmessage).show();
+
+        //the controller and action that we send the request to.
+        var url = "/Projects/GetFieldCourseProjectByInstitute/";
+
+        $.ajax
+        ({
+            url: url,//the url we send the request to 
+            data: { Name: instituteName },//the data we send to the url,into parameter Name in the action the name of the institute will be loaded
+            cache: false,
+            type: "POST",//sending by post
+            success: function (data)//the data that was returned from controller
+            {//when success
+                var markupField = "<option value='0'>Select Field</option>";//the first line of the dropdown list
+                for (var x = 0; x < data.fieldList.length; x++)
+                {//populate the list with the answer that came from server
+                    markupField += "<option value=" + data.fieldList[x].Value + ">" + data.fieldList[x].Text + "</option>";
+                }
+                $("#selectField").html(markupField).show();//display the data
+
+
+                var markupCourse = "<option value='0'>Select Course</option>";//the first line of the dropdown list
+                for (var x = 0; x < data.courseList.length; x++) {//populate the list with the answer that came from server
+                    markupCourse += "<option value=" + data.courseList[x].Value + ">" + data.courseList[x].Text + "</option>";
+                }
+                $("#selectCourse").html(markupCourse).show();//display the datavar markupCourse = "<option value='0'>Select Course</option>";//the first line of the dropdown list
+
+                var markupProject = "<option value='0'>Select Project</option>";//the first line of the dropdown list
+                for (var x = 0; x < data.projectList.length; x++) {//populate the list with the answer that came from server
+                    markupProject += "<option value=" + data.projectList[x].Value + ">" + data.projectList[x].Text + "</option>";
+                }
+                $("#selectProject").html(markupProject).show();//display the data
+
+
+            },
+            error: function (reponse)
+            {
+                alert("error : " + reponse);
+            }
+        });
+
+    }
+
+
+    function GetCourseProject() {
+        var processmessage = "<option value='0'> Please wait...</option>";
+        $("#selectCourse").html(processmessage).show();
+        $("#selectProject").html(processmessage).show();
+        var url = "/Projects/GetCourseAndProjectByInstituteAndField/";
+        
         $.ajax({
             url: url,
-            data: { Name: instituteName },
+            //sending the line that was selected by the user from two fields (select1-institutes,select2-fields)
+            data: { instituteName: $("#selectInstitute :selected").text(), fieldName: $("#selectField :selected").text() },
             cache: false,
             type: "POST",
             success: function (data) {
-                var markup = "<option value='0'>Select Field</option>";
-                for (var x = 0; x < data.length; x++) {
-                    markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                var markupCourse = "<option value='0'>Select Course</option>";
+                for (var x = 0; x < data.courseList.length; x++) {
+                    markupCourse += "<option value=" + data.courseList[x].Value + ">" + data.courseList[x].Text + "</option>";
                 }
-                $("#select2").html(markup).show();
+                $("#selectCourse").html(markupCourse).show();
+
+                var markupProject = "<option value='0'>Select Project</option>";
+                for (var x = 0; x < data.projectList.length; x++) {
+                    markupProject += "<option value=" + data.projectList[x].Value + ">" + data.projectList[x].Text + "</option>";
+                }
+                $("#selectProject").html(markupProject).show();
             },
             error: function (reponse) {
                 alert("error : " + reponse);
@@ -29,22 +90,25 @@
     }
 
 
-    function GetCourses(institute) {
-        var procemessage = "<option value='0'> Please wait...</option>";
-        $("#select3").html(procemessage).show();
-        var url = "/Projects/GetCourseByInstituteAndFieldName/";
-        
+
+    function GetProject() {
+        var processmessage = "<option value='0'> Please wait...</option>";
+        $("#selectProject").html(processmessage).show();
+        var url = "/Projects/GetProjectsByInstituteFieldCourse/";
+
         $.ajax({
             url: url,
-            data: { instituteName: $("#select1 :selected").text(), fieldName: $("#select2 :selected").text() },
+            //sending the line that was selected by the user from two fields (select1-institutes,select2-fields)
+            data: { instituteName: $("#selectInstitute :selected").text(), fieldName: $("#selectField :selected").text(), courseName: $("#selectCourse :selected").text() },
             cache: false,
             type: "POST",
             success: function (data) {
-                var markup = "<option value='0'>Select Course</option>";
+
+                var markupProject = "<option value='0'>Select Project</option>";
                 for (var x = 0; x < data.length; x++) {
-                    markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                    markupProject += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
                 }
-                $("#select3").html(markup).show();
+                $("#selectProject").html(markupProject).show();
             },
             error: function (reponse) {
                 alert("error : " + reponse);
@@ -62,29 +126,32 @@
     <div class="form-group">
         <label for="select" class="col-lg-2 control-label">Institutes:</label>
         <div class="col-lg-10">
-            @Html.DropDownList("institutes", null, new { @id = "select1", @class = "form-control",@onload= "javascript:GetFields(this.value);", @onchange = "javascript:GetFields(this.value);" })
+            @*first argument:the viewdata that populate the dropdown list,second argument:list that populate the dropdown
+                third argument:the firt line that is selected in the dropwon list,forth argument:the attributes that populate the select(dropdon).
+                *@
+            @Html.DropDownList("institutes", null, "Select Institute", new { @id = "selectInstitute", @class = "form-control", @onchange = "javascript:GetFieldCourseProject(this.value);" })
             <br>
         </div>
-        <label for="select" class="col-lg-2 control-label">Fields</label>
+        <label for="select" class="col-lg-2 control-label">Fields:</label>
         <div class="col-lg-10">
-            <select class="form-control" id="select2" onchange="GetCourses(this)"></select>
+            @Html.DropDownList("fields", null, "Select Field", new { @id = "selectField", @class = "form-control", @onchange = "javascript:GetCourseProject();" })
             <br>
         </div>
-        <label for="select" class="col-lg-2 control-label">Courses</label>
+        <label for="select" class="col-lg-2 control-label">Courses:</label>
         <div class="col-lg-10">
-            <select class="form-control" id="select3"></select>
+            @Html.DropDownList("courses", null, "Select Course", new { @id = "selectCourse", @class = "form-control", @onchange = "javascript:GetProject();" })
             <br>
         </div>
-        <label for="select" class="col-lg-2 control-label">Projects</label>
+        <label for="select" class="col-lg-2 control-label">Projects:</label>
         <div class="col-lg-10">
-            <select class="form-control" id="select4"></select>
+            @Html.DropDownList("projects", null, "Select Project", new { @id = "selectProject", @class = "form-control" })
             <br>
         </div>
         
 
         <div class="form-group">
             <div class="col-lg-10 col-lg-offset-2">
-                <button type="submit" class="btn btn-primary">Find</button>
+                <button type="submit" class="btn btn-primary">Search</button>
             </div>
         </div>
 
