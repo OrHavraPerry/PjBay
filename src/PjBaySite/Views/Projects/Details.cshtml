@@ -27,7 +27,7 @@
             @Html.DisplayNameFor(model => model.Price)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Price)
+            @Html.DisplayFor(model => model.Price)$
         </dd>
 
         <dt>
@@ -56,7 +56,7 @@
             @Html.DisplayNameFor(model => model.Video)
         </dt>
         <dd>
-            <iframe width="560" height="315" src="@Html.DisplayFor(model => model.Video)" frameborder="0" allowfullscreen></iframe>
+            <iframe width="400" height="155" src="@Html.DisplayFor(model => model.Video)" frameborder="0" allowfullscreen></iframe>
             @*<video controls="controls" width="280" height="200">
                 <source src="@Html.DisplayFor(model => model.Video)" type="video/mp4" />
                 Your browser does not support the video tag.
