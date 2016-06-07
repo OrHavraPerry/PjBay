@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace PjBaySite.Models
 {
@@ -9,7 +12,9 @@ namespace PjBaySite.Models
     {
         public static void Initialize(IServiceProvider serviceProvider)
         {
+            
             ApplicationDbContext context = (ApplicationDbContext)serviceProvider.GetService(typeof(ApplicationDbContext));
+
             if (!context.Institutes.Any())
             {
                 var Fields = new List<Field>()
@@ -186,10 +191,20 @@ namespace PjBaySite.Models
                     }
                 };
 
+                
+
                 context.Fields.AddRange(Fields);
                 context.Institutes.AddRange(ins);
 
                 context.SaveChanges();
+            }
+
+            UserManager<ApplicationUser> userManager = (UserManager<ApplicationUser>)serviceProvider.GetService(typeof(UserManager<ApplicationUser>));
+            RoleManager<IdentityRole> roleManager = (RoleManager<IdentityRole>)serviceProvider.GetService(typeof(RoleManager<IdentityRole>));
+
+            if (!roleManager.Roles.Any(t=>t.Name=="Admin"))
+            {
+                var res = roleManager.CreateAsync(new IdentityRole("Admin"));
             }
         }
     }
