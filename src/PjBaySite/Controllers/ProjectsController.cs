@@ -267,18 +267,17 @@ namespace PjBaySite.Controllers
         [HttpPost]
         public IActionResult SearchProject(string institutes, string fields, string courses, string projects)
         {
-
+            
             var joinQuery = from i in _context.Institutes
                             join c in _context.Courses on i.ID equals c.InstatuteID
                             join f in _context.Fields on c.FieldID equals f.ID
                             join p in _context.Projects on c.ID equals p.CourseID
-                            where i.Name.Equals(institutes)
-                                  && c.Name.Equals(courses) && f.fieldName.Equals(fields)
+                            where i.Name.Equals(institutes) && f.fieldName.Equals(fields) && c.Name.Equals(courses) 
                                   && p.Name.Contains(projects)
                             select p;
             
 
-            return View(joinQuery);
+            return View(joinQuery.Distinct());
         }
 
         // GET: Projects/Details/5
