@@ -12,11 +12,10 @@
         //before the answer from the server,the strings above will be shown
         //# means id in html document
         $("#selectField").html(processmessage).show();
-        $("#selectCourse").html(processmessage).show();
-        $("#selectProject").html(processmessage).show();
+        
 
         //the controller and action that we send the request to.
-        var url = "/Projects/GetFieldCourseProjectByInstitute/";
+        var url = "/Projects/GetFieldByInstitute/";
 
         $.ajax
         ({
@@ -27,24 +26,15 @@
             success: function (data)//the data that was returned from controller
             {//when success
                 var markupField = "<option value='0'>Select Field</option>";//the first line of the dropdown list
-                for (var x = 0; x < data.fieldList.length; x++)
+                for (var x = 0; x < data.length; x++)
                 {//populate the list with the answer that came from server
-                    markupField += "<option value=\"" + data.fieldList[x].Text + "\">" + data.fieldList[x].Text + "</option>";
+                    markupField += "<option value=\"" + data[x].Text + "\">" + data[x].Text + "</option>";
                 }
                 $("#selectField").html(markupField).show();//display the data
+                $("#selectCourse").html("<option value='0'></option>").show();
+                $("#selectProject").html("<option value='0'></option>").show();
+                
 
-
-                var markupCourse = "<option value='0'>Select Course</option>";//the first line of the dropdown list
-                for (var x = 0; x < data.courseList.length; x++) {//populate the list with the answer that came from server
-                    markupCourse += "<option value=\"" + data.courseList[x].Text + "\">" + data.courseList[x].Text + "</option>";
-                }
-                $("#selectCourse").html(markupCourse).show();//display the datavar markupCourse = "<option value='0'>Select Course</option>";//the first line of the dropdown list
-
-                var markupProject = "<option value='0'>Select Project</option>";//the first line of the dropdown list
-                for (var x = 0; x < data.projectList.length; x++) {//populate the list with the answer that came from server
-                    markupProject += "<option value=\"" + data.projectList[x].Text + "\">" + data.projectList[x].Text + "</option>";
-                }
-                $("#selectProject").html(markupProject).show();//display the data
 
                 $("#selectInstitute").prop("disabled", false);
                 $("#selectField").prop("disabled", false);
@@ -67,8 +57,8 @@
     function GetCourseProject() {
         var processmessage = "<option value='0'> Please wait...</option>";
         $("#selectCourse").html(processmessage).show();
-        $("#selectProject").html(processmessage).show();
-        var url = "/Projects/GetCourseAndProjectByInstituteAndField/";
+        
+        var url = "/Projects/GetCourseByInstituteAndField/";
         
         $.ajax({
             url: url,
@@ -78,18 +68,15 @@
             type: "POST",
             success: function (data) {
                 var markupCourse = "<option value='0'>Select Course</option>";
-                for (var x = 0; x < data.courseList.length; x++) {
-                    markupCourse += "<option value=\"" + data.courseList[x].Text + "\">" + data.courseList[x].Text + "</option>";
+                for (var x = 0; x < data.length; x++) {
+                    markupCourse += "<option value=\"" + data[x].Text + "\">" + data[x].Text + "</option>";
                 }
                 $("#selectCourse").html(markupCourse).show();
+                $("#selectProject").html("<option value='0'></option>").show();
 
-                var markupProject = "<option value='0'>Select Project</option>";
-                for (var x = 0; x < data.projectList.length; x++) {
-                    markupProject += "<option value=\"" + data.projectList[x].Text + "\">" + data.projectList[x].Text + "</option>";
-                }
-                $("#selectProject").html(markupProject).show();
+                
 
-                //enable the courses dropdown list
+                //enable and disable the suitable dropdown lists
                 $("#selectInstitute").prop("disabled", false);
                 $("#selectField").prop("disabled", false);
                 $("#selectCourse").prop("disabled", false);
@@ -126,6 +113,7 @@
                 $("#selectProject").html(markupProject).show();
 
 
+
                 $("#selectInstitute").prop("disabled", false);
                 $("#selectField").prop("disabled", false);
                 $("#selectCourse").prop("disabled", false);
@@ -157,17 +145,17 @@
         </div>
         <label for="select" class="col-lg-2 control-label">Fields:</label>
         <div class="col-lg-10">
-            @Html.DropDownList("fields", null, "Select Field", new { @id = "selectField", @class = "form-control", @onchange = "javascript:GetCourseProject();" , @disabled = "disabled" })
+            <select id="selectField" name="fields" class="form-control" onchange="GetCourseProject()" disabled="disabled"></select>
             <br>
         </div>
         <label for="select" class="col-lg-2 control-label">Courses:</label>
         <div class="col-lg-10">
-            @Html.DropDownList("courses", null, "Select Course", new { @id = "selectCourse", @class = "form-control", @onchange = "javascript:GetProject();", @disabled = "disabled" })
+            <select id="selectCourse" name="courses" class="form-control" onchange="GetProject()" disabled="disabled"></select>
             <br>
         </div>
         <label for="select" class="col-lg-2 control-label">Projects:</label>
         <div class="col-lg-10">
-            @Html.DropDownList("projects", null, "Select Project", new { @id = "selectProject", @class = "form-control", @disabled = "disabled", @onclick= "javascript:enableButton()" })
+            <select id="selectProject" name="projects" class="form-control" onclick="enableButton()" disabled="disabled"></select>
             <br>
         </div>
 

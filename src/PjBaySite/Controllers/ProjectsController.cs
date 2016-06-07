@@ -133,7 +133,9 @@ namespace PjBaySite.Controllers
             var institutes = new List<string>();
 
             // a query which takes the names of courses
-            var institutesQ = from i in _context.Institutes
+            var institutesQ = from i in _context.Institutes join c in _context.Courses on i.ID equals c.InstatuteID
+                              join p in _context.Projects on c.ID equals p.CourseID
+                              where p.Purchased==false
                               select i.Name;
             //put the courses list into courses
             institutes.AddRange(institutesQ.Distinct());
@@ -142,43 +144,43 @@ namespace PjBaySite.Controllers
             ViewData["institutes"] = new SelectList(institutes.Distinct());
 
 
-            //----filling viewData of fields-------
-            var fields = new List<string>();
+            ////----filling viewData of fields-------
+            //var fields = new List<string>();
 
-            // a query which takes the names of courses
-            var fieldsQ = from i in _context.Fields
-                          select i.fieldName;
-            //put the courses list into courses
-            fields.AddRange(fieldsQ.Distinct());
+            //// a query which takes the names of courses
+            //var fieldsQ = from i in _context.Fields
+            //              select i.fieldName;
+            ////put the courses list into courses
+            //fields.AddRange(fieldsQ.Distinct());
 
-            //filling the viewData parameter which passes to the view
-            ViewData["fields"] = new SelectList(fields.Distinct());
-
-
-            //-----filling viewData of courses------
-            var courses = new List<string>();
-
-            // a query which takes the names of courses
-            var coursesQ = from i in _context.Courses
-                           select i.Name;
-            //put the courses list into courses
-            courses.AddRange(coursesQ.Distinct());
-
-            //filling the viewData parameter which passes to the view
-            ViewData["courses"] = new SelectList(courses.Distinct());
+            ////filling the viewData parameter which passes to the view
+            //ViewData["fields"] = new SelectList(fields.Distinct());
 
 
-            //-----filling viewData of projects------
-            var projects = new List<string>();
+            ////-----filling viewData of courses------
+            //var courses = new List<string>();
 
-            // a query which takes the names of projects
-            var projectsQ = from i in _context.Projects
-                           select i.Name;
-            //put the projects list into projects
-            projects.AddRange(projectsQ.Distinct());
+            //// a query which takes the names of courses
+            //var coursesQ = from i in _context.Courses
+            //               select i.Name;
+            ////put the courses list into courses
+            //courses.AddRange(coursesQ.Distinct());
 
-            //filling the viewData parameter which passes to the view
-            ViewData["projects"] = new SelectList(projects);
+            ////filling the viewData parameter which passes to the view
+            //ViewData["courses"] = new SelectList(courses.Distinct());
+
+
+            ////-----filling viewData of projects------
+            //var projects = new List<string>();
+
+            //// a query which takes the names of projects
+            //var projectsQ = from i in _context.Projects
+            //               select i.Name;
+            ////put the projects list into projects
+            //projects.AddRange(projectsQ.Distinct());
+
+            ////filling the viewData parameter which passes to the view
+            //ViewData["projects"] = new SelectList(projects);
 
             return View();
         }
@@ -186,59 +188,35 @@ namespace PjBaySite.Controllers
         
 
         [HttpPost]
-        public ActionResult GetFieldCourseProjectByInstitute(string Name)
+        public ActionResult GetFieldByInstitute(string Name)
         {
             var queryField = from f in _context.Fields
                         join c in _context.Courses on f.ID equals c.Field.ID
                         join i in _context.Institutes on c.InstatuteID equals i.ID
-                        where i.Name.Equals(Name)
+                        join p in _context.Projects on c.ID equals p.CourseID
+                        where i.Name.Equals(Name) && p.Purchased==false
                         select f.fieldName;
 
             SelectList ListFields = new SelectList(queryField.Distinct());
 
-
-            var queryCourse = from i in _context.Institutes join c in _context.Courses on i.ID equals c.InstatuteID
-                              where i.Name.Equals(Name)
-                              select c.Name;
-
-            SelectList ListCourses = new SelectList(queryCourse.Distinct());
-
-            var queryProject = from i in _context.Institutes join
-                                c in _context.Courses on i.ID equals c.InstatuteID
-                               join p in _context.Projects on c.ID equals p.CourseID
-                               where i.Name.Equals(Name)
-                               select p.Name;
-            SelectList ListProjects = new SelectList(queryProject.Distinct());
-
-
-            var result = new { fieldList = ListFields, courseList = ListCourses, projectList = ListProjects };
-            return Json(result);
+            return Json(ListFields);
         }
 
         //Action result for ajax call
         [HttpPost]
-        public ActionResult GetCourseAndProjectByInstituteAndField(string instituteName, string fieldName)
+        public ActionResult GetCourseByInstituteAndField(string instituteName, string fieldName)
         {
             //joining courses,fields and institutes in order to get list of courses names which their institute name is instituteName nad field name is fieldName
             var queryCourse = from f in _context.Fields
                         join c in _context.Courses on f.ID equals c.Field.ID
                         join i in _context.Institutes on c.InstatuteID equals i.ID
-                        where f.fieldName.Equals(fieldName) && i.Name.Equals(instituteName)
+                        join p in _context.Projects on c.ID equals p.CourseID
+                        where f.fieldName.Equals(fieldName) && i.Name.Equals(instituteName) && p.Purchased==false
                         select c.Name;
 
             SelectList courseList = new SelectList(queryCourse.Distinct());
 
-            var queryProject = from i in _context.Institutes
-                               join c in _context.Courses on i.ID equals c.InstatuteID
-                               join f in _context.Fields on c.FieldID equals f.ID
-                               join p in _context.Projects on c.ID equals p.CourseID
-                               where i.Name.Equals(instituteName) && f.fieldName.Equals(fieldName)
-                               select p.Name;
-
-            SelectList projectList = new SelectList(queryProject.Distinct());
-
-            var result = new { courseList = courseList, projectList = projectList };
-            return Json(result);
+            return Json(courseList);
         }
 
         //Action result for ajax call
@@ -250,7 +228,7 @@ namespace PjBaySite.Controllers
                                join c in _context.Courses on i.ID equals c.InstatuteID
                                join f in _context.Fields on c.FieldID equals f.ID
                                join p in _context.Projects on c.ID equals p.CourseID
-                               where i.Name.Equals(instituteName) && f.fieldName.Equals(fieldName) && c.Name.Equals(courseName)
+                               where i.Name.Equals(instituteName) && f.fieldName.Equals(fieldName) && c.Name.Equals(courseName) && p.Purchased == false
                                select p.Name;
 
             SelectList projectList = new SelectList(queryProject.Distinct());
@@ -273,7 +251,7 @@ namespace PjBaySite.Controllers
                             join f in _context.Fields on c.FieldID equals f.ID
                             join p in _context.Projects on c.ID equals p.CourseID
                             where i.Name.Equals(institutes) && f.fieldName.Equals(fields) && c.Name.Equals(courses) 
-                                  && p.Name.Contains(projects)
+                                  && p.Name.Contains(projects) && p.Purchased == false
                             select p;
             
 
@@ -288,13 +266,31 @@ namespace PjBaySite.Controllers
                 return HttpNotFound();
             }
 
-            Project project = _context.Projects.Single(m => m.ID == id);
-            if (project == null)
-            {
-                return HttpNotFound();
-            }
+           
+            return View(id);
+        }
 
-            return View(project);
+        // GET: Projects/Checkout
+        [HttpPost]
+        public IActionResult Paid(int? id)
+        {
+            
+            var query =from p in _context.Projects where p.ID == id select p;
+
+            query.First().Purchased = true;
+
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                
+            }
+            
+
+            return View();
         }
     }
 }
