@@ -29,20 +29,20 @@
                 var markupField = "<option value='0'>Select Field</option>";//the first line of the dropdown list
                 for (var x = 0; x < data.fieldList.length; x++)
                 {//populate the list with the answer that came from server
-                    markupField += "<option value=" + data.fieldList[x].Value + ">" + data.fieldList[x].Text + "</option>";
+                    markupField += "<option value=" + data.fieldList[x].Text + ">" + data.fieldList[x].Text + "</option>";
                 }
                 $("#selectField").html(markupField).show();//display the data
 
 
                 var markupCourse = "<option value='0'>Select Course</option>";//the first line of the dropdown list
                 for (var x = 0; x < data.courseList.length; x++) {//populate the list with the answer that came from server
-                    markupCourse += "<option value=" + data.courseList[x].Value + ">" + data.courseList[x].Text + "</option>";
+                    markupCourse += "<option value=" + data.courseList[x].Text + ">" + data.courseList[x].Text + "</option>";
                 }
                 $("#selectCourse").html(markupCourse).show();//display the datavar markupCourse = "<option value='0'>Select Course</option>";//the first line of the dropdown list
 
                 var markupProject = "<option value='0'>Select Project</option>";//the first line of the dropdown list
                 for (var x = 0; x < data.projectList.length; x++) {//populate the list with the answer that came from server
-                    markupProject += "<option value=" + data.projectList[x].Value + ">" + data.projectList[x].Text + "</option>";
+                    markupProject += "<option value=" + data.projectList[x].Text + ">" + data.projectList[x].Text + "</option>";
                 }
                 $("#selectProject").html(markupProject).show();//display the data
 
@@ -77,13 +77,13 @@
             success: function (data) {
                 var markupCourse = "<option value='0'>Select Course</option>";
                 for (var x = 0; x < data.courseList.length; x++) {
-                    markupCourse += "<option value=" + data.courseList[x].Value + ">" + data.courseList[x].Text + "</option>";
+                    markupCourse += "<option value=" + data.courseList[x].Text + ">" + data.courseList[x].Text + "</option>";
                 }
                 $("#selectCourse").html(markupCourse).show();
 
                 var markupProject = "<option value='0'>Select Project</option>";
                 for (var x = 0; x < data.projectList.length; x++) {
-                    markupProject += "<option value=" + data.projectList[x].Value + ">" + data.projectList[x].Text + "</option>";
+                    markupProject += "<option value=" + data.projectList[x].Text + ">" + data.projectList[x].Text + "</option>";
                 }
                 $("#selectProject").html(markupProject).show();
 
@@ -117,7 +117,7 @@
 
                 var markupProject = "<option value='0'>Select Project</option>";
                 for (var x = 0; x < data.length; x++) {
-                    markupProject += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                    markupProject += "<option value=" + data[x].Text + ">" + data[x].Text + "</option>";
                 }
                 $("#selectProject").html(markupProject).show();
 
