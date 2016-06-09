@@ -100,13 +100,13 @@
                 @*first argument:the viewdata that populate the dropdown list,second argument:list that populate the dropdown
                     third argument:the firt line that is selected in the dropwon list,forth argument:the attributes that populate the select(dropdon).
                 *@
-                @Html.DropDownList("institutes", null, "Select Institute", new { @id = "selectInstitute", @class = "form-control", @onchange = "javascript:GetFieldByProject(this.value);" })
+                @Html.DropDownList("institutes", null, "Select Institute", new { @id = "selectInstitute",  @class = "form-control", @onchange = "javascript:GetFieldByProject(this.value);"})
             </div>
         </div>
         <div class="form-group">
             <label for="select" class="col-md-2 control-label">Fields</label>
             <div class="col-lg-10">
-                <select id="selectField" name="fields" class="form-control" onchange="GetCourse()" disabled="disabled"></select>
+                <select id="selectField" name="fields" class="form-control" onchange="GetCourse()" disabled="disabled" ></select>
             </div>
         </div>
         <div class="form-group">
@@ -161,7 +161,28 @@
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" onclick="stopAction(); return false;" value="Create" class="btn btn-default" />
+                <script>
+                    function stopAction(event) {
+                        var select1 = document.getElementById("selectInstitute");
+                        var selectedValue1 = select1.options[select1.selectedIndex].value;
+
+                        var select2 = document.getElementById("selectField");
+                        var selectedValue2 = select2.options[select2.selectedIndex].value;
+
+                        var select3 = document.getElementById("selectCourse");
+                        var selectedValue3 = select3.options[select3.selectedIndex].value;
+
+                        
+
+
+                        if (!((selectedValue1 != '0') && (selectedValue2 != '0') && (selectedValue3 != '0') && (selectedValue4 != '0')))
+                        {
+                            alert("Please make a selection.");
+                        }
+
+                    }
+                </script>
             </div>
         </div>
     </div>

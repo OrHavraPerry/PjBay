@@ -41,7 +41,7 @@
                 $("#selectCourse").prop("disabled", true);
                 $("#selectProject").prop("disabled", true);
 
-                
+                $("#submitButton").prop("disabled", true);
 
 
             },
@@ -82,7 +82,7 @@
                 $("#selectCourse").prop("disabled", false);
                 $("#selectProject").prop("disabled", true);
 
-               
+                $("#submitButton").prop("disabled", true);
             },
             error: function (reponse) {
                 alert("error : " + reponse);
@@ -118,6 +118,8 @@
                 $("#selectField").prop("disabled", false);
                 $("#selectCourse").prop("disabled", false);
                 $("#selectProject").prop("disabled", false);
+
+                $("#submitButton").prop("disabled", true);
 
                 
             },
@@ -161,7 +163,7 @@
 
         <div class="form-group">
             <div class="col-lg-10 col-lg-offset-2">
-                <button id="submitButton" type="submit" class="btn btn-primary" disabled="disabled">Search</button>
+                <button id="submitButton" type="submit" class="btn btn-primary" onclick="disableButton()" disabled="disabled">Search</button>
                 <script>
                     function enableButton()
                     {
@@ -187,6 +189,28 @@
                             document.getElementById("submitButton").disabled = true;
 
                         }
+                    }
+
+                    function disableButton() {
+                        var select1 = document.getElementById("selectInstitute");
+                        var selectedValue1 = select1.options[select1.selectedIndex].value;
+
+                        var select2 = document.getElementById("selectField");
+                        var selectedValue2 = select2.options[select2.selectedIndex].value;
+
+                        var select3 = document.getElementById("selectCourse");
+                        var selectedValue3 = select3.options[select3.selectedIndex].value;
+
+                        var select4 = document.getElementById("selectProject");
+                        var selectedValue4 = select4.options[select4.selectedIndex].value;
+
+
+                        if (!((selectedValue1 != '0') && (selectedValue2 != '0') && (selectedValue3 != '0') && (selectedValue4 != '0')))
+                        {
+                            document.getElementById("submitButton").disabled = true;
+                            alert("Please make a selection.");
+                        }
+                        
                     }
                 </script>
                 
