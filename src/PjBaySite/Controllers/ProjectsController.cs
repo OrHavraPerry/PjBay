@@ -294,9 +294,9 @@ namespace PjBaySite.Controllers
                               join c in _context.Courses on f.ID equals c.Field.ID
                               join i in _context.Institutes on c.InstatuteID equals i.ID
                               where f.fieldName.Equals(fieldName) && i.Name.Equals(instituteName)
-                              select c;
+                              select c.Name;
 
-            SelectList courseList = new SelectList(queryCourse.Distinct(),"ID","Name");
+            SelectList courseList = new SelectList(queryCourse.Distinct());
 
             return Json(courseList);
         }
@@ -326,12 +326,23 @@ namespace PjBaySite.Controllers
         // POST: Projects/SellProject
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult SellProject(Project project)
+        public IActionResult SellProject(string institutes, string fields, string courses,Project project)
         {
-            project.Purchased = false;
-            project.SubmitDate = DateTime.Now;
+            
             if (ModelState.IsValid)
             {
+
+                var query = from i in _context.Institutes
+                            join c in _context.Courses on i.ID equals c.InstatuteID
+                            join f in _context.Fields on c.FieldID equals f.ID
+                            where i.Name.Equals(institutes) && c.Name.Equals(courses) && f.fieldName.Equals(fields)
+                            select c;
+
+                project.CourseID = query.First().ID;
+                project.Course = query.First();
+
+                project.Purchased = false;
+                project.SubmitDate = DateTime.Now;
                 _context.Projects.Add(project);
                 _context.SaveChanges();
                 return RedirectToAction("SellingConfiramtion");
@@ -339,16 +350,16 @@ namespace PjBaySite.Controllers
             //ViewData["CourseID"] = new SelectList(_context.Projects, "ID", "Course", project.ID);
 
             //------filling viewData of institutes-------
-            var institutes = new List<string>();
+            var instituteList = new List<string>();
 
             // a query which takes the names of courses
             var institutesQ = from i in _context.Institutes
                               select i.Name;
             //put the courses list into courses
-            institutes.AddRange(institutesQ.Distinct());
+            instituteList.AddRange(institutesQ.Distinct());
 
             //filling the viewData parameter which passes to the view
-            ViewData["institutes"] = new SelectList(institutes.Distinct());
+            ViewData["institutes"] = new SelectList(instituteList.Distinct());
             return View(project);
         }
 

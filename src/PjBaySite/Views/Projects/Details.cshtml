@@ -15,48 +15,56 @@
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Name)
+            
         </dd>
-
+        <br />
         <dt>
             @Html.DisplayNameFor(model => model.Grade)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Grade)
+
         </dd>
+        <br />
         <dt>
             @Html.DisplayNameFor(model => model.Price)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Price)$
+            
         </dd>
-
+        <br />
         <dt>
             @Html.DisplayNameFor(model => model.Description)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Description)
+            <br />
         </dd>
-
+        <br />
         <dt>
             @Html.DisplayNameFor(model => model.SubmitDate)
         </dt>
         <dd>
             <time datetime="2009-06-29T23:31+01:00">@Html.DisplayFor(model => model.SubmitDate)</time>
+            <br />
         </dd>
-        
+        <br />
         
         <dt>
             @Html.DisplayNameFor(model => model.Picture)
         </dt>
         <dd>
-            <img width="100" height="100" src="@Html.DisplayFor(model => model.Picture)" alt="Picture" />
+            <img width="200" height="200" src="@Html.DisplayFor(model => model.Picture)" alt="Picture" />
+            <br />
         </dd>
-
+        <br />
+        <br />
         <dt>
             @Html.DisplayNameFor(model => model.Video)
         </dt>
         <dd>
-            <iframe width="400" height="155" src="@Html.DisplayFor(model => model.Video)" frameborder="0" allowfullscreen></iframe>
+            <iframe width="500" height="315" src="@Html.DisplayFor(model => model.Video)" frameborder="0" allowfullscreen></iframe>
             @*<video controls="controls" width="280" height="200">
                 <source src="@Html.DisplayFor(model => model.Video)" type="video/mp4" />
                 Your browser does not support the video tag.
