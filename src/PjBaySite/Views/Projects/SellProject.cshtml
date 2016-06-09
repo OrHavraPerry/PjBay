@@ -1,20 +1,120 @@
-﻿@model PjBaySite.Models.Institute
+@model PjBaySite.Models.Project
+
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "SellProject";
 }
 
-<h2>Create</h2>
 
-<form asp-action="Create">
+
+<script language="javascript" type="text/javascript">
+    function GetFieldByProject(instituteName) {
+        //what will be diplayed when waiting for answer
+        var processmessage = "<option value='0'> Please wait...</option>";
+
+        //before the answer from the server,the strings above will be shown
+        //# means id in html document
+        $("#selectField").html(processmessage).show();
+
+
+        //the controller and action that we send the request to.
+        var url = "/Projects/GetFieldByInstituteForSellView/";
+
+        $.ajax
+        ({
+            url: url,//the url we send the request to
+            data: { Name: instituteName },//the data we send to the url,into parameter Name in the action the name of the institute will be loaded
+            cache: false,
+            type: "POST",//sending by post
+            success: function (data)//the data that was returned from controller
+            {//when success
+                var markupField = "<option value='0'>Select Field</option>";//the first line of the dropdown list
+                for (var x = 0; x < data.length; x++) {//populate the list with the answer that came from server
+                    markupField += "<option value=\"" + data[x].Text + "\">" + data[x].Text + "</option>";
+                }
+                $("#selectField").html(markupField).show();//display the data
+                $("#selectCourse").html("<option value='0'></option>").show();
+
+
+                $("#selectInstitute").prop("disabled", false);
+                $("#selectField").prop("disabled", false);
+                $("#selectCourse").prop("disabled", true);
+
+            },
+            error: function (reponse) {
+                alert("error : " + reponse);
+            }
+        });
+
+    }
+
+
+    function GetCourse() {
+        var processmessage = "<option value='0'> Please wait...</option>";
+        $("#selectCourse").html(processmessage).show();
+
+        var url = "/Projects/GetCourseByInstituteAndFieldForSellView/";
+
+        $.ajax({
+            url: url,
+            //sending the line that was selected by the user from two fields (select1-institutes,select2-fields)
+            data: { instituteName: $("#selectInstitute :selected").text(), fieldName: $("#selectField :selected").text() },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                var markupCourse = "<option value='0'>Select Course</option>";
+                for (var x = 0; x < data.length; x++) {
+                    markupCourse += "<option value=" + data[x].value + ">" + data[x].Text + "</option>";
+                }
+                $("#selectCourse").html(markupCourse).show();
+
+                //enable and disable the suitable dropdown lists
+                $("#selectInstitute").prop("disabled", false);
+                $("#selectField").prop("disabled", false);
+                $("#selectCourse").prop("disabled", false);
+
+            },
+            error: function (reponse) {
+                alert("error : " + reponse);
+            }
+        });
+
+    }
+
+</script>
+
+
+
+<h2>Fill the details of the project you want to sell:</h2>
+
+<form asp-controller="Projects" asp-action="SellProject">
     <div class="form-horizontal">
-        <h4>Institute</h4>
+
         <hr />
+
+        @*diplays the validation problems in the top of the page*@
         <div asp-validation-summary="ValidationSummary.ModelOnly" class="text-danger"></div>
+
         <div class="form-group">
-            <label asp-for="Address" class="col-md-2 control-label"></label>
+            <label for="select" class="col-md-2 control-label">Institutes</label>
+            <div class="col-lg-10">
+                @*first argument:the viewdata that populate the dropdown list,second argument:list that populate the dropdown
+                third argument:the firt line that is selected in the dropwon list,forth argument:the attributes that populate the select(dropdon).
+                *@
+                @Html.DropDownList("institutes", null, "Select Institute", new { @id = "selectInstitute", @class = "form-control", @onchange = "javascript:GetFieldByProject(this.value);" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="select" class="col-md-2 control-label">Fields</label>
+            <div class="col-lg-10">
+                <select id="selectField" name="fields" class="form-control" onchange="GetCourse()" disabled="disabled"></select>
+            </div>
+        </div>
+
+        <input type="hidden" asp-for="ID" />
+        <div class="form-group">
+            <label asp-for="CourseID" class="col-md-2 control-label">Courses</label>
             <div class="col-md-10">
-                <input asp-for="Address" class="form-control" />
-                <span asp-validation-for="Address" class="text-danger" />
+                <select asp-for="CourseID" id="selectCourse" disabled="disabled" class ="form-control"></select>
             </div>
         </div>
         <div class="form-group">
@@ -22,6 +122,42 @@
             <div class="col-md-10">
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Grade" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Grade" class="form-control" />
+                <span asp-validation-for="Grade" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Price" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Description" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Picture" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Picture" class="form-control" />
+                <span asp-validation-for="Picture" class="text-danger" />
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label asp-for="Video" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Video" class="form-control" />
+                <span asp-validation-for="Video" class="text-danger" />
             </div>
         </div>
         <div class="form-group">

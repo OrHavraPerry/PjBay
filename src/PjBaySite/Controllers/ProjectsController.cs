@@ -41,27 +41,7 @@ namespace PjBaySite.Controllers
             return View(project);
         }
 
-        // GET: Projects/Create
-        public IActionResult Create()
-        {
-            ViewData["CourseID"] = new SelectList(_context.Courses, "ID", "Course");
-            return View();
-        }
-
-        // POST: Projects/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create(Project project)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Projects.Add(project);
-                _context.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewData["CourseID"] = new SelectList(_context.Courses, "ID", "Course", project.CourseID);
-            return View(project);
-        }
+        
 
         // GET: Projects/Edit/5
         public IActionResult Edit(int? id)
@@ -236,11 +216,7 @@ namespace PjBaySite.Controllers
             return Json(projectList);
         }
 
-        // GET: Instatutes
-        public IActionResult SellProject()
-        {
-            return View();
-        }
+       
 
         [HttpPost]
         public IActionResult SearchProject(string institutes, string fields, string courses, string projects)
@@ -290,6 +266,95 @@ namespace PjBaySite.Controllers
             }
             
 
+            return View();
+        }
+
+
+        //sellProject view
+        [HttpPost]
+        public ActionResult GetFieldByInstituteForSellView(string Name)
+        {
+            var queryField = from f in _context.Fields
+                             join c in _context.Courses on f.ID equals c.Field.ID
+                             join i in _context.Institutes on c.InstatuteID equals i.ID
+                             where i.Name.Equals(Name)
+                             select f.fieldName;
+
+            SelectList ListFields = new SelectList(queryField.Distinct());
+
+            return Json(ListFields);
+        }
+
+        //Action result for ajax call
+        [HttpPost]
+        public ActionResult GetCourseByInstituteAndFieldForSellView(string instituteName, string fieldName)
+        {
+            //joining courses,fields and institutes in order to get list of courses names which their institute name is instituteName nad field name is fieldName
+            var queryCourse = from f in _context.Fields
+                              join c in _context.Courses on f.ID equals c.Field.ID
+                              join i in _context.Institutes on c.InstatuteID equals i.ID
+                              where f.fieldName.Equals(fieldName) && i.Name.Equals(instituteName)
+                              select c;
+
+            SelectList courseList = new SelectList(queryCourse.Distinct(),"ID","Name");
+
+            return Json(courseList);
+        }
+
+
+        // GET: Projects/SellProject
+        public IActionResult SellProject()
+        {
+            //ViewData["CourseId"] = new SelectList(_context.Courses, "ID", "Course");
+
+            //------filling viewData of institutes-------
+            var institutes = new List<string>();
+
+            // a query which takes the names of courses
+            var institutesQ = from i in _context.Institutes
+                              select i.Name;
+            //put the courses list into courses
+            institutes.AddRange(institutesQ.Distinct());
+
+            //filling the viewData parameter which passes to the view
+            ViewData["institutes"] = new SelectList(institutes.Distinct());
+
+
+            return View();
+        }
+
+        // POST: Projects/SellProject
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SellProject(Project project)
+        {
+            project.Purchased = false;
+            project.SubmitDate = DateTime.Now;
+            if (ModelState.IsValid)
+            {
+                _context.Projects.Add(project);
+                _context.SaveChanges();
+                return RedirectToAction("SellingConfiramtion");
+            }
+            //ViewData["CourseID"] = new SelectList(_context.Projects, "ID", "Course", project.ID);
+
+            //------filling viewData of institutes-------
+            var institutes = new List<string>();
+
+            // a query which takes the names of courses
+            var institutesQ = from i in _context.Institutes
+                              select i.Name;
+            //put the courses list into courses
+            institutes.AddRange(institutesQ.Distinct());
+
+            //filling the viewData parameter which passes to the view
+            ViewData["institutes"] = new SelectList(institutes.Distinct());
+            return View(project);
+        }
+
+        // GET: Projects
+        public IActionResult SellingConfiramtion()
+        {
             return View();
         }
     }
