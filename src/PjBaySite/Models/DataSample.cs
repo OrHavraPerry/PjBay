@@ -202,9 +202,24 @@ namespace PjBaySite.Models
             UserManager<ApplicationUser> userManager = (UserManager<ApplicationUser>)serviceProvider.GetService(typeof(UserManager<ApplicationUser>));
             RoleManager<IdentityRole> roleManager = (RoleManager<IdentityRole>)serviceProvider.GetService(typeof(RoleManager<IdentityRole>));
 
-            if (!roleManager.Roles.Any(t=>t.Name=="Admin"))
+            string adminRole = "Admin";
+            string AdminName = "Admin@PjBay.com";
+            string AdminPass = "1234";
+
+            if (!roleManager.Roles.Any(t=>t.Name== adminRole))
             {
-                var res = roleManager.CreateAsync(new IdentityRole("Admin"));
+                var res = roleManager.CreateAsync(new IdentityRole(adminRole));
+            }
+
+            if (!userManager.Users.Any(u=>u.UserName == AdminName))
+            {
+                var user = new ApplicationUser { UserName = AdminName, Email = AdminName };
+                var task = userManager.CreateAsync(user, AdminPass);
+
+                if (task.Result.Succeeded)
+                {
+                    userManager.AddToRoleAsync(user, adminRole);
+                }
             }
         }
     }

@@ -27,7 +27,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">PjBay</a>
+                    <a class="navbar-brand" asp-controller="Home" asp-action="Index">PjBay</a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -52,8 +52,16 @@
                         <button type="submit" class="btn btn-default">GO</button>
                     </form>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#">Login</a></li>
-                        <li><a asp-controller="Account" asp-action="Register">Register</a></li>
+                        @if (!User.Identity.IsAuthenticated)
+                        {
+                            <li><a asp-controller="Account" asp-action="Login">Login</a></li>
+                            <li><a asp-controller="Account" asp-action="Register">Register</a></li>
+                        }
+                        else
+                        {
+                            <li><a asp-controller="Manage">@User.Identity.Name</a></li>
+                            <li><a asp-controller="Account" asp-action="LogOff">Logout</a></li>
+                        }
                     </ul>
                 </div>
             </div>
