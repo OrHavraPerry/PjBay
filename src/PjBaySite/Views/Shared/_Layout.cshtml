@@ -60,7 +60,7 @@
                         else
                         {
                             <li><a asp-controller="Manage">@User.Identity.Name</a></li>
-                            <li><a asp-controller="Account" asp-action="LogOff">Logout</a></li>
+                            <li>@Html.ActionLink("Logout","LogOff","Account")</li>
                         }
                     </ul>
                 </div>

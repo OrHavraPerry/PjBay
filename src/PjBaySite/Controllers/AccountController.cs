@@ -110,7 +110,7 @@ namespace PjBaySite.Controllers
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    if (user.UserName.ToLower()=="admin@pjbay.com")
+                    if (user.UserName.ToLower() == "admin@pjbay.com")
                     {
                         await _userManager.AddToRoleAsync(user, "Admin");
                     }
@@ -138,7 +138,7 @@ namespace PjBaySite.Controllers
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation(4, "User logged out.");
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
         //
