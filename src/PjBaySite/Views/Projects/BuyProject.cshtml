@@ -3,47 +3,223 @@
     ViewData["Title"] = "BuyProject";
 }
 
+<script language="javascript" type="text/javascript">
+    function GetFieldCourseProject(instituteName)
+    {
+        //what will be diplayed when waiting for answer
+        var processmessage = "<option value='0'> Please wait...</option>";
+
+        //before the answer from the server,the strings above will be shown
+        //# means id in html document
+        $("#selectField").html(processmessage).show();
+        
+
+        //the controller and action that we send the request to.
+        var url = "/Projects/GetFieldByInstitute/";
+
+        $.ajax
+        ({
+            url: url,//the url we send the request to 
+            data: { Name: instituteName },//the data we send to the url,into parameter Name in the action the name of the institute will be loaded
+            cache: false,
+            type: "POST",//sending by post
+            success: function (data)//the data that was returned from controller
+            {//when success
+                var markupField = "<option value='0'>Select Field</option>";//the first line of the dropdown list
+                for (var x = 0; x < data.length; x++)
+                {//populate the list with the answer that came from server
+                    markupField += "<option value=\"" + data[x].Text + "\">" + data[x].Text + "</option>";
+                }
+                $("#selectField").html(markupField).show();//display the data
+                $("#selectCourse").html("<option value='0'></option>").show();
+                $("#selectProject").html("<option value='0'></option>").show();
+                
+
+
+                $("#selectInstitute").prop("disabled", false);
+                $("#selectField").prop("disabled", false);
+                $("#selectCourse").prop("disabled", true);
+                $("#selectProject").prop("disabled", true);
+
+                $("#submitButton").prop("disabled", true);
+
+
+            },
+            error: function (reponse)
+            {
+                alert("error : " + reponse);
+            }
+        });
+
+    }
+
+
+    function GetCourseProject() {
+        var processmessage = "<option value='0'> Please wait...</option>";
+        $("#selectCourse").html(processmessage).show();
+        
+        var url = "/Projects/GetCourseByInstituteAndField/";
+        
+        $.ajax({
+            url: url,
+            //sending the line that was selected by the user from two fields (select1-institutes,select2-fields)
+            data: { instituteName: $("#selectInstitute :selected").text(), fieldName: $("#selectField :selected").text() },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                var markupCourse = "<option value='0'>Select Course</option>";
+                for (var x = 0; x < data.length; x++) {
+                    markupCourse += "<option value=\"" + data[x].Text + "\">" + data[x].Text + "</option>";
+                }
+                $("#selectCourse").html(markupCourse).show();
+                $("#selectProject").html("<option value='0'></option>").show();
+
+                
+
+                //enable and disable the suitable dropdown lists
+                $("#selectInstitute").prop("disabled", false);
+                $("#selectField").prop("disabled", false);
+                $("#selectCourse").prop("disabled", false);
+                $("#selectProject").prop("disabled", true);
+
+                $("#submitButton").prop("disabled", true);
+            },
+            error: function (reponse) {
+                alert("error : " + reponse);
+            }
+        });
+
+    }
+
+
+
+    function GetProject() {
+        var processmessage = "<option value='0'> Please wait...</option>";
+        $("#selectProject").html(processmessage).show();
+        var url = "/Projects/GetProjectsByInstituteFieldCourse/";
+
+        $.ajax({
+            url: url,
+            //sending the line that was selected by the user from two fields (select1-institutes,select2-fields)
+            data: { instituteName: $("#selectInstitute :selected").text(), fieldName: $("#selectField :selected").text(), courseName: $("#selectCourse :selected").text() },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+
+                var markupProject = "<option value='0'>Select Project</option>";
+                for (var x = 0; x < data.length; x++) {
+                    markupProject += "<option value=\"" + data[x].Text + "\">" + data[x].Text + "</option>";
+                }
+                $("#selectProject").html(markupProject).show();
+
+
+
+                $("#selectInstitute").prop("disabled", false);
+                $("#selectField").prop("disabled", false);
+                $("#selectCourse").prop("disabled", false);
+                $("#selectProject").prop("disabled", false);
+
+                $("#submitButton").prop("disabled", true);
+
+                
+            },
+            error: function (reponse) {
+                alert("error : " + reponse);
+            }
+        });
+
+    }
+</script>
+
+
 <h2>Search Project:</h2>
 
 <form asp-controller="Projects" asp-action="SearchProject" method="post">
-    <div class="form-horizontal">
-        <hr />
-        <div class="text-danger"></div>
+    <hr />
+    <div class="form-group">
+        <label for="select" class="col-lg-2 control-label">Institutes:</label>
+        <div class="col-lg-10">
+            @*first argument:the viewdata that populate the dropdown list,second argument:list that populate the dropdown
+                third argument:the firt line that is selected in the dropwon list,forth argument:the attributes that populate the select(dropdon).
+                *@
+            @Html.DropDownList("institutes", null, "Select Institute", new { @id = "selectInstitute", @class = "form-control", @onchange = "javascript:GetFieldCourseProject(this.value);" })
+            <br>
+        </div>
+        <label for="select" class="col-lg-2 control-label">Fields:</label>
+        <div class="col-lg-10">
+            <select id="selectField" name="fields" class="form-control" onchange="GetCourseProject()" disabled="disabled"></select>
+            <br>
+        </div>
+        <label for="select" class="col-lg-2 control-label">Courses:</label>
+        <div class="col-lg-10">
+            <select id="selectCourse" name="courses" class="form-control" onchange="GetProject()" disabled="disabled"></select>
+            <br>
+        </div>
+        <label for="select" class="col-lg-2 control-label">Projects:</label>
+        <div class="col-lg-10">
+            <select id="selectProject" name="projects" class="form-control" onclick="enableButton()" disabled="disabled"></select>
+            <br>
+        </div>
+
         <div class="form-group">
-            <label class="col-md-2 control-label">Institute:</label>
-            <div class="col-md-10">
-                <input type="text" name="institute" class="form-control" >
-                <span class="text-danger" />
+            <div class="col-lg-10 col-lg-offset-2">
+                <button id="submitButton" type="submit" class="btn btn-primary" onclick="disableButton()" disabled="disabled">Search</button>
+                <script>
+                    function enableButton()
+                    {
+                        var select1 = document.getElementById("selectInstitute");
+                        var selectedValue1 = select1.options[select1.selectedIndex].value;
+
+                        var select2 = document.getElementById("selectField");
+                        var selectedValue2 = select2.options[select2.selectedIndex].value;
+
+                        var select3 = document.getElementById("selectCourse");
+                        var selectedValue3 = select3.options[select3.selectedIndex].value;
+
+                        var select4 = document.getElementById("selectProject");
+                        var selectedValue4 = select4.options[select4.selectedIndex].value;
+
+
+                        if ((selectedValue1 != '0')&&(selectedValue2 != '0')&&(selectedValue3 != '0')&&(selectedValue4 != '0'))
+                        {
+                            document.getElementById("submitButton").disabled = false;
+                        }
+                        else
+                        {
+                            document.getElementById("submitButton").disabled = true;
+
+                        }
+                    }
+
+                    function disableButton() {
+                        var select1 = document.getElementById("selectInstitute");
+                        var selectedValue1 = select1.options[select1.selectedIndex].value;
+
+                        var select2 = document.getElementById("selectField");
+                        var selectedValue2 = select2.options[select2.selectedIndex].value;
+
+                        var select3 = document.getElementById("selectCourse");
+                        var selectedValue3 = select3.options[select3.selectedIndex].value;
+
+                        var select4 = document.getElementById("selectProject");
+                        var selectedValue4 = select4.options[select4.selectedIndex].value;
+
+
+                        if (!((selectedValue1 != '0') && (selectedValue2 != '0') && (selectedValue3 != '0') && (selectedValue4 != '0')))
+                        {
+                            document.getElementById("submitButton").disabled = true;
+                            alert("Please make a selection.");
+                        }
+                        
+                    }
+                </script>
+                
             </div>
         </div>
-        <div class="form-group">
-            <label class="col-md-2 control-label">Course:</label>
-            <div class="col-md-10">
-                <input type="text" name="course" class="form-control">
-                <span class="text-danger" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-md-2 control-label">Project:</label>
-            <div class="col-md-10">
-                <input type="text" name="project" class="form-control">
-                <span class="text-danger" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-md-2 control-label">Field</label>
-            <div class="col-md-10">
-                <input type="text" name="field" class="form-control">
-                <span class="text-danger" />
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Find"  class="btn btn-default" />
-            </div>
-        </div>
+
     </div>
 </form>
+
 
 
 

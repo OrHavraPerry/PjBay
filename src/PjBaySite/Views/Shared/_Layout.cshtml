@@ -6,9 +6,11 @@
         <title>@ViewData["Title"] - PjBaySite</title>
 
         <environment names="Development">
-            <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
             <link rel="stylesheet" href="https://bootswatch.com/cosmo/bootstrap.min.css" />
             <link rel="stylesheet" href="~/css/site.css" />
+            <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
+            
+            
         </environment>
         <environment names="Staging,Production">
             <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.5/css/bootstrap.min.css"
@@ -32,7 +34,7 @@
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a asp-controller="Home" asp-action="Index">Home</a></a></li>
+                        <li class="active"><a asp-controller="Home" asp-action="Index">Home</a></li>
                         <li ><a asp-controller="Projects" asp-action="BuyProject">Buy Project</a></li>
                         <li><a asp-controller="Projects" asp-action="SellProject">Sell Project</a></li>
                         
