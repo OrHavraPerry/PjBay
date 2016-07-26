@@ -64,11 +64,23 @@
             @Html.DisplayNameFor(model => model.Video)
         </dt>
         <dd>
-            <iframe width="500" height="315" src="@Html.DisplayFor(model => model.Video)" frameborder="0" allowfullscreen></iframe>
-            @*<video controls="controls" width="280" height="200">
-                <source src="@Html.DisplayFor(model => model.Video)" type="video/mp4" />
-                Your browser does not support the video tag.
-            </video>*@
+            @{ 
+                
+                string videoURL = Model.Video.ToString();
+            }
+
+            @if (videoURL.Contains("youtube") == true)//if the url contains youtube put it into iframe(a youtube video works only with iframe)
+            {
+                <iframe width="500" height="315" src="@Html.DisplayFor(model => model.Video)" frameborder="0" allowfullscreen></iframe>
+            }
+            else//if other type of video put a video tag
+            {
+                <video controls="controls" width="280" height="200">
+                    <source src="@Html.DisplayFor(model => model.Video)" type="video/mp4" />
+                    Your browser does not support the video tag.
+                </video>
+            }
+            
         </dd>
     </dl>
 </div>
