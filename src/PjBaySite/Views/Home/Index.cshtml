@@ -16,13 +16,33 @@
 //}
 }
 
-<div class="jumbotron">
-    <h1>Learn Less NOW!!</h1>
-    <p>Now you can learn less and get better grades!</p>
-    <p>so what are you waiting for?..</p>
-    <p><a class="btn btn-primary btn-lg" Link="Buy">Learn Less Now</a></p>
+<style>
+    .jumbotron{
+        font-family: Gabriola;
+        font-weight: bold;
+
+        color:#660066;
+        /*font-size:40px;
+        font-size-adjust:0.58 ;*/
+        
+    }
+
+    
+</style>
+<div class="jumbotron" style="background-image: url('images/background_1.jpg');background-size:cover;">
+
+    <center>
+        <h1>Welcome to PjBay!!!</h1>
+
+        <p id="pFont" style="font-size:x-large">Now you can learn less and get better grades!</p>
+        <p >so what are you waiting for?..</p>
+        <p><a class="btn btn-primary btn-lg" Link="Buy">Learn Less Now</a></p>
+        
+    </center>
+    
 </div>
 
+<canvas id="logo" width="500" height="500"></canvas>
 @*@foreach (List<IBoxItem> row in Grid)
 {
     <div class="row">
@@ -34,6 +54,43 @@
         }
     </div>
 }*@
+
+
+<script>
+    var can = document.getElementById('logo');
+    var context = can.getContext('2d');
+
+
+    //the text of the logo
+    var text = "PjBay"
+
+    //the color of the background of the circle
+    context.fillStyle = "#7FFFD4";
+    context.beginPath();
+    var radius = 80;
+    //drawing a circle
+    context.arc(200, 200, radius, 0, Math.PI * 2);
+    context.closePath();
+
+    //the width of the line of the circle
+    context.lineWidth = 5;
+
+    //the color of the stroke
+    context.strokeStyle = '#660066';
+    context.stroke();
+    context.fill();
+    context.fillStyle = "#660066"; // font color to write the text with
+    var font = "bold " + radius + "px Gabriola";
+    context.font = font;
+    // Move it down by half the text height and left by half the text width
+    var width = context.measureText(text).width;
+    var height = context.measureText("P").width; // this is a GUESS of height
+    context.fillText(text, 200 - (width / 2), 200 + (height / 2));
+</script>
+
+
+
+
 
 <div id="map_canvas" style="width:400px;height:400px;">Google Map</div> 
 
