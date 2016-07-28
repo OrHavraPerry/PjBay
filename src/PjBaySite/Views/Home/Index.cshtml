@@ -18,31 +18,66 @@
 
 <style>
     .jumbotron{
-        font-family: Gabriola;
-        font-weight: bold;
-
+        font-size:40px;
+        font-weight: bolder;
+        font-family:Gabriola;
         color:#660066;
+        
         /*font-size:40px;
         font-size-adjust:0.58 ;*/
         
     }
-
+    /*making a rounded button*/
+    #myButton {
+        border: 2px solid #660066;
+        border-radius: 50px;
+        background-color: #7FFFD4;
+        color: #660066;
+    }
+    /*making a text with two columns*/
+    .myMultiColumnText {
+        font-family: myGabriolaFont;
+        -webkit-column-count: 2; /* Chrome, Safari, Opera */
+        -moz-column-count: 2; /* Firefox */
+        column-count: 2;
+        color: #660066;
+    }
     
 </style>
-<div class="jumbotron" style="background-image: url('images/background_1.jpg');background-size:cover;">
 
+
+<div class="jumbotron" style="background-image: url('images/background_1.jpg');background-size:cover;">
+    
     <center>
+        <div style="float:right"><canvas id="logo" width="500" height="500"></canvas></div>
         <h1>Welcome to PjBay!!!</h1>
 
-        <p id="pFont" style="font-size:x-large">Now you can learn less and get better grades!</p>
-        <p >so what are you waiting for?..</p>
-        <p><a class="btn btn-primary btn-lg" Link="Buy">Learn Less Now</a></p>
+        <p><b> We offer you great deal:</b></p>
+        <p><b> Pay a little for great homework,from trusted source.</b></p>
+        <p>
+           <a id="myButton" class="btn btn-primary btn-lg" asp-controller="Projects" asp-action="BuyProject"><b>Lets Go!</b></a>
+        </p>
         
     </center>
     
 </div>
 
-<canvas id="logo" width="500" height="500"></canvas>
+
+
+<div class="myMultiColumnText">
+    Welcome to PjBay site!
+    If you are searching for help in your homework,you arrived to the right place.
+    Here you can buy homework for attractive prices.You don't need to do anything just click on the button and go for a vacation.
+    Because why bother yourself with silly homework,when someone else is willing to do them.
+    So, What are you waiting for...Lest Go!
+    @for(var i=0;i<100;i++)
+    {
+        <html>bla </html>
+
+    }
+
+</div>
+
 @*@foreach (List<IBoxItem> row in Grid)
 {
     <div class="row">
