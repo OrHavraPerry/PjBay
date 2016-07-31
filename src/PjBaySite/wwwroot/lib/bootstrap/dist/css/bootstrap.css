@@ -4,6 +4,7 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
+
 html {
   font-family: sans-serif;
   -webkit-text-size-adjust: 100%;
@@ -6798,14 +6799,16 @@ button.close {
   }
 }
 
+/*# sourceMappingURL=bootstrap.css.map */
+
+/*building my own font*/
 @font-face {
-    font-family: "myGabriolaFont";
-    src: url("~/fonts/gabriola/b26b20369adfef2b3d65d266e0625fe2.eot"); /* IE9*/
-    src: url("~/fonts/gabriola/b26b20369adfef2b3d65d266e0625fe2.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
-    url("~/fonts/gabriola/b26b20369adfef2b3d65d266e0625fe2.woff2") format("woff2"), /* chrome?firefox */
-    url("~/fonts/gabriola/b26b20369adfef2b3d65d266e0625fe2.woff") format("woff"), /* chrome?firefox */
-    url("~/fonts/gabriola/b26b20369adfef2b3d65d266e0625fe2.ttf") format("truetype"), /* chrome?firefox?opera?Safari, Android, iOS 4.2+*/
-    url("~/fonts/gabriola/b26b20369adfef2b3d65d266e0625fe2.svg#Gabriola") format("svg"); /* iOS 4.1- */
+    font-family: 'myGabriolaFont';
+    src: url('~/fonts/Gabriola/b26b20369adfef2b3d65d266e0625fe2.eot'); /* IE9*/
+    src: url('~/fonts/Gabriola/b26b20369adfef2b3d65d266e0625fe2.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('~/fonts/Gabriola/b26b20369adfef2b3d65d266e0625fe2.woff2') format('woff2'), /* chrome?firefox */
+    url('~/fonts/Gabriola/b26b20369adfef2b3d65d266e0625fe2.woff') format('woff'), /* chrome?firefox */
+    url('~/fonts/Gabriola/b26b20369adfef2b3d65d266e0625fe2.ttf') format('truetype'), /* chrome?firefox?opera?Safari, Android, iOS 4.2+*/
+    url('~/fonts/Gabriola/b26b20369adfef2b3d65d266e0625fe2.svg#Gabriola') format('svg'); /* iOS 4.1- */
     
 }
-/*# sourceMappingURL=bootstrap.css.map */

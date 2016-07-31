@@ -1,0 +1,47 @@
+@model PjBaySite.Models.Project
+@{
+    ViewData["Title"] = "AdvancedSearch";
+    Layout = "_Layout";
+}
+<html>
+<head>
+    Search Project:
+</head>
+<body>
+    <form asp-controller="Projects" asp-action="SearchProject" method="post">
+
+        <div class="form-group">
+            <label class="col-md-2 control-label">Grade: </label>
+            <div class="col-md-10">
+                <label class="col-md-2 control-label">From: </label>
+                <input name="gradeMin" class="form-control" />
+                <label class="col-md-2 control-label">To: </label>
+                <input name="gradeMax" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label">Price:</label>
+            <div class="col-md-10">
+                <label class="col-md-2 control-label">From: </label>
+                <input name="priceMin" class="form-control" />
+                <label class="col-md-2 control-label">To: </label>
+                <input name="priceMax" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label">Words in Description:</label>
+            <div class="col-md-10">
+                <input name="description" class="form-control" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-lg-10 col-lg-offset-2">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+        </div>
+
+
+    </form>
+</body>
+</html>

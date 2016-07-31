@@ -368,5 +368,24 @@ namespace PjBaySite.Controllers
         {
             return View();
         }
+
+        //searching project from toolbar
+        [HttpPost]
+        public IActionResult SearchProjectFromBar(string projectName)
+        {
+            //searching for a project that have in it's name the string above
+            var searchProjectQuery = from p in _context.Projects
+                                     where p.Name.Contains(projectName) && p.Purchased == false
+                                     select p;
+          
+            return View(searchProjectQuery.Distinct());
+        }
+        //Advanced search in buy project
+        [HttpPost]
+        public IActionResult AdvancedSearch()
+        {
+            return View();
+        }
+
     }
 }
