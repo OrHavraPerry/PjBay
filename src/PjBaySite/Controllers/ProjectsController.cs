@@ -381,7 +381,6 @@ namespace PjBaySite.Controllers
             return View(searchProjectQuery.Distinct());
         }
         //Advanced search in buy project
-        [HttpPost]
         public IActionResult AdvancedSearch()
         {
             return View();

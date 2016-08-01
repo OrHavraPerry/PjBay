@@ -1,4 +1,9 @@
-﻿body {
+﻿/*making my own font*/
+@font-face {
+    font-family: myFont;
+    src: url(../fonts/Gabriola/font.ttf);
+}
+body {
     padding-top: 50px;
     padding-bottom: 20px;
 }
@@ -32,3 +37,69 @@ textarea {
         z-index: 10 !important;
     }
 }
+    /*About page:*/
+    /*making a text with two columns*/
+    .myMultiColumnText {
+        font-family: myFont;
+        font-size:30px;
+        font-style:normal;
+        -webkit-font-smoothing: antialiased;
+        -webkit-text-stroke-width: 0.2px;
+        
+
+        -webkit-column-count: 2; /* Chrome, Safari, Opera */
+        -moz-column-count: 2; /* Firefox */
+        column-count: 2;
+        color: #660066;
+    }
+    /*index page:*/
+
+    /*The big div with the picture*/
+    .jumbotron {
+        font-size: 40px;
+        font-weight: bolder;
+        font-family: myFont;
+        color: #660066;
+        
+    }
+    
+    /*making a rounded button in the div jumbotron*/
+    #myButton {
+        border: 2px solid #660066;
+        border-radius: 50px;
+        background-color: #7FFFD4;
+        color: #660066;
+        font-family: myFont;
+        font-size: 25px;
+        
+    }
+    /*making purple text with my font*/
+    .myText {
+        font-family: myFont;
+        font-size: 30px;
+        color: #660066;
+    }
+    /*making shadow to the h1(welcome to PjBay site!)*/
+    .myh1 {
+        font-family: myFont;
+        font-size:40px;
+        color: #660066;
+        text-shadow: 2px 2px #7FFFD4;
+    }
+
+    /*making the logo canvas to grow(transition)*/
+    .logo {
+        width: 200px;/*the width of the logo before enlargement*/
+        height: 200px;/*the height of the logo before enlargement*/
+        /*the time the transition takes in each axis*/
+        -webkit-transition: width 2s, height 2s; /* For Safari 3.1 to 6.0 */
+        transition: width 2s, height 2s;
+    }
+
+        .logo:hover {
+            /*the final size of the logo after the transition*/
+            width: 400px;
+            height: 400px;
+        }
+
+    

@@ -16,45 +16,7 @@
 //}
 }
 
-<style>
-    .jumbotron {
-        font-size: 40px;
-        font-weight: bolder;
-        font-family: Gabriola;
-        color: #660066;
-    }
-    /*making a rounded button*/
-    #myButton {
-        border: 2px solid #660066;
-        border-radius: 50px;
-        background-color: #7FFFD4;
-        color: #660066;
-    }
-    /*making purple text with my font*/
-    .myText {
-        font-family: myGabriolaFont;
-        color: #660066;
-    }
-    /*making shadow to the h1(welcome to PjBay site!)*/
-    .myh1 {
-        text-shadow: 2px 2px #7FFFD4;
-    }
 
-    /*making the logo canvas to grow(transition)*/
-    .logo {
-        width: 200px;/*the width of the logo before enlargement*/
-        height: 200px;/*the height of the logo before enlargement*/
-        /*the time the transition takes in each axis*/
-        -webkit-transition: width 2s, height 2s; /* For Safari 3.1 to 6.0 */
-        transition: width 2s, height 2s;
-    }
-
-        .logo:hover {
-            /*the final size of the logo after the transition*/
-            width: 400px;
-            height: 400px;
-        }
-</style>
 
 
 <div class="jumbotron" style="background-image: url('images/background_1.jpg');background-size:cover;">
@@ -93,7 +55,7 @@
 </div>
 
 @* logo canvas *@
-<div ><canvas id="logo" class="logo" width="500" height="500"></canvas></div>
+<center><div><canvas id="logo" class="logo" width="500" height="500"></canvas></div></center>
 
 <script>
     var can = document.getElementById('logo');
