@@ -121,7 +121,7 @@ namespace PjBaySite.Controllers
             institutes.AddRange(institutesQ.Distinct());
 
             //filling the viewData parameter which passes to the view
-            ViewData["institutes"] = new SelectList(institutes.Distinct());
+            ViewData["institutes"] = new SelectList(institutes);
 
 
             ////----filling viewData of fields-------

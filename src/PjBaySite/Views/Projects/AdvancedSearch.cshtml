@@ -3,52 +3,122 @@
     ViewData["Title"] = "AdvancedSearch";
     Layout = "_Layout";
 }
+
+<script>
+    $("#submitButton").click(function () {
+        if( (parseInt($("#gradeMin").val()) > parseInt($("#gradeMax").val())&& ( parseInt($(#grade)) 
+        {
+            alert("Please enter maximum grade that bigger than minimum grade.");
+            $("#gradeMin").val('');
+            $("#gradeMin").focus();
+            $("#gradeMax").val('');
+            $("#gradeMax").focus();
+            return false;
+        } else {
+            return true;
+        }
+    });
+</script>
+
+
 <html>
 <head>
-    Search Project:
+   
+    
 </head>
 <body>
+    <h2> Search Project:</h2>
+    <hr />
     <form asp-controller="Projects" asp-action="SearchProject" method="post">
-        <div class="form-horizontal">
+        <table style="border-spacing: 10px 20px;border-collapse:separate;font-size:16px;">
+            <tr>
+                <td align="left">
+                    <label>Grade Range:</label>
+                </td>
+                <td align="center">
+                    <label>From: </label>
+                </td>
+                <td align="center">
+                    <input name="gradeMin" id="gradeMin" onchange="gradeMinValidation()" maxlength="3" style="width:80px" class="form-control" />
+                    <script>
+                        function gradeMinValidation() {
+                            var x = document.getElementById("gradeMin").value;
 
+                            if (!(x.match(/^[0-9]+$/))) {
+                                alert("The minimum grade invalid.Enter a number between 0 to 100");
+                            }
+                        }
 
-            <hr />
+                    </script>
+                </td>
+                <td align="center">
+                    <label>To: </label>
+                </td>
+                <td  align="center">
+                    <input name="gradeMax" id="gradeMax" onchange="gradeMaxValidation()" maxlength="3" style="width:80px" class="form-control" />
+                    <script>
+                        function gradeMaxValidation() {
+                            var x = document.getElementById("gradeMax").value;
 
-            <div class="form-group">
-                <label class="col-md-2 control-label">Grade: </label>
-                <br />
-                <div class="col-lg-10" style="float:left">
-                    <label class="col-md-2 control-label">From: </label>
-                    <input name="gradeMin" class="form-control" maxlength="3" style="width: 4px"/>
-                </div>
-                <div style="float:right">
-                    <label class="col-md-2 control-label" >To: </label>
-                    <input name="gradeMax" class="form-control" maxlength="3" style="width: 4px"/>
-                    <br>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-2 control-label">Price:</label>
-                <div class="col-lg-10">
-                    <label class="col-md-2 control-label">From: </label>
-                    <input name="priceMin" class="form-control" maxlength="8" style="width: 9px"/>
-                    <label class="col-md-2 control-label">To: </label>
-                    <input name="priceMax" class="form-control" maxlength="8" style="width: 9px"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-2 control-label">Words in Description:</label>
-                <div class="col-lg-10">
-                    <input name="description" class="form-control" />
-                </div>
-            </div>
+                            if (!(x.match(/^[0-9]+$/))) {
+                                alert("The maximum grade invalid.Enter a number between 0 to 100");
+                            }
+                        }
 
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <button type="submit" class="btn btn-default" >Search</button>
-                </div>
-            </div>
-        </div>
-</form>
+                    </script>
+                </td>
+            </tr>
+            <tr>
+                <td align="left">
+                    <label>Price Range:</label>
+                </td>
+                <td  align="center">
+                    <label>From: </label>
+                </td>
+                <td  align="center">
+                    <input name="priceMin" id="priceMax" onchange="priceMinValidation()" maxlength="5" style="width:80px" class="form-control" />
+                    <script>
+                        function priceMinValidation() {
+                            var x = document.getElementById("priceMin").value;
+
+                            if (!(x.match(/^[0-9]+$/))) {
+                                alert("The minimum price is invalid.Enter a number between 0 to 10000");
+                            }
+                        }
+
+                    </script>
+                </td>
+                <td  align="center">
+                    <label>To: </label>
+                </td>
+                <td align="center">
+                    <input name="gradeMax" id="priceMax" onchange="priceMaxValidation()" maxlength="5" style="width:80px" class="form-control" />
+                    <script>
+                        function priceMaxValidation() {
+                            var x = document.getElementById("priceMax").value;
+
+                            if (!(x.match(/^[0-9]+$/))) {
+                                alert("The maximum price is invalid.Enter a number between 0 to 10000");
+                            }
+                        }
+
+                    </script>
+                </td>
+            </tr>
+            <tr>
+                <td align="left">
+                    <label>Words in Description:&nbsp;&nbsp;</label>
+                </td>
+                <td colspan="4" align="left">
+                    <input name="description" style="width:260px" class="form-control" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="5" align="center">
+                    <button type="submit" id="submitButton" class="btn btn-default">Search</button>
+                </td>
+            </tr>
+        </table>
+    </form>
 </body>
 </html>
