@@ -4,32 +4,89 @@
     Layout = "_Layout";
 }
 
-<script>
-    $("#submitButton").click(function () {
-        if( (parseInt($("#gradeMin").val()) > parseInt($("#gradeMax").val())&& ( parseInt($(#grade)) 
-        {
-            alert("Please enter maximum grade that bigger than minimum grade.");
-            $("#gradeMin").val('');
-            $("#gradeMin").focus();
-            $("#gradeMax").val('');
-            $("#gradeMax").focus();
-            return false;
-        } else {
-            return true;
-        }
-    });
-</script>
+
 
 
 <html>
 <head>
-   
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>
+
+    $(document).ready(function() {
+        $("#submitButton").click(function ()
+        {
+
+            /*checking if gradeMin is valid,has only numbers and between 0 to 100*/
+            var x = $("#gradeMin").val();
+            if ((!(x.match(/^[0-9]+$/))) || (parseInt(x) < 0) || (parseInt(x) > 100))
+            {
+                alert("The minimum grade invalid.Enter a number between 0 to 100");
+                $("#gradeMin").val('');
+                $("#gradeMin").focus();
+                return false;
+            }
+
+            x = $("#gradeMax").val();
+            if (!(x.match(/^[0-9]+$/)) || parseInt(x) < 0 || parseInt(x) > 100) {
+                alert("The maximum grade is invalid.Enter a number between 0 to 100");
+                $("#gradeMax").val('');
+                $("#gradeMax").focus();
+                return false;
+            }
+
+
+            x = $("#priceMin").val();
+            if (!(x.match(/^[0-9]+$/)) || parseInt(x) < 0 || parseInt(x) > 10000) {
+                alert("The minimum price is invalid.Enter a number between 0 to 10000");
+                $("#priceMin").val('');
+                $("#priceMin").focus();
+                return false;
+            }
+
+            x = $("#priceMax").val();
+            if (!(x.match(/^[0-9]+$/)) || parseInt(x) < 0 || parseInt(x) > 10000) {
+                alert("The maximum price is invalid.Enter a number between 0 to 10000");
+                $("#priceMax").val('');
+                $("#priceMax").focus();
+                return false;
+            }
+
+            //checking if the grade min bigger than grade max
+            if(parseInt($("#gradeMin").val()) > parseInt($("#gradeMax").val()))
+            {
+                alert("Please enter maximum grade that bigger than minimum grade.");
+                $("#gradeMin").val('');
+                $("#gradeMax").val('');
+                $("#gradeMin").focus();
+                return false;
+            }
+            if(parseInt($("#priceMin").val())>parseInt($("#priceMax").val()))
+            {
+                alert("Please enter maximum price that bigger than minimum price.");
+                $("#priceMin").val('');
+                $("#priceMax").val('');
+                $("#priceMin").focus();
+                return false;
+            }
+            if($("#description").val()=='')
+            {
+                alert("Please enter description.");
+                $("#description").focus();
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        });
+    });
+    </script>
     
 </head>
 <body>
     <h2> Search Project:</h2>
     <hr />
-    <form asp-controller="Projects" asp-action="SearchProject" method="post">
+    <form asp-controller="Projects" asp-action="AdvancedSearchResult" method="post">
         <table style="border-spacing: 10px 20px;border-collapse:separate;font-size:16px;">
             <tr>
                 <td align="left">
@@ -39,33 +96,14 @@
                     <label>From: </label>
                 </td>
                 <td align="center">
-                    <input name="gradeMin" id="gradeMin" onchange="gradeMinValidation()" maxlength="3" style="width:80px" class="form-control" />
-                    <script>
-                        function gradeMinValidation() {
-                            var x = document.getElementById("gradeMin").value;
-
-                            if (!(x.match(/^[0-9]+$/))) {
-                                alert("The minimum grade invalid.Enter a number between 0 to 100");
-                            }
-                        }
-
-                    </script>
+                    <input name="gradeMin" id="gradeMin" maxlength="3" style="width:80px" class="form-control" />
+                    
                 </td>
                 <td align="center">
                     <label>To: </label>
                 </td>
                 <td  align="center">
-                    <input name="gradeMax" id="gradeMax" onchange="gradeMaxValidation()" maxlength="3" style="width:80px" class="form-control" />
-                    <script>
-                        function gradeMaxValidation() {
-                            var x = document.getElementById("gradeMax").value;
-
-                            if (!(x.match(/^[0-9]+$/))) {
-                                alert("The maximum grade invalid.Enter a number between 0 to 100");
-                            }
-                        }
-
-                    </script>
+                    <input name="gradeMax" id="gradeMax" maxlength="3" style="width:80px" class="form-control" />
                 </td>
             </tr>
             <tr>
@@ -76,33 +114,13 @@
                     <label>From: </label>
                 </td>
                 <td  align="center">
-                    <input name="priceMin" id="priceMax" onchange="priceMinValidation()" maxlength="5" style="width:80px" class="form-control" />
-                    <script>
-                        function priceMinValidation() {
-                            var x = document.getElementById("priceMin").value;
-
-                            if (!(x.match(/^[0-9]+$/))) {
-                                alert("The minimum price is invalid.Enter a number between 0 to 10000");
-                            }
-                        }
-
-                    </script>
+                    <input name="priceMin" id="priceMin" maxlength="5" style="width:80px" class="form-control" />
                 </td>
                 <td  align="center">
                     <label>To: </label>
                 </td>
                 <td align="center">
-                    <input name="gradeMax" id="priceMax" onchange="priceMaxValidation()" maxlength="5" style="width:80px" class="form-control" />
-                    <script>
-                        function priceMaxValidation() {
-                            var x = document.getElementById("priceMax").value;
-
-                            if (!(x.match(/^[0-9]+$/))) {
-                                alert("The maximum price is invalid.Enter a number between 0 to 10000");
-                            }
-                        }
-
-                    </script>
+                    <input name="priceMax" id="priceMax" maxlength="5" style="width:80px" class="form-control" />
                 </td>
             </tr>
             <tr>
@@ -110,7 +128,7 @@
                     <label>Words in Description:&nbsp;&nbsp;</label>
                 </td>
                 <td colspan="4" align="left">
-                    <input name="description" style="width:260px" class="form-control" />
+                    <input name="description" id="description" style="width:260px" class="form-control" maxlength="500"/>
                 </td>
             </tr>
             <tr>
@@ -122,3 +140,4 @@
     </form>
 </body>
 </html>
+

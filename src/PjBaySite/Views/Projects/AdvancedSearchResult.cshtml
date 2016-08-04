@@ -1,0 +1,55 @@
+@model IEnumerable<PjBaySite.Models.Project>
+
+@{
+    ViewData["Title"] = "SearchProjectFromBar";
+
+}
+
+<h2>Projects found:</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Grade)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        @if (item.Purchased == false)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Grade)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price) $
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.ID">Details</a>
+
+                </td>
+            </tr>
+
+        }
+
+    }
+</table>
+

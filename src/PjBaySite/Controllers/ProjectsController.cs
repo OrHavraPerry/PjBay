@@ -385,6 +385,18 @@ namespace PjBaySite.Controllers
         {
             return View();
         }
+        //Advanced search result
+        [HttpPost]
+        public IActionResult AdvancedSearchResult(string gradeMin, string gradeMax, string priceMin, string priceMax, string description)
+        {
+            //searching for a project that have in it's name the string above
+            var searchProjectQuery = from p in _context.Projects
+                                     where p.Grade >= (Convert.ToInt32(gradeMin)) && p.Grade <= (Convert.ToInt32(gradeMax))
+                                        && p.Price >= (Convert.ToInt32(priceMin)) && p.Price <= (Convert.ToInt32(priceMax))
+                                        && p.Description.Contains(description)
+                                     select p;
 
+            return View(searchProjectQuery.Distinct());
+        }
     }
 }
