@@ -56,22 +56,56 @@ namespace PjBaySite.Controllers
             {
                 return HttpNotFound();
             }
-            ViewData["CourseID"] = new SelectList(_context.Courses, "ID", "Course", project.CourseID);
+
+            //------filling viewData of courses-------
+            var courses = new List<string>();
+
+            // a query which takes the names of courses
+            var coursesQ = from c in _context.Courses
+                           select c.Name;
+            //put the courses list into courses
+            courses.AddRange(coursesQ.Distinct());
+
+            //filling the viewData parameter which passes to the view
+            ViewData["courses"] = new SelectList(courses);
+            ViewData["FisrtCourse"] = (from c in _context.Courses
+                                      where c.ID == project.CourseID
+                                      select c.Name).First();
+
             return View(project);
         }
 
         // POST: Projects/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Project project)
+        public IActionResult Edit(Project project,string courses)
         {
             if (ModelState.IsValid)
             {
+                //find the id of course according to the course name
+                var query = from c in _context.Courses
+                            where c.Name == courses
+                            select c.ID;
+                //updating the id of course in project
+                project.CourseID = query.First();
+
                 _context.Update(project);
                 _context.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewData["CourseID"] = new SelectList(_context.Courses, "ID", "Course", project.CourseID);
+
+            //------filling viewData of courses-------
+            var courses_1 = new List<string>();
+
+            // a query which takes the names of courses
+            var coursesQ = from c in _context.Courses
+                           select c.Name;
+            //put the courses list into courses
+            courses_1.AddRange(coursesQ.Distinct());
+
+            //filling the viewData parameter which passes to the view
+            ViewData["courses"] = new SelectList(courses_1);
+
             return View(project);
         }
 

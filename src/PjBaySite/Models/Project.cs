@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PjBaySite.Models
 {
-    public class Project : IBoxItem
+    public class Project
     {
         [Required]
         public int ID { get; set; }
@@ -44,13 +44,6 @@ namespace PjBaySite.Models
         public int CourseID { get; set; }
 
         public Course Course { get; set; }
-        [NotMapped]
-        public IEnumerable<IBoxItem> Childs
-        {
-            get
-            {
-                return new List<IBoxItem>();
-            }
-        }
+        
     }
 }

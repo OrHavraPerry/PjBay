@@ -117,5 +117,22 @@ namespace PjBaySite.Controllers
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
+        //search form for institute name
+        public IActionResult Search()
+        {
+            return View();
+        }
+
+        //Search result for institute
+        [HttpPost]
+        public IActionResult SearchResult(string Name)
+        {
+            var searchResultQ = from i in _context.Institutes
+                                where i.Name.Contains(Name)
+                                select i;
+
+            return View(searchResultQ.Distinct());
+        }
+
     }
 }
