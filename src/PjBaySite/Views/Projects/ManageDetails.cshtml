@@ -1,0 +1,101 @@
+@model PjBaySite.Models.Project
+@{
+    ViewData["Title"] = "Details";
+    Layout = "_Layout";
+}
+
+<h2>Details</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+
+        </dd>
+        <br />
+        <dt>
+            @Html.DisplayNameFor(model => model.Grade)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Grade)
+
+        </dd>
+        <br />
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Price)$
+
+        </dd>
+        <br />
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+            <br />
+        </dd>
+        <br />
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Purchased)
+            <br />
+        </dd>
+        <br />
+        <dt>
+            @Html.DisplayNameFor(model => model.SubmitDate)
+        </dt>
+        <dd>
+            <time datetime="2009-06-29T23:31+01:00">@Html.DisplayFor(model => model.SubmitDate)</time>
+            <br />
+        </dd>
+        <br />
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Picture)
+        </dt>
+        <dd>
+            <img width="200" height="200" src="@Html.DisplayFor(model => model.Picture)" alt="Picture" />
+            <br />
+        </dd>
+        <br />
+        <br />
+        <dt>
+            @Html.DisplayNameFor(model => model.Video)
+        </dt>
+        <dd>
+            @{
+
+                string videoURL = Model.Video.ToString();
+            }
+
+            @if (videoURL.Contains("youtube") == true)//if the url contains youtube put it into iframe(a youtube video works only with iframe)
+            {
+                <iframe width="500" height="315" src="@Html.DisplayFor(model => model.Video)" frameborder="0" allowfullscreen></iframe>
+            }
+            else//if other type of video put a video tag
+            {
+                <video controls="controls" width="280" height="200">
+                    <source src="@Html.DisplayFor(model => model.Video)" type="video/mp4" />
+                    Your browser does not support the video tag.
+                </video>
+            }
+
+        </dd>
+    </dl>
+</div>
+
+
+<p>
+    <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</p>
+

@@ -71,7 +71,7 @@ namespace PjBaySite.Controllers
             ViewData["FisrtCourse"] = (from c in _context.Courses
                                       where c.ID == project.CourseID
                                       select c.Name).First();
-
+            ViewData["date"] = project.SubmitDate;
             return View(project);
         }
 
@@ -433,5 +433,74 @@ namespace PjBaySite.Controllers
 
             return View(searchProjectQuery.Distinct());
         }
+
+        // details for manager in prjects
+        public IActionResult ManageDetails(int? id)
+        {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+
+            Project project = _context.Projects.Single(m => m.ID == id);
+            if (project == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(project);
+        }
+
+        // GET: Projects/Create
+        public IActionResult Create()
+        {
+            //------filling viewData of institutes-------
+            var institutes = new List<string>();
+
+            // a query which takes the names of courses
+            var institutesQ = from i in _context.Institutes
+                              select i.Name;
+            //put the courses list into courses
+            institutes.AddRange(institutesQ.Distinct());
+
+            //filling the viewData parameter which passes to the view
+            ViewData["institutes"] = new SelectList(institutes.Distinct());
+
+            return View();
+        }
+
+        // POST: Projects/Create
+        [HttpPost]
+        public IActionResult Create(string institutes, string fields, string courses, Project project)
+        {
+            if (ModelState.IsValid)
+            {
+                var query = from i in _context.Institutes
+                            join c in _context.Courses on i.ID equals c.InstatuteID
+                            join f in _context.Fields on c.FieldID equals f.ID
+                            where i.Name.Equals(institutes) && c.Name.Equals(courses) && f.fieldName.Equals(fields)
+                            select c;
+
+                project.CourseID = query.First().ID;
+
+                _context.Projects.Add(project);
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            //------filling viewData of institutes-------
+            var instituteList = new List<string>();
+
+            // a query which takes the names of courses
+            var institutesQ = from i in _context.Institutes
+                              select i.Name;
+            //put the courses list into courses
+            instituteList.AddRange(institutesQ.Distinct());
+
+            //filling the viewData parameter which passes to the view
+            ViewData["institutes"] = new SelectList(instituteList.Distinct());
+            return View(project);
+        }
+        
     }
 }

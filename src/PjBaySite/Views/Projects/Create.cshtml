@@ -1,7 +1,7 @@
 @model PjBaySite.Models.Project
 
 @{
-    ViewData["Title"] = "SellProject";
+    ViewData["Title"] = "Create";
 }
 
 
@@ -86,7 +86,7 @@
 
 <h2>Fill the details of the project you want to sell:</h2>
 @*the form begin here*@
-<form asp-controller="Projects" asp-action="SellProject">
+<form asp-controller="Projects" asp-action="Create">
     <div class="form-horizontal">
 
         <hr />
@@ -100,13 +100,13 @@
                 @*first argument:the viewdata that populate the dropdown list,second argument:list that populate the dropdown
                     third argument:the firt line that is selected in the dropwon list,forth argument:the attributes that populate the select(dropdon).
                 *@
-                @Html.DropDownList("institutes", null, "Select Institute", new { @id = "selectInstitute",  @class = "form-control", @onchange = "javascript:GetFieldByProject(this.value);"})
+                @Html.DropDownList("institutes", null, "Select Institute", new { @id = "selectInstitute", @class = "form-control", @onchange = "javascript:GetFieldByProject(this.value);" })
             </div>
         </div>
         <div class="form-group">
             <label for="select" class="col-md-2 control-label">Fields</label>
             <div class="col-lg-10">
-                <select id="selectField" name="fields" class="form-control" onchange="GetCourse()" disabled="disabled" ></select>
+                <select id="selectField" name="fields" class="form-control" onchange="GetCourse()" disabled="disabled"></select>
             </div>
         </div>
         <div class="form-group">
@@ -123,6 +123,7 @@
                 <span asp-validation-for="Name" class="text-danger" />
             </div>
         </div>
+
         <div class="form-group">
             <label asp-for="Grade" class="col-md-2 control-label"></label>
             <div class="col-md-10">
@@ -135,6 +136,19 @@
             <div class="col-md-10">
                 <input asp-for="Price" class="form-control" />
                 <span asp-validation-for="Price" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="SubmitDate" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input type="date" asp-for="SubmitDate" class="form-control" />
+                <span asp-validation-for="SubmitDate" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Purchased" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input type="checkbox" asp-for="Purchased" class="checkbox" />
             </div>
         </div>
         <div class="form-group">
@@ -174,13 +188,13 @@
                         var select3 = document.getElementById("selectCourse");
                         var selectedValue3 = select3.options[select3.selectedIndex].value;
 
-                        
+
                         if (!((selectedValue1 != '0') && (selectedValue2 != '0') && (selectedValue3 != '0') && (selectedValue4 != '0')))
                         {
                             alert("Please make a selection.");
- 
+
                         }
-                        
+
 
                     }
                 </script>
@@ -188,6 +202,12 @@
         </div>
     </div>
 </form>
+
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
 
 
 @section Scripts {
