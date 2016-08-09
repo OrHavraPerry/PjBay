@@ -1,6 +1,7 @@
 using System.Linq;
 using Microsoft.AspNet.Mvc;
 using PjBaySite.Models;
+using System;
 
 namespace PjBaySite.Controllers
 {
@@ -25,6 +26,8 @@ namespace PjBaySite.Controllers
             SelectList ListFields = new SelectList(queryField.Distinct());
             return Json(ListFields);
             */
+
+            throw new NotImplementedException();
         }
     }
 }
