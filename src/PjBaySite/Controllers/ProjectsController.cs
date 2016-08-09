@@ -147,7 +147,8 @@ namespace PjBaySite.Controllers
             var institutes = new List<string>();
 
             // a query which takes the names of courses
-            var institutesQ = from i in _context.Institutes join c in _context.Courses on i.ID equals c.InstatuteID
+            var institutesQ = from i in _context.Institutes
+                              join c in _context.Courses on i.ID equals c.InstatuteID
                               join p in _context.Projects on c.ID equals p.CourseID
                               where p.Purchased==false
                               select i.Name;
@@ -256,7 +257,7 @@ namespace PjBaySite.Controllers
         public IActionResult SearchProject(string institutes, string fields, string courses, string projects)
         {
             
-            var joinQuery = from i in _context.Institutes
+            var searchQ = from i in _context.Institutes
                             join c in _context.Courses on i.ID equals c.InstatuteID
                             join f in _context.Fields on c.FieldID equals f.ID
                             join p in _context.Projects on c.ID equals p.CourseID
@@ -265,7 +266,7 @@ namespace PjBaySite.Controllers
                             select p;
             
 
-            return View(joinQuery.Distinct());
+            return View(searchQ.Distinct());
         }
 
         // GET: Projects/Details/5
@@ -373,7 +374,7 @@ namespace PjBaySite.Controllers
                             select c;
 
                 project.CourseID = query.First().ID;
-                project.Course = query.First();
+                //project.Course = query.First();
 
                 project.Purchased = false;
                 project.SubmitDate = DateTime.Now;

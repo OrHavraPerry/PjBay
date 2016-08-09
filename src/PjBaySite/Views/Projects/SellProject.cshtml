@@ -85,7 +85,7 @@
 
 
 <h2>Fill the details of the project you want to sell:</h2>
-
+@*the form begin here*@
 <form asp-controller="Projects" asp-action="SellProject">
     <div class="form-horizontal">
 
@@ -161,9 +161,10 @@
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
+                @*stops the form from submition in case the selections doesn't entered*@
                 <input type="submit" onclick="stopAction(); return false;" value="Create" class="btn btn-default" />
                 <script>
-                    function stopAction(event) {
+                    function stopAction() {
                         var select1 = document.getElementById("selectInstitute");
                         var selectedValue1 = select1.options[select1.selectedIndex].value;
 
@@ -174,12 +175,12 @@
                         var selectedValue3 = select3.options[select3.selectedIndex].value;
 
                         
-
-
                         if (!((selectedValue1 != '0') && (selectedValue2 != '0') && (selectedValue3 != '0') && (selectedValue4 != '0')))
                         {
                             alert("Please make a selection.");
+ 
                         }
+                        
 
                     }
                 </script>
