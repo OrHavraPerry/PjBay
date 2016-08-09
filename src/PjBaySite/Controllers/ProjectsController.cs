@@ -11,6 +11,7 @@ namespace PjBaySite.Controllers
     public class ProjectsController : Controller
     {
         private ApplicationDbContext _context;
+        
 
         public ProjectsController(ApplicationDbContext context)
         {
@@ -57,35 +58,50 @@ namespace PjBaySite.Controllers
                 return HttpNotFound();
             }
 
-            //------filling viewData of courses-------
-            var courses = new List<string>();
+            //------filling viewData of institutes-------
+            var institutes = new List<string>();
 
             // a query which takes the names of courses
-            var coursesQ = from c in _context.Courses
-                           select c.Name;
+            var institutesQ = from i in _context.Institutes
+                              select i.Name;
             //put the courses list into courses
-            courses.AddRange(coursesQ.Distinct());
+            institutes.AddRange(institutesQ.Distinct());
 
             //filling the viewData parameter which passes to the view
-            ViewData["courses"] = new SelectList(courses);
-            ViewData["FisrtCourse"] = (from c in _context.Courses
-                                      where c.ID == project.CourseID
-                                      select c.Name).First();
-            ViewData["date"] = project.SubmitDate;
+            ViewData["institutes"] = new SelectList(institutes.Distinct());
+
+            ViewData["PreviusInstitute"] = (from i in _context.Institutes
+                                          join c in _context.Courses on i.ID equals c.InstatuteID
+                                          join p in _context.Projects on c.ID equals p.CourseID
+                                          where p.ID == project.ID
+                                          select i.Name).First();
+            
+            ViewData["PreviousCourse"] = (from c in _context.Courses
+                                       where c.ID == project.CourseID
+                                       select c.Name).First();
+
+            ViewData["PreviousField"] = (from f in _context.Fields
+                                         join c in _context.Courses on f.ID equals c.FieldID
+                                         where c.ID == project.CourseID
+                                         select f.fieldName).First();
+            
             return View(project);
         }
 
         // POST: Projects/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Project project,string courses)
+        public IActionResult Edit(Project project,string courses,string institutes,string fields)
         {
             if (ModelState.IsValid)
             {
                 //find the id of course according to the course name
-                var query = from c in _context.Courses
-                            where c.Name == courses
+                var query = from i in _context.Institutes
+                            join c in _context.Courses on i.ID equals c.InstatuteID
+                            join f in _context.Fields on c.FieldID equals f.ID
+                            where i.Name == institutes && c.Name == courses && f.fieldName == fields
                             select c.ID;
+
                 //updating the id of course in project
                 project.CourseID = query.First();
 
@@ -94,18 +110,34 @@ namespace PjBaySite.Controllers
                 return RedirectToAction("Index");
             }
 
-            //------filling viewData of courses-------
-            var courses_1 = new List<string>();
+            //------filling viewData of institutes-------
+            var institutes_1 = new List<string>();
 
             // a query which takes the names of courses
-            var coursesQ = from c in _context.Courses
-                           select c.Name;
+            var institutesQ = from i in _context.Institutes
+                              select i.Name;
             //put the courses list into courses
-            courses_1.AddRange(coursesQ.Distinct());
+            institutes_1.AddRange(institutesQ.Distinct());
 
             //filling the viewData parameter which passes to the view
-            ViewData["courses"] = new SelectList(courses_1);
+            ViewData["institutes"] = new SelectList(institutes_1.Distinct());
 
+            ViewData["PreviusInstitute"] = (from i in _context.Institutes
+                                            join c in _context.Courses on i.ID equals c.InstatuteID
+                                            join p in _context.Projects on c.ID equals p.CourseID
+                                            where p.ID == project.ID
+                                            select i.Name).First();
+
+            ViewData["PreviousCourse"] = (from c in _context.Courses
+                                          where c.ID == project.CourseID
+                                          select c.Name).First();
+
+            ViewData["PreviousField"] = (from f in _context.Fields
+                                         join c in _context.Courses on f.ID equals c.FieldID
+                                         where c.ID == project.CourseID
+                                         select f.fieldName).First();
+
+            
             return View(project);
         }
 
@@ -123,7 +155,20 @@ namespace PjBaySite.Controllers
             {
                 return HttpNotFound();
             }
+            ViewData["PreviusInstitute"] = (from i in _context.Institutes
+                                            join c in _context.Courses on i.ID equals c.InstatuteID
+                                            join p in _context.Projects on c.ID equals p.CourseID
+                                            where p.ID == project.ID
+                                            select i.Name).First();
 
+            ViewData["PreviousCourse"] = (from c in _context.Courses
+                                          where c.ID == project.CourseID
+                                          select c.Name).First();
+
+            ViewData["PreviousField"] = (from f in _context.Fields
+                                         join c in _context.Courses on f.ID equals c.FieldID
+                                         where c.ID == project.CourseID
+                                         select f.fieldName).First();
             return View(project);
         }
 
@@ -447,6 +492,20 @@ namespace PjBaySite.Controllers
             {
                 return HttpNotFound();
             }
+            ViewData["PreviusInstitute"] = (from i in _context.Institutes
+                                            join c in _context.Courses on i.ID equals c.InstatuteID
+                                            join p in _context.Projects on c.ID equals p.CourseID
+                                            where p.ID == project.ID
+                                            select i.Name).First();
+
+            ViewData["PreviousCourse"] = (from c in _context.Courses
+                                          where c.ID == project.CourseID
+                                          select c.Name).First();
+
+            ViewData["PreviousField"] = (from f in _context.Fields
+                                         join c in _context.Courses on f.ID equals c.FieldID
+                                         where c.ID == project.CourseID
+                                         select f.fieldName).First();
 
             return View(project);
         }

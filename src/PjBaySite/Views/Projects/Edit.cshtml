@@ -5,96 +5,222 @@
     Layout = "_Layout";
 }
 
-<h2>Edit Project</h2>
+<script language="javascript" type="text/javascript">
+    function GetFieldByProject(instituteName) {
+        //what will be diplayed when waiting for answer
+        var processmessage = "<option value='0'> Please wait...</option>";
 
-<form asp-action="Edit">
-    <div class="form-horizontal">
-        
-        <hr />
-        <div asp-validation-summary="ValidationSummary.ModelOnly" class="text-danger"></div>
-        <input type="hidden" asp-for="ID" />
+        //before the answer from the server,the strings above will be shown
+        //# means id in html document
+        $("#selectField").html(processmessage).show();
 
-        <div class="form-group">
-            <label asp-for="Name" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger" />
-            </div>
-        </div>
 
-        <div class="form-group">
-            <label asp-for="CourseID" class="control-label col-md-2">Courses:</label>
-            <div class="col-md-10">
-                @Html.DropDownList("courses", null, ViewData["FisrtCourse"].ToString(), new { @class = "form-control" })
-                
-                @*<select asp-for="CourseID" name="CourseID" class="form-control"/>*@
-                <span asp-validation-for="CourseID" class="text-danger" />
+        //the controller and action that we send the request to.
+        var url = "/Projects/GetFieldByInstituteForSellView/";
+
+        $.ajax
+        ({
+            url: url,//the url we send the request to
+            data: { Name: instituteName },//the data we send to the url,into parameter Name in the action the name of the institute will be loaded
+            cache: false,
+            type: "POST",//sending by post
+            success: function (data)//the data that was returned from controller
+            {//when success
+                var markupField = "<option value='0'>Select Field</option>";//the first line of the dropdown list
+                for (var x = 0; x < data.length; x++) {//populate the list with the answer that came from server
+                    markupField += "<option value=\"" + data[x].Text + "\">" + data[x].Text + "</option>";
+                }
+                $("#selectField").html(markupField).show();//display the data
+                $("#selectCourse").html("<option value='0'></option>").show();
+
+
+                $("#selectInstitute").prop("disabled", false);
+                $("#selectField").prop("disabled", false);
+                $("#selectCourse").prop("disabled", true);
+
+            },
+            error: function (reponse) {
+                alert("error : " + reponse);
+            }
+        });
+
+    }
+
+
+    function GetCourse() {
+        var processmessage = "<option value='0'> Please wait...</option>";
+        $("#selectCourse").html(processmessage).show();
+
+        var url = "/Projects/GetCourseByInstituteAndFieldForSellView/";
+
+        $.ajax({
+            url: url,
+            //sending the line that was selected by the user from two fields (select1-institutes,select2-fields)
+            data: { instituteName: $("#selectInstitute :selected").text(), fieldName: $("#selectField :selected").text() },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                var markupCourse = "<option value='0'>Select Course</option>";
+                for (var x = 0; x < data.length; x++) {
+                    markupCourse += "<option value=\"" + data[x].Text + "\">" + data[x].Text + "</option>";
+                }
+                $("#selectCourse").html(markupCourse).show();
+
+                //enable and disable the suitable dropdown lists
+                $("#selectInstitute").prop("disabled", false);
+                $("#selectField").prop("disabled", false);
+                $("#selectCourse").prop("disabled", false);
+
+            },
+            error: function (reponse) {
+                alert("error : " + reponse);
+            }
+        });
+
+    }
+
+</script>
+<html>
+<head>
+    
+</head>
+<body>
+    <h2>Edit Project</h2>
+
+    <form asp-action="Edit">
+        <div class="form-horizontal">
+
+            <hr />
+            <div asp-validation-summary="ValidationSummary.ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ID" />
+
+
+
+            @*<div class="form-group">
+                    <label asp-for="CourseID" class="control-label col-md-2">Courses:</label>
+                    <div class="col-md-10">
+                        @Html.DropDownList("courses", null, ViewData["FisrtCourse"].ToString(), new { @class = "form-control" })
+                        <span asp-validation-for="CourseID" class="text-danger" />
+                    </div>
+                </div>*@
+
+            <div class="form-group">
+                <label for="select" class="col-md-2 control-label">Institutes</label>
+                <div class="col-lg-10">
+                    @*first argument:the viewdata that populate the dropdown list,second argument:list that populate the dropdown
+                        third argument:the firt line that is selected in the dropwon list,forth argument:the attributes that populate the select(dropdon).
+                    *@
+                    @Html.DropDownList("institutes", null, "Select Institute", new { @id = "selectInstitute", @class = "form-control", @onchange = "javascript:GetFieldByProject(this.value);" })
+                    <label>The previous selection:  @ViewData["PreviusInstitute"].ToString()</label>
+                </div>
+
+            </div>
+            <div class="form-group">
+                <label for="select" class="col-md-2 control-label">Fields</label>
+                <div class="col-lg-10">
+                    <select id="selectField" name="fields" class="form-control" onchange="GetCourse()" disabled="disabled"></select>
+                    <label>The previous selection:  @ViewData["PreviousField"].ToString()</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="select" class="col-md-2 control-label">Courses</label>
+                <div class="col-lg-10">
+                    <select id="selectCourse" name="courses" class="form-control" disabled="disabled"></select>
+                    <label>The previous selection:  @ViewData["PreviousCourse"].ToString()</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Grade" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="Grade" class="form-control" />
+                    <span asp-validation-for="Grade" class="text-danger" />
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="Price" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="Price" class="form-control" />
+                    <span asp-validation-for="Price" class="text-danger" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Purchased" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input type="checkbox" asp-for="Purchased" class="checkbox" />
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="SubmitDate" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input type="date" asp-for="SubmitDate" class="form-control" />
+                    <span asp-validation-for="SubmitDate" class="text-danger" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <textarea asp-for="Description" class="form-control" rows="7"></textarea>
+                    <span asp-validation-for="Description" class="text-danger" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Picture" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="Picture" class="form-control" />
+                    <span asp-validation-for="Picture" class="text-danger" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Video" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="Video" class="form-control" />
+                    <span asp-validation-for="Video" class="text-danger" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" onclick="stopAction(); return false;" value="Save" class="btn btn-default" />
+                    <script>
+                        function stopAction()
+                        {
+                            var select1 = document.getElementById("selectInstitute");
+                            var selectedValue1 = select1.options[select1.selectedIndex].value;
+
+                            var select2 = document.getElementById("selectField");
+                            var selectedValue2 = select2.options[select2.selectedIndex].value;
+
+                            var select3 = document.getElementById("selectCourse");
+                            var selectedValue3 = select3.options[select3.selectedIndex].value;
+
+
+                            if (!((selectedValue1 != '0') && (selectedValue2 != '0') && (selectedValue3 != '0') && (selectedValue4 != '0')))
+                            {
+                                alert("Please make a selection.");
+                            
+                            }
+                        
+                        }
+                    </script>
+                </div>
             </div>
         </div>
-        
-        <div class="form-group">
-            <label asp-for="Grade" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Grade" class="form-control" />
-                <span asp-validation-for="Grade" class="text-danger" />
-            </div>
-        </div>
-        
-        
-        <div class="form-group">
-            <label asp-for="Price" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="Purchased" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input type="checkbox" asp-for="Purchased" class="checkbox" />
-                
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="SubmitDate" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input type="date" asp-for="SubmitDate" class="form-control" />
-                <span asp-validation-for="SubmitDate" class="text-danger" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="Description" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <textarea asp-for="Description" class="form-control" rows="7"></textarea>
-                <span asp-validation-for="Description" class="text-danger" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="Picture" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Picture" class="form-control" />
-                <span asp-validation-for="Picture" class="text-danger" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="Video" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Video" class="form-control" />
-                <span asp-validation-for="Video" class="text-danger" />
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
+    </form>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
     </div>
-</form>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
+</body>
+</html>
 @section Scripts {
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>

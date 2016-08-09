@@ -9,7 +9,30 @@
 <div>
     <hr />
     <dl class="dl-horizontal">
+        <dt>
+            Institute
+        </dt>
+        <dd>
+            @ViewData["PreviusInstitute"].ToString()
 
+        </dd>
+        <br />
+        <dt>
+            Course
+        </dt>
+        <dd>
+            @ViewData["PreviousCourse"].ToString()
+
+        </dd>
+        <br />
+        <dt>
+            Field
+        </dt>
+        <dd>
+            @ViewData["PreviousField"].ToString()
+
+        </dd>
+        <br />
         <dt>
             @Html.DisplayNameFor(model => model.Name)
         </dt>
