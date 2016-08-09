@@ -36,11 +36,21 @@ namespace PjBaySite.Controllers
             //                value = FieldGroup.Count()
             //            };
 
-            var q = from f in _context.Fields
-                    join c in _context.Courses on f.ID equals c.FieldID
-                    join p in _context.Projects on c.ID equals p.CourseID
-                    group p by f.fieldName into FieldsGroup
-                    select FieldsGroup;
+            var q = _context.Fields
+                            .Join(
+                                _context.Courses,
+                                f => f.ID,
+                                c => c.FieldID,
+                                (f, c) => new { FieldName = f.fieldName, CourseID = c.ID }).ToList()
+                            .Join(
+                                _context.Projects,
+                                fc => fc.CourseID,
+                                pr => pr.CourseID,
+                                (fc, pr) => new { Field = fc.FieldName, Project = pr }).ToList()
+                            .GroupBy(fc => fc.Field)
+                            .Select(g => new { FieldName = g.Key, Count = g.Count() });
+
+            var p = _context.Projects;
 
             string path = @"c:\temp\GraphA.tsv";
 
@@ -59,11 +69,11 @@ namespace PjBaySite.Controllers
                     // Header
                     fs.WriteLine("letter\tfrequency");
 
-                    //foreach (var field in q)
-                    //{
-                    //    //var newLine = string.Format("{0}\t{1}", field.Key, field.Count);
-                    //    fs.WriteLine(newLine);
-                    //}
+                    foreach (var fc in q)
+                    {
+                        var newLine = string.Format("{0}\t{1}", fc.FieldName, fc.Count);
+                        fs.WriteLine(newLine);
+                    }
                 }
 
                 FileInfo file = new FileInfo(path);
