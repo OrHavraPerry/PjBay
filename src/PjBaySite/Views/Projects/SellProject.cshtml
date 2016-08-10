@@ -82,7 +82,34 @@
 
 </script>
 
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>
 
+    $(document).ready(function() {
+        $("#createButton").click(function ()
+        {
+            //the selected item in dropdown list of institute
+            var selectedInstitute = $("#selectInstitute").val();
+            var selectedCourse = $("#selectCourse").val();
+            var selectedField = $("#selectField").val();
+
+            if ((selectedInstitute == 0) || (selectedCourse == 0) || (selectedField == 0))
+            {
+                alert("Please make a selection!");
+                return false;
+            }
+            else
+            {
+                return true;
+
+            }
+        });
+    });
+    </script>
+    </head>
+<body>
 
 <h2>Fill the details of the project you want to sell:</h2>
 @*the form begin here*@
@@ -162,36 +189,11 @@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 @*stops the form from submition in case the selections doesn't entered*@
-                <input type="submit" onclick="stopAction(); return false;" value="Create" class="btn btn-default" />
-                <script>
-                    function stopAction() {
-                        var select1 = document.getElementById("selectInstitute");
-                        var selectedValue1 = select1.options[select1.selectedIndex].value;
-
-                        var select2 = document.getElementById("selectField");
-                        var selectedValue2 = select2.options[select2.selectedIndex].value;
-
-                        var select3 = document.getElementById("selectCourse");
-                        var selectedValue3 = select3.options[select3.selectedIndex].value;
-
-                        
-                        if (!((selectedValue1 != '0') && (selectedValue2 != '0') && (selectedValue3 != '0') && (selectedValue4 != '0')))
-                        {
-                            alert("Please make a selection.");
- 
-                        }
-                        
-
-                    }
-                </script>
+                <input type="submit" id="createButton" value="Create" class="btn btn-default" />
+                
             </div>
         </div>
     </div>
 </form>
 
-
-@section Scripts {
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-}
+</body></html>

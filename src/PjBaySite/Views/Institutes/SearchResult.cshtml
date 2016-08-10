@@ -34,10 +34,14 @@
         <td>
             @Html.DisplayFor(modelItem => item.Address)
         </td>
-
+        <td>
+            <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+            <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+            <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+        </td>
     </tr>
 }
 </table>
-    <a asp-action="Index">Back to List</a>
+    <a onclick="history.go(-1);return false;">Back to search</a>
 </body>
 </html>

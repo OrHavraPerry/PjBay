@@ -11,6 +11,23 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
+            Institute
+        </dt>
+        <dd>
+            @ViewData["PreviusInstitute"].ToString()
+
+        </dd>
+        <br />
+        
+        <dt>
+            Field
+        </dt>
+        <dd>
+            @ViewData["PreviousField"].ToString()
+
+        </dd>
+        <br />
+        <dt>
             @Html.DisplayNameFor(model => model.Name)
         </dt>
         <dd>
@@ -20,5 +37,6 @@
 </div>
 <p>
     <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
+    <a onclick="history.go(-1);return false;">Back</a> |
     <a asp-action="Index">Back to List</a>
 </p>

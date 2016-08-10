@@ -119,12 +119,14 @@
 
     </dl>
     
-    <form asp-action="Delete">
+    <form asp-action="DeleteConfirmed">
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-default" /> 
             
         </div>
         <br /><br/>
-        <a asp-action="Index">Back to List</a>
+        @* redirct to previos page *@
+        <a onclick="history.go(-1);return false;">Back</a> |
+        <a asp-action="Index">Back to Main</a>
     </form>
 </div>

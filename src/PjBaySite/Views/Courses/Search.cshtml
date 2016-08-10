@@ -1,10 +1,8 @@
-@model PjBaySite.Models.Institute
+@model PjBaySite.Models.Course
 
 @{
     ViewData["Title"] = "Search";
 }
-
-<!DOCTYPE html>
 
 <html>
 <head>
@@ -14,7 +12,7 @@
     $(document).ready(function() {
         $("#searchButton").click(function ()
         {
-            var name = $("#Name").val();
+            var name = $("#name").val();
 
             if (name=='')
             {
@@ -30,17 +28,22 @@
     });
     </script>
 </head>
+
 <body>
-    
-    <form asp-controller="Institutes" asp-action="SearchResult" method="post">
-        <h2>Search Institute:</h2>
-        <hr />
-        <div asp-validation-summary="ValidationSummary.ModelOnly" class="text-danger"></div>
+
+
+    <h2>Search a Course</h2>
+
+    <form asp-action="SearchResult">
         <div class="form-horizontal">
+
+            <hr />
+            <div asp-validation-summary="ValidationSummary.ModelOnly" class="text-danger"></div>
+
             <div class="form-group">
                 <label asp-for="Name" class="col-md-2 control-label"></label>
                 <div class="col-md-10">
-                    <input asp-for="Name" name="Name" class="form-control" />
+                    <input asp-for="Name" name="name" class="form-control" />
                     <span asp-validation-for="Name" class="text-danger" />
                 </div>
             </div>
@@ -51,9 +54,9 @@
             </div>
         </div>
     </form>
+
     <div>
         <a asp-action="Index">Back to List</a>
     </div>
-
 </body>
 </html>

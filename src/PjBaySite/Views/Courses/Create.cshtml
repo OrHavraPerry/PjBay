@@ -4,46 +4,74 @@
     ViewData["Title"] = "Create";
 }
 
-<h2>Create</h2>
 
-<form asp-action="Create">
-    <div class="form-horizontal">
-        <h4>Course</h4>
-        <hr />
-        <div asp-validation-summary="ValidationSummary.ModelOnly" class="text-danger"></div>
-        <div class="form-group">
-            <label asp-for="FieldID" class="col-md-2 control-label">Field Name</label>
-            <div class="col-md-10">
-                @Html.DropDownList("FieldName", null, "Select Field", new {@class = "form-control"})
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>
+
+    $(document).ready(function() {
+        $("#createButton").click(function ()
+        {
+            //the selected item in dropdown list of institute
+            var selectedInstitute = $("#selectInstitute").val();
+            var selectedField = $("#selectField").val();
+
+            if ((selectedInstitute == 0) || (selectedField == 0))
+            {
+                alert("Please make a selection!");
+                return false;
+            }
+            else
+            {
+                return true;
+
+            }
+        });
+    });
+    </script>
+</head>
+<body>
+
+
+    <h2>Create</h2>
+
+    <form asp-action="Create">
+        <div class="form-horizontal">
+            <h4>Course</h4>
+            <hr />
+            <div asp-validation-summary="ValidationSummary.ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="InstatuteID" class="col-md-2 control-label">Instatute Name</label>
+                <div class="col-md-10">
+                    @Html.DropDownList("institutes", null, "Select Institute", new { @id = "selectInstitute", @class = "form-control"})
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="FieldID" class="col-md-2 control-label">Field Name</label>
+                <div class="col-md-10">
+                    @Html.DropDownList("fields", null, "Select Field", new { @id = "selectField", @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Name" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="Name" name="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" id="createButton" value="Create" class="btn btn-default" />
+                </div>
             </div>
         </div>
-        <div class="form-group">
-            <label asp-for="InstatuteID" class="col-md-2 control-label">Instatute Name</label>
-            <div class="col-md-10">
-                @Html.DropDownList("InstatuteName", null, "Select Instatute", new { @class = "form-control" })
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="Name" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Name" name="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger" />
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
+    </form>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
     </div>
-</form>
+</body>
+</html>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-}

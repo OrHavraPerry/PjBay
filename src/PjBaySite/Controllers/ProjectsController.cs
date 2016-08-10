@@ -244,12 +244,13 @@ namespace PjBaySite.Controllers
 
             return View();
         }
-
+        //----------------ajax calls for buyProject--------
         
-
+        //ajax call for fields that match with the selected institute
         [HttpPost]
         public ActionResult GetFieldByInstitute(string Name)
         {
+            
             var queryField = from f in _context.Fields
                         join c in _context.Courses on f.ID equals c.Field.ID
                         join i in _context.Institutes on c.InstatuteID equals i.ID
@@ -295,7 +296,7 @@ namespace PjBaySite.Controllers
             
             return Json(projectList);
         }
-
+        //end ajax calls
        
 
         [HttpPost]
@@ -344,12 +345,11 @@ namespace PjBaySite.Controllers
                 Console.WriteLine(e);
                 
             }
-            
 
             return View();
         }
 
-
+        //-----------------ajax call for sellProject and manager--------
         //sellProject view
         [HttpPost]
         public ActionResult GetFieldByInstituteForSellView(string Name)
@@ -380,7 +380,7 @@ namespace PjBaySite.Controllers
 
             return Json(courseList);
         }
-
+        //----------------end ajax calls for sellProject and manager------
 
         // GET: Projects/SellProject
         public IActionResult SellProject()
@@ -392,6 +392,9 @@ namespace PjBaySite.Controllers
 
             // a query which takes the names of courses
             var institutesQ = from i in _context.Institutes
+                              join c in _context.Courses on i.ID equals c.InstatuteID
+                              join p in _context.Projects on c.ID equals p.CourseID
+                              where p.Purchased == false
                               select i.Name;
             //put the courses list into courses
             institutes.AddRange(institutesQ.Distinct());
@@ -560,6 +563,20 @@ namespace PjBaySite.Controllers
             ViewData["institutes"] = new SelectList(instituteList.Distinct());
             return View(project);
         }
-        
+
+        public IActionResult ManagerSearch()
+        {
+            return View();
+        }
+        //Search result for institute
+        [HttpPost]
+        public IActionResult ManagerSearchResult(string name)
+        {
+            var searchResultQ = from p in _context.Projects
+                                where p.Name.Contains(name)
+                                select p;
+
+            return View(searchResultQ.Distinct());
+        }
     }
 }

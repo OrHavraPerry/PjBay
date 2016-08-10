@@ -4,48 +4,83 @@
     ViewData["Title"] = "Edit";
 }
 
-<h2>Edit</h2>
 
-<form asp-action="Edit">
-    <div class="form-horizontal">
-        <h4>Course</h4>
-        <hr />
-        <div asp-validation-summary="ValidationSummary.ModelOnly" class="text-danger"></div>
-        <div class="form-group">
-            <label asp-for="FieldID" class="control-label col-md-2">FieldID</label>
-            <div class="col-md-10">
-                <select asp-for="FieldID" class="form-control" />
-                <span asp-validation-for="FieldID" class="text-danger" />
+
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>
+
+    $(document).ready(function() {
+        $("#saveButton").click(function ()
+        {
+            //the selected item in dropdown list of institute
+            var selectedInstitute = $("#selectInstitute").val();
+            var selectedField = $("#selectField").val();
+
+            if ((selectedInstitute == 0) || (selectedField == 0))
+            {
+                alert("Please make a selection!");
+                return false;
+            }
+            else
+            {
+                return true;
+
+            }
+        });
+
+    });
+    </script>
+</head>
+<body>
+
+
+    <h2>Edit</h2>
+
+    <form asp-action="Edit">
+        <div class="form-horizontal">
+            <h4>Course</h4>
+            <hr />
+            <div asp-validation-summary="ValidationSummary.ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="InstatuteID" class="control-label col-md-2">InstatuteID</label>
+                <div class="col-md-10">
+                    @*first argument:the viewdata that populate the dropdown list,second argument:list that populate the dropdown
+                        third argument:the firt line that is selected in the dropwon list,forth argument:the attributes that populate the select(dropdon).
+                    *@
+                    @Html.DropDownList("institutes", null, "Select Institute", new { @id = "selectInstitute", @class = "form-control", @onchange = "javascript:GetFieldByInstitute(this.value);" })
+                    <label>The previous selection:  @ViewData["PreviusInstitute"].ToString()</label>
+                    <span asp-validation-for="InstatuteID" class="text-danger" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="FieldID" class="control-label col-md-2">FieldID</label>
+                <div class="col-md-10">
+                    @Html.DropDownList("fields", null, "Select Field", new { @id = "selectField", @class = "form-control" })
+                    <label>The previous selection:  @ViewData["PreviousField"].ToString()</label>
+                    <span asp-validation-for="FieldID" class="text-danger" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" id="saveButton" value="Save" class="btn btn-default" />
+                </div>
             </div>
         </div>
-        <div class="form-group">
-            <label asp-for="InstatuteID" class="control-label col-md-2">InstatuteID</label>
-            <div class="col-md-10">
-                <select asp-for="InstatuteID" class="form-control" />
-                <span asp-validation-for="InstatuteID" class="text-danger" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="Name" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger" />
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
+    </form>
+
+    <div>
+        <a onclick="history.go(-1);return false;">Back</a> |
+        <a asp-action="Index">Back to Main</a>
     </div>
-</form>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-}
+</body>
+</html>

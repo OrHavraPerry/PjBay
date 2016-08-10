@@ -82,27 +82,49 @@
 </script>
 <html>
 <head>
-    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>
+
+    $(document).ready(function() {
+        $("#saveButton").click(function ()
+        {
+            //the selected item in dropdown list of institute
+            var selectedInstitute = $("#selectInstitute").val();
+            var selectedCourse = $("#selectCourse").val();
+            var selectedField = $("#selectField").val();
+            
+            if ((selectedInstitute == 0) || (selectedCourse == 0) || (selectedField == 0))
+            {
+                alert("Please make a selection!");
+                return false;
+            }
+            else
+            {
+                return true;
+
+            }
+        });
+
+        //$(function()
+        //{
+        //    //getting the previous page
+        //    var referrer = document.referrer;
+        //    //var referrer = Request.UrlReferrer;
+        //    //var referrer = Request.ServerVariables["http_referer"];
+        //    alert(referrer);
+        //    $("#back").attr("href", referrer);
+        //})
+    });
+    </script>
 </head>
 <body>
     <h2>Edit Project</h2>
 
     <form asp-action="Edit">
         <div class="form-horizontal">
-
             <hr />
             <div asp-validation-summary="ValidationSummary.ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ID" />
-
-
-
-            @*<div class="form-group">
-                    <label asp-for="CourseID" class="control-label col-md-2">Courses:</label>
-                    <div class="col-md-10">
-                        @Html.DropDownList("courses", null, ViewData["FisrtCourse"].ToString(), new { @class = "form-control" })
-                        <span asp-validation-for="CourseID" class="text-danger" />
-                    </div>
-                </div>*@
 
             <div class="form-group">
                 <label for="select" class="col-md-2 control-label">Institutes</label>
@@ -189,40 +211,18 @@
             </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" onclick="stopAction(); return false;" value="Save" class="btn btn-default" />
-                    <script>
-                        function stopAction()
-                        {
-                            var select1 = document.getElementById("selectInstitute");
-                            var selectedValue1 = select1.options[select1.selectedIndex].value;
-
-                            var select2 = document.getElementById("selectField");
-                            var selectedValue2 = select2.options[select2.selectedIndex].value;
-
-                            var select3 = document.getElementById("selectCourse");
-                            var selectedValue3 = select3.options[select3.selectedIndex].value;
-
-
-                            if (!((selectedValue1 != '0') && (selectedValue2 != '0') && (selectedValue3 != '0') && (selectedValue4 != '0')))
-                            {
-                                alert("Please make a selection.");
-                            
-                            }
-                        
-                        }
-                    </script>
+                    <input type="submit" id="saveButton" value="Save" class="btn btn-default" />
                 </div>
             </div>
         </div>
     </form>
 
     <div>
-        <a asp-action="Index">Back to List</a>
+        
+        <a onclick="history.go(-1);return false;">Back</a> |
+        <a asp-action="Index">Back to Main</a>
+        
     </div>
 </body>
 </html>
-@section Scripts {
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-}
+
