@@ -4,27 +4,53 @@ using Microsoft.AspNet.Mvc;
 using PjBaySite.Models;
 using System.IO;
 using Microsoft.Data.Entity;
+using Microsoft.Extensions.Logging;
 
 namespace PjBaySite.Controllers
 {
     public class StatisticsController : Controller
     {
         private ApplicationDbContext _context;
+        private readonly ILogger<StatisticsController> _logger;
 
-        public StatisticsController(ApplicationDbContext context)
+        public StatisticsController(ApplicationDbContext context, ILogger<StatisticsController> logger)
         {
             _context = context;
+            _logger = logger;
         }
         public IActionResult Index()
         {
             return View();
         }
+        private FileInfo PrepareFile(string fileName)
+        {
+            FileInfo fiFile = null;
 
+            try
+            {
+                // Create Temp Dir
+                var TempDir = new DirectoryInfo(PjBaySite.Properties.Resource.TempDirPath);
+                if (!TempDir.Exists) TempDir.Create();
+
+                fiFile = new FileInfo(Path.Combine(TempDir.FullName, fileName));
+
+                if (fiFile.Exists) fiFile.Delete();
+                fiFile.Create().Dispose();
+            }
+            catch (Exception ex)
+            {
+                //TODO: Handle Exeption
+                _logger.LogCritical("Error While Creating File", ex);
+                throw;
+            }
+
+            return fiFile;
+        }
+        #region Graphs
         public ActionResult GraphA()
         {
             return View();
         }
-
         public ActionResult GraphAData()
         {
             //var query = from p in _context.Projects.Include(p => p.Course)
@@ -52,19 +78,13 @@ namespace PjBaySite.Controllers
 
             var p = _context.Projects;
 
-            string path = @"c:\temp\GraphA.tsv";
-
             try
             {
+                // Prepare File
+                var fiFile = PrepareFile(new Random().Next(10000,99999) + PjBaySite.Properties.Resource.GraphAFile);
 
-                // Delete the file if it exists.
-                if (System.IO.File.Exists(path))
-                {
-                    System.IO.File.Delete(path);
-                }
-
-                // Create the file.
-                using (StreamWriter fs = new StreamWriter(System.IO.File.Create(path)))
+                // Fill the file.
+                using (StreamWriter fs = new StreamWriter(fiFile.OpenWrite()))
                 {
                     // Header
                     fs.WriteLine("letter\tfrequency");
@@ -76,31 +96,29 @@ namespace PjBaySite.Controllers
                     }
                 }
 
-                FileInfo file = new FileInfo(path);
-                return File(file.Open(FileMode.Open, FileAccess.Read), "text/tsv", "data.tsv");
+                return File(fiFile.Open(FileMode.Open, FileAccess.Read), "text/tsv", "data.tsv");
             }
             catch (Exception ex)
             {
                 // Error ex
+                _logger.LogCritical("Error While Creating GraphB", ex);
             }
 
             return RedirectToAction("Index");
         }
-
         public ActionResult GraphB()
         {
             return View();
         }
-
         public ActionResult GraphBData()
         {
             var query0_59 = (from p in _context.Projects
-                            where p.Grade>=0 && p.Grade < 60
-                            select p).Count();
+                             where p.Grade >= 0 && p.Grade < 60
+                             select p).Count();
 
             var query60_69 = (from p in _context.Projects
-                             where p.Grade >= 60 && p.Grade < 70
-                             select p).Count();
+                              where p.Grade >= 60 && p.Grade < 70
+                              select p).Count();
 
             var query70_79 = (from p in _context.Projects
                               where p.Grade >= 70 && p.Grade < 80
@@ -108,8 +126,8 @@ namespace PjBaySite.Controllers
 
 
             var query80_85 = (from p in _context.Projects
-                             where p.Grade >= 80 && p.Grade < 85
-                             select p).Count();
+                              where p.Grade >= 80 && p.Grade < 85
+                              select p).Count();
 
             var query86_90 = (from p in _context.Projects
                               where p.Grade >= 85 && p.Grade < 90
@@ -117,29 +135,24 @@ namespace PjBaySite.Controllers
 
 
             var query90_95 = (from p in _context.Projects
-                             where p.Grade >= 90 && p.Grade < 95
-                             select p).Count();
-
-            var query96_100 = (from p in _context.Projects
-                              where p.Grade >= 95 && p.Grade <= 100
+                              where p.Grade >= 90 && p.Grade < 95
                               select p).Count();
 
-            string path = @"C:\Users\liron\Source\Repos\PjBay\src\PjBaySite\wwwroot\files/GraphB.csv";
+            var query96_100 = (from p in _context.Projects
+                               where p.Grade >= 95 && p.Grade <= 100
+                               select p).Count();
 
             try
             {
+                // Prepare File
+                var fiFile = PrepareFile(new Random().Next(10000, 99999) + PjBaySite.Properties.Resource.GraphBFile);
 
-                // Delete the file if it exists.
-                if (System.IO.File.Exists(path))
-                {
-                    System.IO.File.Delete(path);
-                }
-                // Create the file.
-                using (StreamWriter fs = new StreamWriter(System.IO.File.Create(path)))
+                // Fill the file.
+                using (StreamWriter fs = new StreamWriter(fiFile.OpenWrite()))
                 {
                     // Header
                     fs.WriteLine("age,population");
-                    
+
                     var newLine = string.Format("{0},{1}", "0-59", query0_59);
                     fs.WriteLine(newLine);
 
@@ -163,15 +176,16 @@ namespace PjBaySite.Controllers
 
                 }
 
-                FileInfo file = new FileInfo(path);
-                return File(file.Open(FileMode.Open, FileAccess.Read), "text/tsv", "data.csv");
+                return File(fiFile.Open(FileMode.Open, FileAccess.Read), "text/tsv", "data.csv");
             }
             catch (Exception ex)
             {
                 // Error ex
+                _logger.LogCritical("Error While Creating GraphB", ex);
             }
             return RedirectToAction("Index");
-        }
+        } 
+        #endregion
 
     }
 }
