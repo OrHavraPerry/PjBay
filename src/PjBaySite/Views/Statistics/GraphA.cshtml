@@ -52,7 +52,6 @@ var xAxis = d3.svg.axis()
 var yAxis = d3.svg.axis()
     .scale(y)
     .orient("left")
-    .ticks(10, "%");
 
 var svg = d3.select("body").append("svg")
     .attr("width", width + margin.left + margin.right)
@@ -64,8 +63,8 @@ d3.tsv("@Url.Action("GraphAData")", type, function(error, data) {
   if (error) throw error;
 
   x.domain(data.map(function(d) { return d.letter; }));
-  //y.domain([0, d3.max(data, function (d) { return d.frequency; })]);
-  y.domain([0, function (d) { return d.frequency; }]);
+  y.domain([0, d3.max(data, function (d) { return d.frequency; })]);
+  ///y.domain([0, function (d) { return d.frequency; }]);
 
   svg.append("g")
       .attr("class", "x axis")

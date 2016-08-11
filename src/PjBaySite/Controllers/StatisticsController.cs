@@ -52,7 +52,7 @@ namespace PjBaySite.Controllers
 
             var p = _context.Projects;
 
-            string path = @"c:\temp\GraphA.tsv";
+            string path = @"C:\Users\liron\Source\Repos\PjBay\src\PjBaySite\wwwroot\files/GraphA.tsv";
 
             try
             {
