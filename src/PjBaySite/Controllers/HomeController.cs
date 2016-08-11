@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using PjBaySite.Models;
 using Microsoft.Data.Entity;
+using Microsoft.AspNet.Mvc.Rendering;
 
 namespace PjBaySite.Controllers
 {
@@ -29,6 +30,21 @@ namespace PjBaySite.Controllers
         {
             ViewData["Message"] = "Your application description page.";
 
+            //------filling viewData of institutes-------
+            var institutes_1 = new List<string>();
+
+            // a query which takes the names of courses
+            var institutesQ = from i in _context.Institutes
+                              select i.Name;
+            //put the courses list into courses
+            institutes_1.AddRange(institutesQ.Distinct());
+
+            //filling the viewData parameter which passes to the view
+            ViewData["institutes"] = new SelectList(institutes_1.Distinct());
+
+
+            
+
             return View();
         }
 
@@ -42,6 +58,19 @@ namespace PjBaySite.Controllers
         public IActionResult Error()
         {
             return View();
+        }
+
+        [HttpPost]
+        public string GetInstituteAdress(string name)
+        {
+
+            var queryAddress = from i in _context.Institutes
+                               where i.Name==name
+                             select i.Address;
+
+            
+
+            return queryAddress.First().ToString();
         }
     }
 }
