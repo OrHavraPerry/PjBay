@@ -42,11 +42,7 @@ namespace PjBaySite.Controllers
             ////filling the viewData parameter which passes to the view
             //ViewData["institutes"] = new SelectList(institutes_1.Distinct());
 
-            var query = from i in _context.Institutes
-                        select i.Address;
-            
-
-            return View(query.Distinct());
+            return View();
         }
 
         public IActionResult Contact()
@@ -61,17 +57,12 @@ namespace PjBaySite.Controllers
             return View();
         }
 
-        [HttpPost]
-        public string GetInstituteAdress(string name)
+        [HttpGet]
+        public string[][] GetInstituteAdresses()
         {
-
-            var queryAddress = from i in _context.Institutes
-                               where i.Name==name
-                             select i.Address;
-
-            
-
-            return queryAddress.First().ToString();
+            var query = from i in _context.Institutes
+                        select new string[] { i.Name, i.Address };
+            return query.ToArray();
         }
     }
 }

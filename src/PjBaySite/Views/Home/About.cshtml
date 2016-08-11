@@ -27,17 +27,20 @@
 
             map = new google.maps.Map(document.getElementById("googleMap"), myOptions);
 
-            codeAddress();
-
+            $.get("@Url.Action("GetInstituteAdresses", "Home")",
+                function (data){
+                    for (var i = 0; i < data.length; i++){
+                        codeAddress(data[i][1], data[i][0]);
+                    }
+                });
         }
 
 
-        function codeAddress() {
+        function codeAddress(address,name) {
 
             @*@Url.Action("GetInstituteAdress")*@
-            
-            var address = "Kottayam, Kerala";
-            alert(address);
+
+            //var address = "Kottayam, Kerala";
             geocoder.geocode({ 'address': address }, function (results, status) {
 
                 if (status == google.maps.GeocoderStatus.OK) {
@@ -47,6 +50,8 @@
                     var marker = new google.maps.Marker({
 
                         map: map,
+
+                        title: name,
 
                         position: results[0].geometry.location
                     });
@@ -77,13 +82,6 @@
     </p>
 
     @*@Html.DropDownList("institutes", null, "Select Institute", new { @id = "institutes", @class = "form-control", @onchange = "javascript:GetFieldCourseProject(this.value);" })*@
-
-    @foreach(var item in Model)
-    {
-        
-
-    }
-
 
     <div id="googleMap" style="width:400px;height:400px;"></div>
     
