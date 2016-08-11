@@ -30,22 +30,23 @@ namespace PjBaySite.Controllers
         {
             ViewData["Message"] = "Your application description page.";
 
-            //------filling viewData of institutes-------
-            var institutes_1 = new List<string>();
+            ////------filling viewData of institutes-------
+            //var institutes_1 = new List<string>();
 
-            // a query which takes the names of courses
-            var institutesQ = from i in _context.Institutes
-                              select i.Name;
-            //put the courses list into courses
-            institutes_1.AddRange(institutesQ.Distinct());
+            //// a query which takes the names of courses
+            //var institutesQ = from i in _context.Institutes
+            //                  select i.Name;
+            ////put the courses list into courses
+            //institutes_1.AddRange(institutesQ.Distinct());
 
-            //filling the viewData parameter which passes to the view
-            ViewData["institutes"] = new SelectList(institutes_1.Distinct());
+            ////filling the viewData parameter which passes to the view
+            //ViewData["institutes"] = new SelectList(institutes_1.Distinct());
 
-
+            var query = from i in _context.Institutes
+                        select i.Address;
             
 
-            return View();
+            return View(query.Distinct());
         }
 
         public IActionResult Contact()

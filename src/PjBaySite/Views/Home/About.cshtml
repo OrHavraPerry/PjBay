@@ -35,6 +35,7 @@
         function codeAddress() {
 
             @*@Url.Action("GetInstituteAdress")*@
+            
             var address = "Kottayam, Kerala";
             alert(address);
             geocoder.geocode({ 'address': address }, function (results, status) {
@@ -75,7 +76,14 @@
         So we made this site.
     </p>
 
-    @Html.DropDownList("institutes", null, "Select Institute", new { @id = "institutes", @class = "form-control", @onchange = "javascript:GetFieldCourseProject(this.value);" })
+    @*@Html.DropDownList("institutes", null, "Select Institute", new { @id = "institutes", @class = "form-control", @onchange = "javascript:GetFieldCourseProject(this.value);" })*@
+
+    @foreach(var item in Model)
+    {
+        
+
+    }
+
 
     <div id="googleMap" style="width:400px;height:400px;"></div>
     
