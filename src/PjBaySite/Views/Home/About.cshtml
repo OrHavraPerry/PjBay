@@ -17,10 +17,10 @@
 
             geocoder = new google.maps.Geocoder();
 
-            var latlng = new google.maps.LatLng(10, 10);
+            var latlng = new google.maps.LatLng(10,10);
 
             var myOptions = {
-                zoom: 8,
+                zoom: 7,
                 center: latlng,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             }
@@ -81,8 +81,11 @@
         So we made this site.
     </p>
 
-    @*@Html.DropDownList("institutes", null, "Select Institute", new { @id = "institutes", @class = "form-control", @onchange = "javascript:GetFieldCourseProject(this.value);" })*@
-
+   <br />
+    <br />
+    <p class="myText">
+        The Universities and colleges we are working with:
+    </p>
     <div id="googleMap" style="width:400px;height:400px;"></div>
     
 
