@@ -52,7 +52,7 @@ namespace PjBaySite.Controllers
 
             var p = _context.Projects;
 
-            string path = @"C:\Users\liron\Source\Repos\PjBay\src\PjBaySite\wwwroot\files/GraphA.tsv";
+            string path = @"C:\Users\Marian\Source\Repos\PjBay\src\PjBaySite\wwwroot\files\GraphA.tsv";
 
             try
             {
@@ -124,7 +124,7 @@ namespace PjBaySite.Controllers
                               where p.Grade >= 95 && p.Grade <= 100
                               select p).Count();
 
-            string path = @"C:\Users\liron\Source\Repos\PjBay\src\PjBaySite\wwwroot\files/GraphB.csv";
+            string path = @"C:\Users\Marian\Source\Repos\PjBay\src\PjBaySite\wwwroot\files\GraphB.csv";
 
             try
             {

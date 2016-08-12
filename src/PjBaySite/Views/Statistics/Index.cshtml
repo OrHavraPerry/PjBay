@@ -3,15 +3,18 @@
 *@
 @{
 }
-<html>
+@*<html>
 <head>
     <link rel="stylesheet" href="~/css/side-menu.css">
 </head>
 
-<body>
+<body><aside>
     <div id="menu">
         <div class="pure-menu">
             <a class="pure-menu-heading" href="#">Statistics</a>
+            <br />
+            <br />
+            <br />
 
             <ul class="pure-menu-list">
                 <li class="pure-menu-item"><a asp-controller="Statistics" asp-action="GraphA" class="pure-menu-link">A</a></li>
@@ -19,6 +22,42 @@
             </ul>
         </div>
     </div>
+</aside>
     <script src="~/js/ui.js"></script>
+</body>
+</html>*@
+
+
+<script type="text/javascript">
+function GoToSomeLink(obj) //if parameters are used use them here also.
+{
+    var count=parseInt(obj); //use this count varible anywhere in the function
+    $(#menuDiv).show(); //any div show or hide
+    return false;
+
+}
+</script>
+
+<html>
+<head>
+
+</head>
+
+<body>
+    <aside>
+        <div>
+            <div>
+                <h1>Statisics:</h1>
+
+                <ul>
+                    <li><a asp-controller="Statistics" asp-action="GraphA">Projects in each field</a></li>
+                    <li><a asp-controller="Statistics" asp-action="GraphB">Distribution of grades</a></li>
+                </ul>
+            </div>
+        </div>
+    </aside>
+    <div id="menuDiv">
+        
+    </div>
 </body>
 </html>
