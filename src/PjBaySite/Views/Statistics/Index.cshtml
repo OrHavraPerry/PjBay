@@ -2,7 +2,7 @@
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-   
+    Layout = "_Layout";
 }
 
 
@@ -11,7 +11,8 @@
         <link rel="stylesheet" href="~/css/side-menu.css">
     </head>
 
-    <body><aside>
+    <body>
+        <aside>
         <div id="menu">
             <div class="pure-menu">
                 <br />
@@ -22,13 +23,14 @@
                 <br />
                 <br />
 
-                <ul class="pure-menu-list">
-                    <li class="pure-menu-item"><a asp-controller="Statistics" asp-action="GraphA" class="pure-menu-link">Projects in each field</a></li>
+                <ul class="pure-menu-list" style="list-style-type: none; margin: 0;padding: 0;position: absolute;">
+                    <li class="pure-menu-item"><a asp-controller="Statistics" asp-action="GraphA" class="pure-menu-link" target="_self">Projects in each field</a></li>
                     <li class="pure-menu-item"><a asp-controller="Statistics" asp-action="GraphB" class="pure-menu-link">Distribution of grades</a></li>
                 </ul>
             </div>
         </div>
     </aside>
+        <section></section>
         <script src="~/js/ui.js"></script>
     </body>
     </html>
