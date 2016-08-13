@@ -1,4 +1,4 @@
-﻿{
+{
   "userSecretsId": "aspnet5-PjBaySite-6708368a-9bda-4070-a4fd-97d0a8f29d5c",
   "version": "1.0.0-*",
   "compilationOptions": {
@@ -34,7 +34,11 @@
 
   "frameworks": {
     "dnx451": { },
-    "dnxcore50": { }
+    "dnxcore50": {
+      "dependencies": {
+        "System.Xml.XmlDocument": "4.0.1-beta-23516"
+      }
+    }
   },
 
   "exclude": [

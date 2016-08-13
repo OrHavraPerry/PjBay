@@ -88,8 +88,27 @@
     </p>
     <div id="googleMap" style="width:400px;height:400px;"></div>
     
+    
 
+
+
+    @*RSS with wikipedia*@
+
+    
+
+    <h2 class="myText">Wikipedia News Feed:</h2>
+    @{
+        foreach (var item in (List<RssEntry>)ViewData["Rss"])
+        {
+            <h3><a href="@item.link">@item.title</a></h3>
+            <p>@item.summary</p>
+            <h5>@item.updated</h5>
+            <br />
+            <br />
+        }
+    }
 
 </body>
 </html>
 @*key to google:   AIzaSyBjauX5YS1EHLHgW-ZqRRSpkDxdJTdEJ6E*@
+@* https://en.wikipedia.org/w/api.php?action=featuredfeed&feed=featured&feedformat=atom *@
