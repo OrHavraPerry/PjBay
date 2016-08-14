@@ -22,8 +22,6 @@ namespace PjBaySite.Controllers
         }
         public IActionResult Index()
         {
-
-            ViewData["Rss"] = ReadRss();
             return View();
         }
 
@@ -66,30 +64,6 @@ namespace PjBaySite.Controllers
             var query = from i in _context.Institutes
                         select new string[] { i.Name, i.Address };
             return query.ToArray();
-        }
-
-
-        //--------rss-------------
-       
-        
-
-        private List<RssEntry> ReadRss()
-        {
-            string url = "https://en.wikipedia.org/w/api.php?action=featuredfeed&feed=featured&feedformat=atom";
-
-            return ReadXml(url);
-        }
-
-        public List<RssEntry> ReadXml(String url)
-        {
-            var serializer = new XmlSerializer(typeof(List<RssEntry>));
-            using (var reader = XmlReader.Create(url))
-            {
-                List<RssEntry> entries = (List<RssEntry>)serializer.Deserialize(reader);
-                return entries;
-
-            }
-
         }
     }
 }
