@@ -195,9 +195,6 @@ namespace PjBaySite.Controllers
 
             // a query which takes the names of courses
             var institutesQ = from i in _context.Institutes
-                              join c in _context.Courses on i.ID equals c.InstatuteID
-                              join p in _context.Projects on c.ID equals p.CourseID
-                              where p.Purchased==false
                               select i.Name;
             //put the courses list into courses
             institutes.AddRange(institutesQ.Distinct());
@@ -356,9 +353,6 @@ namespace PjBaySite.Controllers
 
             // a query which takes the names of courses
             var institutesQ = from i in _context.Institutes
-                              join c in _context.Courses on i.ID equals c.InstatuteID
-                              join p in _context.Projects on c.ID equals p.CourseID
-                              where p.Purchased == false
                               select i.Name;
             //put the courses list into courses
             institutes.AddRange(institutesQ.Distinct());
