@@ -4,6 +4,7 @@ using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.Data.Entity;
 using PjBaySite.Models;
 using System.Collections.Generic;
+using Microsoft.AspNet.Authorization;
 
 namespace PjBaySite.Controllers
 {
@@ -15,7 +16,7 @@ namespace PjBaySite.Controllers
         {
             _context = context;
         }
-
+        [Authorize(Roles = "Admin")]
         // GET: Courses
         public IActionResult Index()
         {

@@ -3,6 +3,7 @@ using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.Data.Entity;
 using PjBaySite.Models;
+using Microsoft.AspNet.Authorization;
 
 namespace PjBaySite.Controllers
 {
@@ -15,6 +16,7 @@ namespace PjBaySite.Controllers
             _context = context;    
         }
 
+        [Authorize(Roles = "Admin")]
         // GET: Fields
         public IActionResult Index()
         {

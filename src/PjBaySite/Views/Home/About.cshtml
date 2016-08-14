@@ -92,21 +92,6 @@
 
 
 
-    @*RSS with wikipedia*@
-
-    
-
-    <h2 class="myText">Wikipedia News Feed:</h2>
-    @{
-        foreach (var item in (List<RssEntry>)ViewData["Rss"])
-        {
-            <h3><a href="@item.link">@item.title</a></h3>
-            <p>@item.summary</p>
-            <h5>@item.updated</h5>
-            <br />
-            <br />
-        }
-    }
 
 </body>
 </html>

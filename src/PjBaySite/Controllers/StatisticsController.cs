@@ -2,12 +2,15 @@ using System.Linq;
 using Microsoft.AspNet.Mvc;
 using PjBaySite.Models;
 using System;
+using Microsoft.AspNet.Authorization;
 
 namespace PjBaySite.Controllers
 {
     public class StatisticsController : Controller
     {
         private ApplicationDbContext _context;
+
+        [Authorize(Roles = "Admin")]
         public IActionResult Index()
         {
             return View();
