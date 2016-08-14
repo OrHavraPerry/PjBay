@@ -2,23 +2,6 @@
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    Layout = "StaLayout";
 }
-<html>
-<head>
-    <link rel="stylesheet" href="~/css/side-menu.css">
-</head>
 
-<body>
-    <div id="menu">
-        <div class="pure-menu">
-            <a class="pure-menu-heading" href="#">Statistics</a>
-
-            <ul class="pure-menu-list">
-                <li class="pure-menu-item"><a asp-controller="Statistics" asp-action="GraphA" class="pure-menu-link">A</a></li>
-                <li class="pure-menu-item"><a href="#" class="pure-menu-link">B</a></li>
-            </ul>
-        </div>
-    </div>
-    <script src="~/js/ui.js"></script>
-</body>
-</html>
