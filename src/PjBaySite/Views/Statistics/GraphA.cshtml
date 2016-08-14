@@ -3,45 +3,20 @@
 *@
 @{
     Layout = "StaLayout";
-}
-<html>
-<head>
-
-    <!DOCTYPE html>
-    <meta charset="utf-8">
-    <style>
-        .bar {
-            fill: steelblue;
-        }
-
-            .bar:hover {
-                fill: brown;
-            }
-
-        .axis {
-            font: 10px sans-serif;
-        }
-
-            .axis path,
-            .axis line {
-                fill: none;
-                stroke: #000;
-                shape-rendering: crispEdges;
-            }
-
-        .x.axis path {
-            display: none;
-        }
-    </style>
-
+}    
+    <h1 class="myText">The number of projects in each field:</h1>
+    <br/>
+    <br />
     
+    <svg/>
+@section Scripts { 
     <script src="//d3js.org/d3.v3.min.js"></script>
     <script>
 
 
 
-        var margin = { top: 20, right: 20, bottom: 30, left: 300 },
-            width = 960 - margin.right,
+        var margin = { top: 20, right: 20, bottom: 30, left: 40 },
+            width = 960 -margin.left- margin.right,
             height = 300 - margin.top - margin.bottom;
 
         var x = d3.scale.ordinal()
@@ -58,7 +33,7 @@
             .scale(y)
             .orient("left")
 
-        var svg = d3.select("body").append("svg")
+        var svg = d3.select("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
           .append("g")
@@ -102,9 +77,4 @@
         }
 
     </script>
-</head>
-<body>
-    <h1 class="myText">The number of projects in each field:</h1>
-
-</body>
-</html>
+    }

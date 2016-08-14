@@ -9,7 +9,7 @@
             <link rel="stylesheet" href="https://bootswatch.com/cosmo/bootstrap.min.css" />
             <link rel="stylesheet" href="~/css/site.css" />
             <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
-            
+            <link href="~/css/side-bar.css" rel="stylesheet">
             
         </environment>
         <environment names="Staging,Production">
@@ -17,6 +17,7 @@
                   asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
                   asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
             <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+            <link href="~/css/side-bar.css" rel="stylesheet">
         </environment>
     </head>
     <body>
@@ -49,7 +50,8 @@
 
                             <li><a asp-controller="Projects" asp-action="SellProject">Sell Project</a></li>
 
-
+                            @if (User.IsInRole("Admin"))
+                            {
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Management <span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
@@ -60,6 +62,7 @@
                                     <li><a asp-controller="Projects" asp-action="Index">Manage Projects</a></li>
                                 </ul>
                             </li>
+                            }
                         </ul>
                         <form asp-controller="Projects" asp-action="SearchProjectFromBar" method="post" class="navbar-form navbar-left" role="search">
                             <div class="form-group">
@@ -86,13 +89,11 @@
         </header>
         <div class="container body-content">
             @RenderBody()
-            <hr />
-            <footer>
-                
-                <p>&copy; 2016 - PjBaySite</p>
-            </footer>
         </div>
-
+        <hr />
+        <footer>
+            <p>&copy; 2016 - PjBaySite</p>
+        </footer>
         <environment names="Development">
             <script src="~/lib/jquery/dist/jquery.js"></script>
             <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>

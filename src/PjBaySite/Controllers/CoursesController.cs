@@ -23,7 +23,7 @@ namespace PjBaySite.Controllers
             var applicationDbContext = _context.Courses.Include(c => c.Field).Include(c => c.Instatute);
             return View(applicationDbContext.ToList());
         }
-
+        [Authorize(Roles = "Admin")]
         // GET: Courses/Details/5
         public IActionResult Details(int? id)
         {
@@ -48,7 +48,7 @@ namespace PjBaySite.Controllers
 
             return View(course);
         }
-
+        [Authorize(Roles = "Admin")]
         // GET: Courses/Create
         public IActionResult Create()
         {
@@ -81,6 +81,7 @@ namespace PjBaySite.Controllers
         }
         //ajax call getting fields by institute name chosen
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult GetFieldByInstitute(string Name)
         {
             var queryField = from f in _context.Fields
@@ -94,7 +95,7 @@ namespace PjBaySite.Controllers
             return Json(ListFields);
         }
 
-
+        [Authorize(Roles = "Admin")]
         // POST: Courses/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -138,6 +139,7 @@ namespace PjBaySite.Controllers
         }
 
         // GET: Courses/Edit/5
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(int? id)
         {
             if (id == null)
@@ -186,7 +188,7 @@ namespace PjBaySite.Controllers
 
             return View(course);
         }
-
+        [Authorize(Roles = "Admin")]
         // POST: Courses/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -234,7 +236,7 @@ namespace PjBaySite.Controllers
                                          select f.fieldName).First();
             return View(course);
         }
-
+        [Authorize(Roles = "Admin")]
         // GET: Courses/Delete/5
         [ActionName("Delete")]
         public IActionResult Delete(int? id)
@@ -262,6 +264,7 @@ namespace PjBaySite.Controllers
         }
 
         // POST: Courses/Delete/5
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
@@ -271,12 +274,13 @@ namespace PjBaySite.Controllers
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
-
+        [Authorize(Roles = "Admin")]
         public IActionResult Search()
         {
             return View();
         }
         //Search result for course
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult SearchResult(string name)
         {

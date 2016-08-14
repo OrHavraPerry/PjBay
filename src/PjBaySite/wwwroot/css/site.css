@@ -101,6 +101,40 @@ textarea {
             width: 400px;
             height: 400px;
         }
+        .bar {
+            fill: steelblue;
+        }
+
+            .bar:hover {
+                fill: brown;
+            }
+
+        .axis {
+            font: 10px sans-serif;
+        }
+
+            .axis path,
+            .axis line {
+                fill: none;
+                stroke: #000;
+                shape-rendering: crispEdges;
+            }
+
+        .x.axis path {
+            display: none;
+        }
+        svg{
+            margin-left:-100px;
+            margin-top:0px;
+        }
+        .arc text {
+            font: 10px sans-serif;
+            text-anchor: middle;
+        }
+
+        .arc path {
+            stroke: #fff;
+           
 
 
 

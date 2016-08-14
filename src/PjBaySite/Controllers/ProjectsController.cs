@@ -43,8 +43,8 @@ namespace PjBaySite.Controllers
             return View(project);
         }
 
-        
 
+        [Authorize(Roles = "Admin")]
         // GET: Projects/Edit/5
         public IActionResult Edit(int? id)
         {
@@ -90,6 +90,7 @@ namespace PjBaySite.Controllers
         }
 
         // POST: Projects/Edit/5
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Project project,string courses,string institutes,string fields)
@@ -141,7 +142,7 @@ namespace PjBaySite.Controllers
             
             return View(project);
         }
-
+        [Authorize(Roles = "Admin")]
         // GET: Projects/Delete/5
         [ActionName("Delete")]
         public IActionResult Delete(int? id)
@@ -172,7 +173,7 @@ namespace PjBaySite.Controllers
                                          select f.fieldName).First();
             return View(project);
         }
-
+        [Authorize(Roles = "Admin")]
         // POST: Projects/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -203,45 +204,7 @@ namespace PjBaySite.Controllers
 
             //filling the viewData parameter which passes to the view
             ViewData["institutes"] = new SelectList(institutes);
-
-
-            ////----filling viewData of fields-------
-            //var fields = new List<string>();
-
-            //// a query which takes the names of courses
-            //var fieldsQ = from i in _context.Fields
-            //              select i.fieldName;
-            ////put the courses list into courses
-            //fields.AddRange(fieldsQ.Distinct());
-
-            ////filling the viewData parameter which passes to the view
-            //ViewData["fields"] = new SelectList(fields.Distinct());
-
-
-            ////-----filling viewData of courses------
-            //var courses = new List<string>();
-
-            //// a query which takes the names of courses
-            //var coursesQ = from i in _context.Courses
-            //               select i.Name;
-            ////put the courses list into courses
-            //courses.AddRange(coursesQ.Distinct());
-
-            ////filling the viewData parameter which passes to the view
-            //ViewData["courses"] = new SelectList(courses.Distinct());
-
-
-            ////-----filling viewData of projects------
-            //var projects = new List<string>();
-
-            //// a query which takes the names of projects
-            //var projectsQ = from i in _context.Projects
-            //               select i.Name;
-            ////put the projects list into projects
-            //projects.AddRange(projectsQ.Distinct());
-
-            ////filling the viewData parameter which passes to the view
-            //ViewData["projects"] = new SelectList(projects);
+            
 
             return View();
         }
@@ -482,7 +445,7 @@ namespace PjBaySite.Controllers
 
             return View(searchProjectQuery.Distinct());
         }
-
+        [Authorize(Roles = "Admin")]
         // details for manager in prjects
         public IActionResult ManageDetails(int? id)
         {
@@ -513,7 +476,7 @@ namespace PjBaySite.Controllers
 
             return View(project);
         }
-
+        [Authorize(Roles = "Admin")]
         // GET: Projects/Create
         public IActionResult Create()
         {
@@ -531,7 +494,7 @@ namespace PjBaySite.Controllers
 
             return View();
         }
-
+        [Authorize(Roles = "Admin")]
         // POST: Projects/Create
         [HttpPost]
         public IActionResult Create(string institutes, string fields, string courses, Project project)
@@ -564,12 +527,13 @@ namespace PjBaySite.Controllers
             ViewData["institutes"] = new SelectList(instituteList.Distinct());
             return View(project);
         }
-
+        [Authorize(Roles = "Admin")]
         public IActionResult ManagerSearch()
         {
             return View();
         }
         //Search result for institute
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult ManagerSearchResult(string name)
         {

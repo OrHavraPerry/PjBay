@@ -22,27 +22,12 @@ namespace PjBaySite.Controllers
         }
         public IActionResult Index()
         {
-
             return View();
         }
-
-        
 
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
-
-            ////------filling viewData of institutes-------
-            //var institutes_1 = new List<string>();
-
-            //// a query which takes the names of courses
-            //var institutesQ = from i in _context.Institutes
-            //                  select i.Name;
-            ////put the courses list into courses
-            //institutes_1.AddRange(institutesQ.Distinct());
-
-            ////filling the viewData parameter which passes to the view
-            //ViewData["institutes"] = new SelectList(institutes_1.Distinct());
 
             return View();
         }

@@ -22,7 +22,7 @@ namespace PjBaySite.Controllers
         {
             return View(_context.Fields.ToList());
         }
-
+        [Authorize(Roles = "Admin")]
         // GET: Fields/Details/5
         public IActionResult Details(int? id)
         {
@@ -39,13 +39,13 @@ namespace PjBaySite.Controllers
 
             return View(field);
         }
-
+        [Authorize(Roles = "Admin")]
         // GET: Fields/Create
         public IActionResult Create()
         {
             return View();
         }
-
+        [Authorize(Roles = "Admin")]
         // POST: Fields/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -59,7 +59,7 @@ namespace PjBaySite.Controllers
             }
             return View(field);
         }
-
+        [Authorize(Roles = "Admin")]
         // GET: Fields/Edit/5
         public IActionResult Edit(int? id)
         {
@@ -75,7 +75,7 @@ namespace PjBaySite.Controllers
             }
             return View(field);
         }
-
+        [Authorize(Roles = "Admin")]
         // POST: Fields/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -109,6 +109,7 @@ namespace PjBaySite.Controllers
         }
 
         // POST: Fields/Delete/5
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
@@ -118,6 +119,7 @@ namespace PjBaySite.Controllers
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
+        [Authorize(Roles = "Admin")]
         //search form for institute name
         public IActionResult Search()
         {
@@ -125,6 +127,7 @@ namespace PjBaySite.Controllers
         }
 
         //Search result for institute
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult SearchResult(string name)
         {

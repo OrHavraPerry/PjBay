@@ -21,12 +21,12 @@ namespace PjBaySite.Controllers
         {
             return View();
         }
-
+        [Authorize(Roles = "Admin")]
         public ActionResult GraphA()
         {
             return View();
         }
-
+        [Authorize(Roles = "Admin")]
         public ActionResult GraphAData()
         {
             //var query = from p in _context.Projects.Include(p => p.Course)
@@ -88,12 +88,12 @@ namespace PjBaySite.Controllers
 
             return RedirectToAction("Index");
         }
-
+        [Authorize(Roles = "Admin")]
         public ActionResult GraphB()
         {
             return View();
         }
-
+        [Authorize(Roles = "Admin")]
         public ActionResult GraphBData()
         {
             var query0_59 = (from p in _context.Projects

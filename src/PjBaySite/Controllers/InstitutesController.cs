@@ -21,7 +21,7 @@ namespace PjBaySite.Controllers
         {
             return View(_context.Institutes.ToList());
         }
-
+        [Authorize(Roles = "Admin")]
         // GET: Instatutes/Details/5
         public IActionResult Details(int? id)
         {
@@ -38,13 +38,13 @@ namespace PjBaySite.Controllers
 
             return View(institute);
         }
-
+        [Authorize(Roles = "Admin")]
         // GET: Instatutes/Create
         public IActionResult Create()
         {
             return View();
         }
-
+        [Authorize(Roles = "Admin")]
         // POST: Instatutes/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -58,7 +58,7 @@ namespace PjBaySite.Controllers
             }
             return View(instatute);
         }
-
+        [Authorize(Roles = "Admin")]
         // GET: Instatutes/Edit/5
         public IActionResult Edit(int? id)
         {
@@ -74,7 +74,7 @@ namespace PjBaySite.Controllers
             }
             return View(instatute);
         }
-
+        [Authorize(Roles = "Admin")]
         // POST: Instatutes/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -88,7 +88,7 @@ namespace PjBaySite.Controllers
             }
             return View(instatute);
         }
-
+        [Authorize(Roles = "Admin")]
         // GET: Instatutes/Delete/5
         [ActionName("Delete")]
         public IActionResult Delete(int? id)
@@ -106,7 +106,7 @@ namespace PjBaySite.Controllers
 
             return View(instatute);
         }
-
+        [Authorize(Roles = "Admin")]
         // POST: Instatutes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -117,12 +117,13 @@ namespace PjBaySite.Controllers
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
+        [Authorize(Roles = "Admin")]
         //search form for institute name
         public IActionResult Search()
         {
             return View();
         }
-
+        [Authorize(Roles = "Admin")]
         //Search result for institute
         [HttpPost]
         public IActionResult SearchResult(string Name)
