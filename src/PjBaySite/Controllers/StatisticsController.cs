@@ -1,32 +1,191 @@
+using System;
 using System.Linq;
 using Microsoft.AspNet.Mvc;
 using PjBaySite.Models;
-using System;
+using System.IO;
+using Microsoft.Data.Entity;
+using Microsoft.Extensions.Logging;
 
 namespace PjBaySite.Controllers
 {
     public class StatisticsController : Controller
     {
         private ApplicationDbContext _context;
+        private readonly ILogger<StatisticsController> _logger;
+
+        public StatisticsController(ApplicationDbContext context, ILogger<StatisticsController> logger)
+        {
+            _context = context;
+            _logger = logger;
+        }
         public IActionResult Index()
         {
             return View();
         }
+        private FileInfo PrepareFile(string fileName)
+        {
+            FileInfo fiFile = null;
 
+            try
+            {
+                // Create Temp Dir
+                var TempDir = new DirectoryInfo(PjBaySite.Properties.Resource.TempDirPath);
+                if (!TempDir.Exists) TempDir.Create();
+
+                fiFile = new FileInfo(Path.Combine(TempDir.FullName, fileName));
+
+                if (fiFile.Exists) fiFile.Delete();
+                fiFile.Create().Dispose();
+            }
+            catch (Exception ex)
+            {
+                //TODO: Handle Exeption
+                _logger.LogCritical("Error While Creating File", ex);
+                throw;
+            }
+
+            return fiFile;
+        }
+        #region Graphs
         public ActionResult GraphA()
         {
-            /*
-            var queryField = from fields in _context.Fields
-                             join c in _context.Courses on fields.ID equals c.Field.ID
-                             join i in _context.Institutes on c.InstatuteID equals i.ID
-                             join p in _context.Projects on c.ID equals p.CourseID
-                             where i.Name.Equals(Name) && p.Purchased == false
-                             select fields.fieldName;
-
-            SelectList ListFields = new SelectList(queryField.Distinct());
-            return Json(ListFields);
-            */
-            throw new NotImplementedException();
+            return View();
         }
+        public ActionResult GraphAData()
+        {
+            //var query = from p in _context.Projects.Include(p => p.Course)
+            //            join f in _context.Fields on p.Course.FieldID equals f.ID
+            //            group p by f.fieldName into FieldGroup
+            //            select new
+            //            {
+            //                key = FieldGroup.Key,
+            //                value = FieldGroup.Count()
+            //            };
+
+            var q = _context.Fields
+                            .Join(
+                                _context.Courses,
+                                f => f.ID,
+                                c => c.FieldID,
+                                (f, c) => new { FieldName = f.fieldName, CourseID = c.ID }).ToList()
+                            .Join(
+                                _context.Projects,
+                                fc => fc.CourseID,
+                                pr => pr.CourseID,
+                                (fc, pr) => new { Field = fc.FieldName, Project = pr }).ToList()
+                            .GroupBy(fc => fc.Field)
+                            .Select(g => new { FieldName = g.Key, Count = g.Count() });
+
+            var p = _context.Projects;
+
+            try
+            {
+                // Prepare File
+                var fiFile = PrepareFile(new Random().Next(10000,99999) + PjBaySite.Properties.Resource.GraphAFile);
+
+                // Fill the file.
+                using (StreamWriter fs = new StreamWriter(fiFile.OpenWrite()))
+                {
+                    // Header
+                    fs.WriteLine("letter\tfrequency");
+
+                    foreach (var fc in q)
+                    {
+                        var newLine = string.Format("{0}\t{1}", fc.FieldName, fc.Count);
+                        fs.WriteLine(newLine);
+                    }
+                }
+
+                return File(fiFile.Open(FileMode.Open, FileAccess.Read), "text/tsv", "data.tsv");
+            }
+            catch (Exception ex)
+            {
+                // Error ex
+                _logger.LogCritical("Error While Creating GraphB", ex);
+            }
+
+            return RedirectToAction("Index");
+        }
+        public ActionResult GraphB()
+        {
+            return View();
+        }
+        public ActionResult GraphBData()
+        {
+            var query0_59 = (from p in _context.Projects
+                             where p.Grade >= 0 && p.Grade < 60
+                             select p).Count();
+
+            var query60_69 = (from p in _context.Projects
+                              where p.Grade >= 60 && p.Grade < 70
+                              select p).Count();
+
+            var query70_79 = (from p in _context.Projects
+                              where p.Grade >= 70 && p.Grade < 80
+                              select p).Count();
+
+
+            var query80_85 = (from p in _context.Projects
+                              where p.Grade >= 80 && p.Grade < 85
+                              select p).Count();
+
+            var query86_90 = (from p in _context.Projects
+                              where p.Grade >= 85 && p.Grade < 90
+                              select p).Count();
+
+
+            var query90_95 = (from p in _context.Projects
+                              where p.Grade >= 90 && p.Grade < 95
+                              select p).Count();
+
+            var query96_100 = (from p in _context.Projects
+                               where p.Grade >= 95 && p.Grade <= 100
+                               select p).Count();
+
+            try
+            {
+                // Prepare File
+                var fiFile = PrepareFile(new Random().Next(10000, 99999) + PjBaySite.Properties.Resource.GraphBFile);
+
+                // Fill the file.
+                using (StreamWriter fs = new StreamWriter(fiFile.OpenWrite()))
+                {
+                    // Header
+                    fs.WriteLine("age,population");
+
+                    var newLine = string.Format("{0},{1}", "0-59", query0_59);
+                    fs.WriteLine(newLine);
+
+                    newLine = string.Format("{0},{1}", "60-69", query60_69);
+                    fs.WriteLine(newLine);
+
+                    newLine = string.Format("{0},{1}", "70-79", query70_79);
+                    fs.WriteLine(newLine);
+
+                    newLine = string.Format("{0},{1}", "80-85", query80_85);
+                    fs.WriteLine(newLine);
+
+                    newLine = string.Format("{0},{1}", "86-90", query86_90);
+                    fs.WriteLine(newLine);
+
+                    newLine = string.Format("{0},{1}", "90-95", query90_95);
+                    fs.WriteLine(newLine);
+
+                    newLine = string.Format("{0},{1}", "96-100", query96_100);
+                    fs.WriteLine(newLine);
+
+                }
+
+                return File(fiFile.Open(FileMode.Open, FileAccess.Read), "text/tsv", "data.csv");
+            }
+            catch (Exception ex)
+            {
+                // Error ex
+                _logger.LogCritical("Error While Creating GraphB", ex);
+            }
+            return RedirectToAction("Index");
+        } 
+        #endregion
+
     }
 }
