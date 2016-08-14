@@ -5,6 +5,7 @@ using Microsoft.Data.Entity;
 using PjBaySite.Models;
 using System;
 using System.Collections.Generic;
+using Microsoft.AspNet.Authorization;
 
 namespace PjBaySite.Controllers
 {
@@ -17,6 +18,7 @@ namespace PjBaySite.Controllers
             _context = context;    
         }
 
+        [Authorize(Roles = "Admin")]
         // GET: Projects
         public IActionResult Index()
         {

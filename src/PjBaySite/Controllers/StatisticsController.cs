@@ -4,6 +4,7 @@ using Microsoft.AspNet.Mvc;
 using PjBaySite.Models;
 using System.IO;
 using Microsoft.Data.Entity;
+using Microsoft.AspNet.Authorization;
 
 namespace PjBaySite.Controllers
 {
@@ -15,6 +16,7 @@ namespace PjBaySite.Controllers
         {
             _context = context;
         }
+        [Authorize(Roles="Admin")]
         public IActionResult Index()
         {
             return View();
