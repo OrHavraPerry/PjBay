@@ -2,61 +2,6 @@
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    Layout = "_Layout";
+    Layout = "StaLayout";
 }
 
-
-<html>
-    <head>
-        <link rel="stylesheet" href="~/css/side-menu.css">
-    </head>
-
-    <body>
-        <aside class="myText">
-        <div id="menu">
-            <div class="pure-menu">
-                <br />
-                <br />
-                <br />
-                <p class="pure-menu-heading" href="#"> &nbsp;&nbsp;  Statistics</p>
-                <br />
-                
-
-                <ul class="pure-menu-list" style="list-style-type: none; margin: 0;padding: 0;position: absolute;">
-                    <li class="pure-menu-item" style="margin:0 0 20px 0;"><a asp-controller="Statistics" asp-action="GraphA" class="pure-menu-link" target="_self">Projects in each field</a></li>
-                    <li class="pure-menu-item" style="margin:0 0 20px 0;"><a asp-controller="Statistics" asp-action="GraphB" class="pure-menu-link">Distribution of grades</a></li>
-                </ul>
-            </div>
-        </div>
-    </aside>
-        <section></section>
-        <script src="~/js/ui.js"></script>
-    </body>
-    </html>
-
-@*
-<html>
-<head>
-    
-</head>
-<body>
-    <aside>
-        <div>
-            <div>
-                <h1>Statisics:</h1>
-
-                <ul>
-                    
-                    <li><a href="Statistics/GraphA" target="frame">Projects in each field</a></li>
-                    <li><a href="Statistics/GraphB" target="frame">Distribution of grades</a></li>
-                </ul>
-            </div>
-        </div>
-    </aside>
-    <section>
-        <div >
-            <iframe id="frame" name="frame" frameborder="0"></iframe>
-        </div>
-    </section>
-</body>
-</html>*@

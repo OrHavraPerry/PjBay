@@ -2,7 +2,7 @@
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    Layout = "_Layout";
+    Layout = "StaLayout";
 }
 <html>
 <head>
@@ -11,6 +11,10 @@
     <!DOCTYPE html>
     <meta charset="utf-8">
     <style>
+        svg{
+            margin-left:300px;
+            margin-top:-60px;
+        }
         .arc text {
             font: 10px sans-serif;
             text-anchor: middle;
@@ -18,14 +22,14 @@
 
         .arc path {
             stroke: #fff;
+            
         }
     </style>
-
     <script src="//d3js.org/d3.v3.min.js"></script>
     <script>
 
-        var width = 960,
-            height = 500,
+        var width = 760,
+            height = 400,
             radius = Math.min(width, height) / 2;
 
         var color = d3.scale.ordinal()
@@ -76,7 +80,5 @@
 </head>
 <body>
     <h1 class="myText">The distribution of grades among the projects</h1>
-    <br />
-    <br />
 </body>
 </html> 
