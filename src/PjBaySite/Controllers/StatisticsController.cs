@@ -29,15 +29,6 @@ namespace PjBaySite.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult GraphAData()
         {
-            //var query = from p in _context.Projects.Include(p => p.Course)
-            //            join f in _context.Fields on p.Course.FieldID equals f.ID
-            //            group p by f.fieldName into FieldGroup
-            //            select new
-            //            {
-            //                key = FieldGroup.Key,
-            //                value = FieldGroup.Count()
-            //            };
-
             var q = _context.Fields
                             .Join(
                                 _context.Courses,

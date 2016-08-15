@@ -74,7 +74,7 @@ namespace PjBaySite.Models
                                     new Project()
                                     { 
                                         Name="Map Reduce",
-                                        Grade=85,
+                                        Grade=35,
                                         Price=350,
                                         Description="Drive better business decisions with an overview of how big data is organized, analyzed, and interpreted. Apply your insights to real-world problems and questions.",
                                         Picture="http://blog.sqlauthority.com/i/b/mapreduce.jpg",
@@ -86,7 +86,7 @@ namespace PjBaySite.Models
                                     new Project()
                                     {
                                         Name="Machine Learning",
-                                        Grade=90,
+                                        Grade=45,
                                         Price=250,
                                         Description="Interested in increasing your knowledge of the Big Data landscape?  This course is for those new to data science and interested in understanding why the Big Data Era has come to be.",
                                         Picture="https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://coursera.s3.amazonaws.com/topics/ml/large-icon.png",
@@ -106,7 +106,7 @@ namespace PjBaySite.Models
                                     new Project()
                                     {
                                         Name="Media and us",
-                                        Grade=85,
+                                        Grade=55,
                                         Price=350,
                                         Description="In today’s marketplace, organizations need effective, profitable social marketing strategies. In this Specialization, you’ll learn to match markets to social strategies to profitably grow your business. ",
                                         Picture="http://www.ereachconsulting.com/wp-content/uploads/2012/12/Social-Media-Management.png",
@@ -126,7 +126,7 @@ namespace PjBaySite.Models
                                     new Project()
                                     {
                                         Name="Milan",
-                                        Grade=100,
+                                        Grade=10,
                                         Price=130,
                                         Description="The course will examine problems of the architectural spaces, technology and forms looking to the antiquity in the XV century in Italy.",
                                         Picture="https://media-cdn.tripadvisor.com/media/photo-s/06/9f/d0/38/the-duomo-s-structure.jpg",
@@ -146,7 +146,7 @@ namespace PjBaySite.Models
                                     new Project()
                                     {
                                         Name="Build a Church",
-                                        Grade=100,
+                                        Grade=65,
                                         Price=130,
                                         Description="The objective of this course is to provide an overview of the culture of ancient Rome beginning about 1000 BCE and ending with the so-called :Fall of Rome.",
                                         Picture="https://i.ytimg.com/vi/76J_wv7bCtk/maxresdefault.jpg",
@@ -166,7 +166,7 @@ namespace PjBaySite.Models
                                     new Project()
                                     {
                                         Name="Tool 1",
-                                        Grade=100,
+                                        Grade=67,
                                         Price=130,
                                         Description="In order to effectively manage and operate a business, managers and leaders need to understand the market characteristics and economic environment they operate in. In this Specialization, you will build a solid understanding of the operation of markets and the macro-economic environment with real-world examples.",
                                         Picture="http://image.shutterstock.com/z/stock-vector-successful-business-steps-idea-planning-execution-concept-vector-illustration-194322317.jpg",
@@ -197,7 +197,7 @@ namespace PjBaySite.Models
                                     new Project()
                                     {
                                         Name="climate changing discussion",
-                                        Grade=95,
+                                        Grade=75,
                                         Price=360,
                                         Description="The University of Alberta, the University of Tromso and the University of the Arctic invite you to explore this four week course that examines the environment and climate of the circumpolar North.",
                                         Picture="https://uofa.ualberta.ca/-/media/ualberta/courses/arctic/changing-arctic-mooc-video.png",
@@ -208,7 +208,7 @@ namespace PjBaySite.Models
                                     new Project()
                                     {
                                         Name="Water in the Western United States",
-                                        Grade=95,
+                                        Grade=74,
                                         Price=360,
                                         Description="This course combines an overview of the science behind water and climate in the Western United States with a survey of the major legal, political, and cultural issues focused on this precious resource.",
                                         Picture="http://www.thesolutionsjournal.com/sites/default/files/imagecache/headline-image/headline/Per_Sabo_Figure1.jpg",
@@ -227,7 +227,7 @@ namespace PjBaySite.Models
                                     new Project()
                                     {
                                         Name="Paper on how i changed a person",
-                                        Grade=100,
+                                        Grade=81,
                                         Price=360,
                                         Description="Ever wonder why people do what they do? This course offers some answers based on the latest research from social psychology.",
                                         Picture="http://collegefun-d.com/wp-content/uploads/2014/07/MarketPsychology.jpg",
@@ -238,7 +238,7 @@ namespace PjBaySite.Models
                                     new Project()
                                     {
                                         Name="The Brain and Space",
-                                        Grade=95,
+                                        Grade=87,
                                         Price=360,
                                         Description="This course is about how the brain creates our sense of spatial location from a variety of sensory and motor sources, and how this spatial sense in turn shapes our cognitive abilities.",
                                         Picture="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSaX0WwiXodllxeNvP-8x6CO_2DbAneTvQF0E2MWD_mhLFrpavT",
@@ -285,7 +285,7 @@ namespace PjBaySite.Models
                                     new Project()
                                     {
                                         Name="Education in kindergarden",
-                                        Grade=100,
+                                        Grade=93,
                                         Price=360,
                                         Description="How are all of the species living on Earth today related? How does understanding evolutionary science contribute to our well-being? In this course, participants will learn about evolutionary relationships, population genetics, and natural and artificial selection. Participants will explore evolutionary science and learn how to integrate it into their classrooms.",
                                         Picture="http://www.news-track.com/wp-content/uploads/2015/06/Evolution-des-wissens.jpg",
@@ -324,7 +324,7 @@ namespace PjBaySite.Models
                                     new Project()
                                     {
                                         Name="Black Jeck",
-                                        Grade=95,
+                                        Grade=92,
                                         Price=230,
                                         Description="Building black jack with pointers",
                                         Picture="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRzOQdnbHtg36Uo812HUKiOr8niqWodrDJtg3f-QAsWGJ9JnGJi",
@@ -336,7 +336,7 @@ namespace PjBaySite.Models
                                     new Project()
                                     {
                                         Name="8 horses game chess",
-                                        Grade=98,
+                                        Grade=91,
                                         Price=230,
                                         Description="allocating 8 horses in a chess board,that they can't eat each other,using recursion",
                                         Picture="https://chess-teacher.com/wp-content/uploads/2016/01/chess-8.jpg",
